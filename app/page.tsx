@@ -34,6 +34,14 @@ export default function HomePage() {
               <ArrowRight size={20} />
             </Link>
             <a
+              href="https://scholar-sparkle-web.lovable.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors shadow-lg hover:shadow-xl"
+            >
+              <span>👨‍🏫 For Professors</span>
+            </a>
+            <a
               href="#how-it-works"
               className="flex items-center space-x-2 bg-white hover:bg-gray-50 text-primary-600 px-8 py-4 rounded-lg font-semibold text-lg transition-colors border-2 border-primary-600"
             >
@@ -255,7 +263,7 @@ export default function HomePage() {
               </ul>
             </div>
             <div className="bg-white rounded-lg p-6 border border-gray-200">
-              <h4 className="font-bold text-lg text-gray-900 mb-3">You Don't Need:</h4>
+              <h4 className="font-bold text-lg text-gray-900 mb-3">You Don&apos;t Need:</h4>
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-start">
                   <span className="text-red-600 mr-2">✗</span>

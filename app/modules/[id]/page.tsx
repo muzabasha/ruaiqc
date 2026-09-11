@@ -18,7 +18,7 @@ export default function ModulePage() {
   const [completedTopics, setCompletedTopics] = useState<string[]>([]);
   const [quizScores, setQuizScores] = useState<Record<string, number>>({});
 
-  const module = getModuleById(moduleId);
+  const currentModule = getModuleById(moduleId);
   const topics = getTopicsByModuleId(moduleId);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ModulePage() {
     setQuizScores(progress.quizScores);
   }, []);
 
-  if (!module) {
+  if (!currentModule) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -62,10 +62,10 @@ export default function ModulePage() {
         <div className="bg-gradient-to-r from-primary-500 to-quantum-500 rounded-lg p-8 mb-8 text-white shadow-lg">
           <div className="flex items-center space-x-3 mb-4">
             <BookOpen size={32} />
-            <p className="text-lg font-medium opacity-90">Module {module.number}</p>
+            <p className="text-lg font-medium opacity-90">Module {currentModule.number}</p>
           </div>
-          <h1 className="text-4xl font-bold mb-4">{module.title}</h1>
-          <p className="text-lg opacity-90 mb-6">{module.description}</p>
+          <h1 className="text-4xl font-bold mb-4">{currentModule.title}</h1>
+          <p className="text-lg opacity-90 mb-6">{currentModule.description}</p>
           
           <div className="bg-white bg-opacity-20 rounded-lg p-4">
             <div className="flex justify-between items-center mb-2">
@@ -91,7 +91,7 @@ export default function ModulePage() {
                 <TopicCard
                   key={topic.id}
                   topicId={topic.id}
-                  topicNumber={`${module.number}.${topic.number}`}
+                  topicNumber={`${currentModule.number}.${topic.number}`}
                   title={topic.title}
                   description={topic.description}
                   isCompleted={isTopicCompleted(topic.id)}

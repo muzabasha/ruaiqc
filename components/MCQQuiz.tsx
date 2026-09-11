@@ -189,7 +189,7 @@ export default function MCQQuiz({ mcqs, topicId }: MCQQuizProps) {
             {score === mcqs.length && (
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <p className="text-green-800 font-semibold">
-                  🎉 Perfect score! You've mastered this topic!
+                  🎉 Perfect score! You&apos;ve mastered this topic!
                 </p>
               </div>
             )}

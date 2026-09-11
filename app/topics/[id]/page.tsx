@@ -20,7 +20,7 @@ export default function TopicPage() {
   const [completed, setCompleted] = useState(false);
 
   const topic = getTopicById(topicId);
-  const module = topic ? getModuleById(topic.moduleId) : null;
+  const currentModule = topic ? getModuleById(topic.moduleId) : null;
 
   useEffect(() => {
     if (topic) {
@@ -44,7 +44,7 @@ export default function TopicPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [topic, completed]);
 
-  if (!topic || !module) {
+  if (!topic || !currentModule) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -71,11 +71,11 @@ export default function TopicPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Back Button */}
         <Link
-          href={`/modules/${module.id}`}
+          href={`/modules/${currentModule.id}`}
           className="inline-flex items-center space-x-2 text-gray-600 hover:text-primary-600 mb-6 transition-colors"
         >
           <ArrowLeft size={20} />
-          <span>Back to {module.title}</span>
+          <span>Back to {currentModule.title}</span>
         </Link>
 
         {/* Topic Header */}
@@ -118,7 +118,7 @@ export default function TopicPage() {
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg p-8 border-2 border-amber-200">
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
               <span className="text-3xl mr-3">📖</span>
-              Let's Begin with a Story
+              Let&apos;s Begin with a Story
             </h2>
             <div className="prose prose-lg max-w-none text-gray-800 whitespace-pre-line">
               {topic.story}
