@@ -169,100 +169,116 @@ Q(5,right) = 21.7`,
     ],
     code: [
       {
+        code: '# ─── SECTION 1: ENVIRONMENT SETUP ───────────────────────────────────────',
+        explanation: '📌 Section 1 begins here. We first describe the world the agent lives in — a 5×5 grid with 25 cells. This is the "environment" in reinforcement learning.',
+      },
+      {
         code: '# Define the environment',
-        explanation: 'We\'ll create a simple 5x5 grid world.',
+        explanation: '💬 Comment: This block sets up the rules of the grid world — its size, where the agent starts, and where the goal is.',
       },
       {
         code: 'GRID_SIZE = 5',
-        explanation: 'Our environment is a 5x5 grid (states 0-24).',
+        explanation: '📐 Sets the grid to 5 columns × 5 rows = 25 total cells. States are numbered 0 to 24 (top-left = 0, bottom-right = 24). UPPER_CASE naming signals this is a constant that should not change during the run.',
       },
       {
         code: 'START_STATE = 0',
-        explanation: 'Agent starts at the top-left corner.',
+        explanation: '🚀 The agent always begins at state 0 (top-left corner, row=0, col=0). This is reset at the start of every episode so the agent re-learns from the same starting point each time.',
       },
       {
         code: 'GOAL_STATE = 24',
-        explanation: 'Goal is at the bottom-right corner.',
+        explanation: '🎯 The destination is state 24 (bottom-right corner, row=4, col=4). When the agent reaches this state, the episode ends with a large reward. The entire purpose of training is to learn the fastest path from state 0 → state 24.',
       },
       {
         code: '',
         explanation: '',
+      },
+      {
+        code: '# ─── SECTION 2: HYPERPARAMETERS ────────────────────────────────────────────',
+        explanation: '📌 Section 2: Hyperparameters are knobs you tune to control how the agent learns. These are NOT learned — you choose them before training.',
       },
       {
         code: '# Q-learning parameters',
-        explanation: 'Set hyperparameters for the learning process.',
+        explanation: '💬 Comment: These four numbers control the speed, depth, curiosity, and duration of learning.',
       },
       {
         code: 'LEARNING_RATE = 0.1',
-        explanation: 'Alpha: how fast we update Q-values.',
+        explanation: '📈 Alpha (α) = 0.1. This controls HOW FAST the agent updates its Q-values when it learns something new. Think of it as "how seriously do I take new information?"\n• α = 0.1 → 10% of new info replaces old belief each step (stable, gradual learning)\n• α = 1.0 → completely replaces old belief (too fast, unstable)\n• α = 0.0 → agent never learns at all\n✅ 0.1 is a safe, standard choice for small environments.',
       },
       {
         code: 'DISCOUNT_FACTOR = 0.9',
-        explanation: 'Gamma: how much we value future rewards.',
+        explanation: '⏳ Gamma (γ) = 0.9. Controls HOW MUCH the agent values FUTURE rewards versus IMMEDIATE rewards.\n• γ = 0.9 → future reward is worth 90% of an equal immediate reward (forward-thinking agent)\n• γ = 0.0 → agent is completely greedy, only cares about the next immediate reward\n• γ = 1.0 → agent values all future rewards equally (can cause instability)\n✅ 0.9 makes the agent plan ahead — essential for navigating a grid where the goal is many steps away.',
       },
       {
         code: 'EPSILON = 0.1',
-        explanation: 'Probability of exploring (random action).',
+        explanation: '🎲 Epsilon (ε) = 0.1. Controls the EXPLORATION vs EXPLOITATION trade-off.\n• With 10% probability, the agent tries a RANDOM action (explore — discover new paths)\n• With 90% probability, the agent picks the BEST known action (exploit — use what it learned)\n✅ This prevents the agent from getting stuck always doing the same thing. Without exploration, it might never find the optimal path.',
       },
       {
         code: 'EPISODES = 500',
-        explanation: 'Number of training episodes.',
+        explanation: '🔁 The agent will train for 500 complete episodes. One episode = one attempt to go from START → GOAL (or max 100 steps). More episodes = more practice = better Q-values. 500 is enough to converge on a good policy for this small 5×5 grid.',
       },
       {
         code: '',
         explanation: '',
+      },
+      {
+        code: '# ─── SECTION 3: Q-TABLE INITIALIZATION ─────────────────────────────────────',
+        explanation: '📌 Section 3: The Q-table is the agent\'s "brain" — a memory of how good each action is in each state.',
       },
       {
         code: '# Initialize Q-table',
-        explanation: 'Create table with Q-values for all state-action pairs.',
+        explanation: '💬 Comment: Before training, the agent knows nothing, so all Q-values start at zero.',
       },
       {
         code: 'num_states = GRID_SIZE * GRID_SIZE',
-        explanation: 'Total states = 5 × 5 = 25 positions.',
+        explanation: '🧮 Calculates total number of states: 5 × 5 = 25. Each cell in the grid is one state. This tells us how many rows the Q-table needs.',
       },
       {
         code: 'num_actions = 4  # up, down, left, right',
-        explanation: 'Four possible actions at each state.',
+        explanation: '🧭 The agent has 4 possible moves at every state:\n• Action 0 = UP    (move to the row above)\n• Action 1 = DOWN  (move to the row below)\n• Action 2 = LEFT  (move to the column left)\n• Action 3 = RIGHT (move to the column right)\nThe comment reminds us of this mapping. This tells us how many columns the Q-table needs.',
       },
       {
         code: 'Q = np.zeros((num_states, num_actions))',
-        explanation: 'Q-table initialized with zeros.',
+        explanation: '🗃️ Creates the Q-table: a 25×4 matrix (25 states × 4 actions), filled entirely with zeros.\n• Each row = one state (a grid cell)\n• Each column = one action (up/down/left/right)\n• Each cell Q[s, a] = estimated quality of taking action a in state s\n→ At start, Q[0,0]=0, Q[0,1]=0, Q[0,2]=0, Q[0,3]=0 ... all zeros\n→ After training, Q[0,3] might be large because "go right" from start is a good idea.',
       },
       {
         code: '',
         explanation: '',
       },
       {
+        code: '# ─── SECTION 4: HELPER FUNCTIONS ───────────────────────────────────────────',
+        explanation: '📌 Section 4: Two small utility functions that the training loop will call thousands of times.',
+      },
+      {
         code: '# Helper function: get next state',
-        explanation: 'Determines where the agent moves based on action.',
+        explanation: '💬 Comment: This function simulates the physics of the grid — what happens when the agent moves.',
       },
       {
         code: 'def get_next_state(state, action):',
-        explanation: 'Function to calculate the result of taking an action.',
+        explanation: '🔧 Defines a function that takes the current state (0–24) and chosen action (0–3), and returns the resulting next state. It handles wall collisions — if the agent tries to move off the grid, it stays in place.',
       },
       {
         code: '    row, col = state // GRID_SIZE, state % GRID_SIZE',
-        explanation: 'Convert state number to row and column position.',
+        explanation: '🗺️ Converts the flat state number into 2D grid coordinates:\n• row = state // 5  (integer division: state 7 → row 1)\n• col = state %  5  (remainder:         state 7 → col 2)\nExample: state 12 → row=2, col=2 (center of the grid)\nThis lets us check if moving would go out of bounds.',
       },
       {
         code: '    if action == 0 and row > 0: row -= 1  # up',
-        explanation: 'Move up if not at top edge.',
+        explanation: '⬆️ Action 0 = UP. Subtracts 1 from the row (moves toward the top). The guard "row > 0" ensures the agent doesn\'t go above the top edge. If at row=0 and tries to go up → stays at row=0 (wall collision).',
       },
       {
         code: '    elif action == 1 and row < GRID_SIZE-1: row += 1  # down',
-        explanation: 'Move down if not at bottom edge.',
+        explanation: '⬇️ Action 1 = DOWN. Adds 1 to the row (moves toward the bottom). Guard "row < 4" prevents going below the last row. If at row=4 (bottom edge) and tries to go down → stays at row=4.',
       },
       {
         code: '    elif action == 2 and col > 0: col -= 1  # left',
-        explanation: 'Move left if not at left edge.',
+        explanation: '⬅️ Action 2 = LEFT. Subtracts 1 from the column (moves toward the left). Guard "col > 0" prevents going off the left edge. If at col=0 (left edge) and tries to go left → stays at col=0.',
       },
       {
         code: '    elif action == 3 and col < GRID_SIZE-1: col += 1  # right',
-        explanation: 'Move right if not at right edge.',
+        explanation: '➡️ Action 3 = RIGHT. Adds 1 to the column (moves toward the right). Guard "col < 4" prevents going off the right edge. If at col=4 (right edge) and tries to go right → stays at col=4.',
       },
       {
         code: '    return row * GRID_SIZE + col',
-        explanation: 'Convert row, column back to state number.',
+        explanation: '🔄 Converts 2D coordinates back to a flat state number:\nnext_state = row × 5 + col\nExample: row=2, col=3 → state = 2×5+3 = 13\nThis reverses the earlier decomposition and gives a single integer the Q-table can use as an index.',
       },
       {
         code: '',
@@ -270,31 +286,35 @@ Q(5,right) = 21.7`,
       },
       {
         code: '# Helper function: get reward',
-        explanation: 'Defines rewards for reaching different states.',
+        explanation: '💬 Comment: Defines the reward signal — the feedback the agent receives after each action.',
       },
       {
         code: 'def get_reward(state):',
-        explanation: 'Returns reward based on the state reached.',
+        explanation: '🏆 Defines a reward function. Takes the state the agent just moved into and returns a number:\n• Positive number = good outcome\n• Negative number = bad/costly outcome\nThis is how the environment "tells" the agent whether it did something worthwhile.',
       },
       {
         code: '    if state == GOAL_STATE: return 100',
-        explanation: 'Large positive reward for reaching the goal.',
+        explanation: '✅ If the agent reaches state 24 (the goal), it gets a reward of +100. This large positive signal teaches the agent that reaching the goal is highly desirable. The agent will update Q-values to make goal-reaching actions much more attractive.',
       },
       {
         code: '    else: return -1',
-        explanation: 'Small negative reward for each step (encourages efficiency).',
+        explanation: '⏱️ Every step that is NOT the goal gives a reward of -1. This "step penalty" encourages efficiency — the agent is penalized for wasting time. Without this, the agent might wander aimlessly and still get the +100 eventually. With -1 per step, the agent learns to reach the goal in as few moves as possible.',
       },
       {
         code: '',
         explanation: '',
       },
       {
+        code: '# ─── SECTION 5: TRAINING LOOP ──────────────────────────────────────────────',
+        explanation: '📌 Section 5: The core of Q-learning — repeatedly running episodes and updating the Q-table after every step.',
+      },
+      {
         code: '# Training loop',
-        explanation: 'Run multiple episodes to train the agent.',
+        explanation: '💬 Comment: This is where the actual learning happens over 500 episodes.',
       },
       {
         code: 'rewards_per_episode = []',
-        explanation: 'Track total reward in each episode.',
+        explanation: '📊 Creates an empty Python list to record the total reward earned in each episode. After training, we\'ll plot this list to see how the agent improved over time. If rewards increase episode-by-episode, the agent is learning!',
       },
       {
         code: '',
@@ -302,19 +322,19 @@ Q(5,right) = 21.7`,
       },
       {
         code: 'for episode in range(EPISODES):',
-        explanation: 'Loop through training episodes.',
+        explanation: '🔁 Outer loop: repeats 500 times (episode = 0, 1, 2, ... 499). Each iteration is one complete training attempt — the agent starts fresh at state 0 and tries to reach state 24.',
       },
       {
         code: '    state = START_STATE',
-        explanation: 'Start each episode at the initial position.',
+        explanation: '📍 Resets the agent\'s position to state 0 (top-left corner) at the start of every episode. This ensures each episode is a fresh attempt, just like a player starting a new game from the beginning.',
       },
       {
         code: '    total_reward = 0',
-        explanation: 'Track cumulative reward for this episode.',
+        explanation: '💰 Initializes a running counter for the total reward accumulated during this episode. Starts at 0 and we add to it after each step. At the end of the episode, this tells us how well the agent performed.',
       },
       {
         code: '    steps = 0',
-        explanation: 'Count steps taken in this episode.',
+        explanation: '👟 Counter for how many steps taken in this episode. Used to enforce the max-100-step limit. Prevents infinite loops in case the agent gets stuck in a cycle without reaching the goal.',
       },
       {
         code: '    ',
@@ -322,27 +342,27 @@ Q(5,right) = 21.7`,
       },
       {
         code: '    while state != GOAL_STATE and steps < 100:',
-        explanation: 'Continue until goal reached or max steps.',
+        explanation: '🔄 Inner loop: runs until EITHER the goal is reached (state == 24) OR 100 steps have been taken. This inner loop is one episode\'s decision-action-learn cycle. The 100-step cap prevents the agent from running forever early in training when it\'s mostly lost.',
       },
       {
         code: '        # Choose action (epsilon-greedy)',
-        explanation: 'Balance exploration vs exploitation.',
+        explanation: '💬 Comment: The ε-greedy strategy decides whether to explore or exploit on each step.',
       },
       {
         code: '        if np.random.random() < EPSILON:',
-        explanation: 'With probability epsilon, explore randomly.',
+        explanation: '🎲 np.random.random() generates a float between 0.0 and 1.0 uniformly at random. If it falls below EPSILON (0.1), we explore. Since EPSILON=0.1, this happens ~10% of the time. The other 90% we exploit what we already know.',
       },
       {
         code: '            action = np.random.randint(0, num_actions)',
-        explanation: 'Pick a random action.',
+        explanation: '🃏 EXPLORE: picks a random action integer from {0, 1, 2, 3} with equal probability. This is the exploration step — the agent tries something it might not normally choose, which might reveal a better path it didn\'t know about.',
       },
       {
         code: '        else:',
-        explanation: 'Otherwise, exploit current knowledge.',
+        explanation: '🧠 EXPLOIT: we skip the random choice and use what the agent has learned.',
       },
       {
         code: '            action = np.argmax(Q[state])',
-        explanation: 'Pick action with highest Q-value.',
+        explanation: '🏹 Q[state] is a 1D array of 4 Q-values (one per action) for the current state.\nnp.argmax() returns the index of the LARGEST value — the action the agent currently believes is best.\nExample: if Q[5] = [2.1, 4.7, 1.3, 3.9], then argmax = 1 (DOWN has the highest Q-value → take action DOWN).',
       },
       {
         code: '        ',
@@ -350,15 +370,15 @@ Q(5,right) = 21.7`,
       },
       {
         code: '        # Take action',
-        explanation: 'Execute the chosen action.',
+        explanation: '💬 Comment: Execute the chosen action and observe what happens in the environment.',
       },
       {
         code: '        next_state = get_next_state(state, action)',
-        explanation: 'Observe resulting state.',
+        explanation: '🌍 Calls our helper function to simulate the action: given the current state and chosen action, what cell does the agent land in? The result is the "next_state" — the agent\'s new position on the grid.',
       },
       {
         code: '        reward = get_reward(next_state)',
-        explanation: 'Get reward for reaching new state.',
+        explanation: '🏅 Asks the environment: "What reward do I get for being in next_state?" Returns either +100 (goal reached!) or -1 (any other cell). This reward will be used to update the Q-value for the action just taken.',
       },
       {
         code: '        ',
@@ -366,15 +386,15 @@ Q(5,right) = 21.7`,
       },
       {
         code: '        # Q-learning update',
-        explanation: 'Apply the Q-learning formula.',
+        explanation: '💬 Comment: This is the heart of the algorithm — updating the Q-table using the Bellman equation.',
       },
       {
         code: '        best_next_q = np.max(Q[next_state])',
-        explanation: 'Find best Q-value in next state.',
+        explanation: '🔭 Looks ahead: "What is the BEST Q-value I could get from the next_state, regardless of which action I would take?" np.max(Q[next_state]) scans all 4 action Q-values in the next state and returns the maximum. This is the max Q(s\',a\') term from the Bellman equation.',
       },
       {
         code: '        Q[state, action] = Q[state, action] + LEARNING_RATE * (reward + DISCOUNT_FACTOR * best_next_q - Q[state, action])',
-        explanation: 'Update Q-value using the Q-learning equation.',
+        explanation: '⚡ THE BELLMAN UPDATE — the single most important line in Q-learning!\n\nBreaking it down step-by-step:\n① reward + DISCOUNT_FACTOR * best_next_q\n   → "What is this action actually worth?" = immediate reward + (0.9 × best future value)\n   → This is called the TD Target (Temporal Difference Target)\n\n② TD Target - Q[state, action]\n   → "How surprised are we?" = difference between what we expected vs what actually happened\n   → This is called the TD Error\n\n③ LEARNING_RATE * TD_Error\n   → "How much do we adjust?" = 0.1 × TD Error (small, gradual adjustment)\n\n④ Q[state, action] = Q[state, action] + adjustment\n   → Update the Q-value: nudge it toward reality\n\nIf TD Error is positive → we underestimated, Q goes UP\nIf TD Error is negative → we overestimated, Q goes DOWN\nIf TD Error is zero → our estimate was perfect, Q stays SAME',
       },
       {
         code: '        ',
@@ -382,15 +402,15 @@ Q(5,right) = 21.7`,
       },
       {
         code: '        state = next_state',
-        explanation: 'Move to next state.',
+        explanation: '📍 The agent "moves" — updates its current state to the new state. Now the agent is at the cell it just moved to. The next iteration of the while loop will start decision-making from this new position.',
       },
       {
         code: '        total_reward += reward',
-        explanation: 'Accumulate reward.',
+        explanation: '💰 Adds the step\'s reward to the episode\'s running total. After the episode ends, this sum tells us how well the agent did overall. Early episodes: very negative (many -1 steps, rarely reaches +100). Late episodes: near +100 - (few steps × 1) = efficient paths.',
       },
       {
         code: '        steps += 1',
-        explanation: 'Count the step.',
+        explanation: '👟 Increments the step counter by 1 so the while-loop condition (steps < 100) can eventually stop an episode where the agent is wandering. Without this counter, a lost agent would loop forever.',
       },
       {
         code: '    ',
@@ -398,43 +418,47 @@ Q(5,right) = 21.7`,
       },
       {
         code: '    rewards_per_episode.append(total_reward)',
-        explanation: 'Store episode reward for analysis.',
+        explanation: '📈 At the END of each episode, save the total reward to the list. After 500 episodes, this list has 500 numbers. Plotting them reveals the learning curve: should trend upward from very negative (lost/wandering) to near positive (efficient goal-reaching).',
       },
       {
         code: '',
         explanation: '',
       },
       {
+        code: '# ─── SECTION 6: VISUALIZATION ──────────────────────────────────────────────',
+        explanation: '📌 Section 6: Plot the learning curve to visually confirm the agent improved over time.',
+      },
+      {
         code: '# Visualize learning progress',
-        explanation: 'Plot how rewards improved over time.',
+        explanation: '💬 Comment: Create a graph showing how the agent\'s total reward per episode changed over training.',
       },
       {
         code: 'plt.figure(figsize=(10, 5))',
-        explanation: 'Create a figure for the plot.',
+        explanation: '🖼️ Creates a new matplotlib figure (plot canvas) with width=10 inches and height=5 inches. Always call this before plt.plot() to control the output size. A wider figure makes the learning curve easier to read.',
       },
       {
         code: 'plt.plot(rewards_per_episode)',
-        explanation: 'Plot rewards vs episode number.',
+        explanation: '📉📈 Plots the 500 episode rewards as a line graph:\n• X-axis = episode number (0 to 499)\n• Y-axis = total reward that episode\n• You should see the line start very low (negative, many wasted steps) and gradually climb higher (agent finds shorter paths and collects less penalties).',
       },
       {
         code: 'plt.xlabel(\'Episode\')',
-        explanation: 'Label x-axis.',
+        explanation: '🏷️ Labels the X-axis "Episode" so readers know each point on the x-axis represents one complete training attempt.',
       },
       {
         code: 'plt.ylabel(\'Total Reward\')',
-        explanation: 'Label y-axis.',
+        explanation: '🏷️ Labels the Y-axis "Total Reward" — the sum of all rewards in an episode. Negative values = agent was slow. Values close to +100 = agent found the goal quickly with few wasted steps.',
       },
       {
         code: 'plt.title(\'Q-Learning Progress: Reward per Episode\')',
-        explanation: 'Add title.',
+        explanation: '📋 Adds a descriptive title to the chart. This makes the plot self-explanatory when shared or included in a report.',
       },
       {
         code: 'plt.grid(True)',
-        explanation: 'Add grid for readability.',
+        explanation: '📏 Adds a light grey grid to the plot background. Grids make it much easier to read values off the chart and spot trends, especially whether the curve is flat or rising.',
       },
       {
         code: 'plt.show()',
-        explanation: 'Display the plot.',
+        explanation: '👁️ Renders and displays the finished plot. In Google Colab, this appears inline below the cell. In a local script, it opens a pop-up window. Without plt.show(), nothing appears on screen.',
       },
       {
         code: '',
@@ -442,11 +466,11 @@ Q(5,right) = 21.7`,
       },
       {
         code: 'print(f"Training completed over {EPISODES} episodes")',
-        explanation: 'Print confirmation message.',
+        explanation: '📢 Prints a confirmation message after all training is done. The f-string inserts the value of EPISODES (500) into the string automatically → "Training completed over 500 episodes".',
       },
       {
         code: 'print(f"Final average reward (last 100 episodes): {np.mean(rewards_per_episode[-100:]):.2f}")',
-        explanation: 'Show average performance in final episodes.',
+        explanation: '📊 Evaluates and prints the agent\'s final performance:\n• rewards_per_episode[-100:] → slices the LAST 100 values from the list\n• np.mean(...) → computes the average of those 100 values\n• :.2f → formats the float to 2 decimal places\n\nWhy the last 100 episodes? Because early training is chaotic — the agent is still learning. The last 100 episodes represent the agent after it has mostly converged to a good policy. A high average here confirms successful learning.',
       },
     ],
     executionFlow: [
