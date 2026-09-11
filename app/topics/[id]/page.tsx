@@ -7,7 +7,7 @@ import Header from '@/components/Header';
 import EquationCard from '@/components/EquationCard';
 import PythonHandsOn from '@/components/PythonHandsOn';
 import MCQQuiz from '@/components/MCQQuiz';
-import { getTopicById, allTopics } from '@/content/topics';
+import { getTopicById, getPreviousTopic, getNextTopic } from '@/content/topics';
 import { getModuleById } from '@/content/modules';
 import { markTopicComplete, isTopicCompleted } from '@/lib/progress';
 import { ArrowLeft, ArrowRight, CheckCircle, Target, Lightbulb } from 'lucide-react';
@@ -58,11 +58,9 @@ export default function TopicPage() {
     );
   }
 
-  // Find previous and next topics
-  const allTopicsList = Object.values(allTopics);
-  const currentIndex = allTopicsList.findIndex((t) => t.id === topicId);
-  const previousTopic = currentIndex > 0 ? allTopicsList[currentIndex - 1] : null;
-  const nextTopic = currentIndex < allTopicsList.length - 1 ? allTopicsList[currentIndex + 1] : null;
+  // Find previous and next topics in curriculum order
+  const previousTopic = getPreviousTopic(topicId);
+  const nextTopic = getNextTopic(topicId);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">

@@ -1,0 +1,1101 @@
+import { Topic } from '@/lib/types';
+
+export const whatIsML: Topic = {
+  id: 'what-is-ml',
+  moduleId: 'machine-learning',
+  number: 1,
+  title: 'What is Machine Learning?',
+  description: 'Delve into the core mechanics of machine learning: how statistical algorithms turn raw data into actionable predictive knowledge.',
+  objectives: [
+    'Define Machine Learning from statistical and algorithmic viewpoints',
+    'Understand how mathematical functions are approximated from observations',
+    'Map out the end-to-end Machine Learning lifecycle',
+  ],
+  story: `When Johannes Kepler analyzed the planetary observations recorded by Tycho Brahe in the early 1600s, he didn't have access to modern physics. He had massive tables of numbers: dates, angles, and celestial coordinates.
+  
+For years, Kepler analyzed those numbers until he discovered the hidden mathematical relationship: planets travel in elliptical orbits with the Sun at one focus ($P^2 = a^3$).
+  
+Machine learning does on a colossal, automated scale what Kepler did by hand: it sifts through millions of numbers, detects underlying geometric regularities, and expresses them as predictive mathematical equations.`,
+  motivation: `**Why Machine Learning is essential knowledge:**
+
+1. **Automating knowledge discovery**: Human experts cannot inspect millions of hospital patient records or web clicks; ML models uncover patterns instantly.
+2. **Predictive advantage**: From anticipating equipment failure in factories to forecasting customer demand, ML shifts organizations from reactive to proactive.`,
+  concept: {
+    simple: `Machine Learning is a way to make computers smart without giving them step-by-step instructions. Instead, we show them hundreds or thousands of examples. The computer finds the common patterns on its own and uses those patterns to make smart guesses on new examples it has never seen before.`,
+    technical: `Machine Learning is an inductive functional approximation paradigm. Given an unknown underlying data-generating distribution $P(X, Y)$, an ML algorithm searches a parameterized hypothesis class $\\mathcal{H} = \\{f_\\theta : \\theta \\in \\Theta\\}$ to identify optimal parameters $\\theta^*$ minimizing expected risk $\\mathbb{E}_{(x,y)\\sim P}[\\mathcal{L}(f_\\theta(x), y)]$.`,
+  },
+  keyTerms: [
+    { term: 'Hypothesis Class', simple: 'The family of possible formulas the computer is allowed to test.', technical: 'The restricted functional space $\\mathcal{H}$ of candidate models searched during optimization.' },
+    { term: 'Loss Function', simple: 'A score that measures how wrong the computer’s guess is.', technical: 'A mapping $\\mathcal{L}: \\hat{\\mathcal{Y}} \\times \\mathcal{Y} \\rightarrow \\mathbb{R}^+$ penalizing prediction discrepancy.' },
+    { term: 'Optimization', simple: 'Tuning the dials to make the mistakes as small as possible.', technical: 'Algorithmic minimization of empirical risk via convex solvers, gradient descent, or heuristics.' },
+  ],
+  equations: [
+    {
+      latex: '\\theta^* = \\arg\\min_{\\theta} \\frac{1}{N} \\sum_{i=1}^N \\mathcal{L}\\big(f_\\theta(x_i), y_i\\big)',
+      explanation: 'Empirical Risk Minimization (ERM): Finding the exact parameter values theta* that minimize average loss across all training samples.',
+      symbols: [
+        { symbol: '\\theta^*', meaning: 'Optimal parameters', interpretation: 'The best weights for our model' },
+        { symbol: '\\mathcal{L}', meaning: 'Loss function', interpretation: 'Penalty for error' },
+        { symbol: 'N', meaning: 'Number of training samples', interpretation: 'Size of dataset' },
+      ],
+      example: {
+        description: 'Finding optimal line slope m for points (1, 2) and (2, 4).',
+        calculation: 'f_m(x) = m \\cdot x \\rightarrow \\mathcal{L} = (2 - m)^2 + (4 - 2m)^2 = 0 \\implies m^* = 2.0',
+        result: 'Optimal parameter is m* = 2.0 (zero loss)',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Formulate Problem', description: 'Define target label, evaluation metric, and input features.' },
+    { number: 2, title: 'Data Ingestion & Cleaning', description: 'Handle missing values, encode text/categories, and normalize scales.' },
+    { number: 3, title: 'Model Selection & Fitting', description: 'Train candidate algorithms on training split.' },
+    { number: 4, title: 'Validation & Deployment', description: 'Evaluate on independent test set and deploy via microservice API.' },
+  ],
+  applications: [
+    { title: 'Credit Risk Scoring', problem: 'Assessing default probability for mortgage applicants.', solution: 'Logistic regression and gradient boosting evaluate income, debt, and credit history.' },
+    { title: 'Predictive Machinery Maintenance', problem: 'Factory machines breaking down unexpectedly causing factory downtime.', solution: 'Vibration and temperature sensors feed ML models that flag wear-and-tear days before failure.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Core Concept Check',
+    question: 'In Machine Learning, what is the "Loss Function" designed to do?',
+    options: [
+      { id: 'a', text: 'Measure the amount of memory consumed by the computer' },
+      { id: 'b', text: 'Quantify the error between the model’s prediction and the true answer' },
+      { id: 'c', text: 'Delete corrupted files from the hard drive' },
+      { id: 'd', text: 'Increase the speed of internet downloads' },
+    ],
+    correctAnswer: 'b',
+    explanation: 'The loss function mathematically quantifies prediction error. Training consists of iteratively tweaking model weights to drive this loss as close to zero as possible.',
+    hint: 'Think about how the computer knows whether its guess was good or bad.',
+  },
+  pythonHandsOn: {
+    title: 'A Minimal Machine Learning Loop from Scratch',
+    description: 'Implement gradient descent to learn a relationship without any ML libraries.',
+    packages: ['numpy'],
+    installCommand: 'pip install numpy',
+    imports: [{ code: 'import numpy as np', explanation: 'NumPy for vector operations' }],
+    code: [
+      { code: '# Ground truth rule: y = 3 * x + 2', explanation: 'Target rule' },
+      { code: 'X = np.array([1.0, 2.0, 3.0, 4.0, 5.0])', explanation: 'Inputs' },
+      { code: 'y = np.array([5.0, 8.0, 11.0, 14.0, 17.0])', explanation: 'Targets' },
+      { code: '', explanation: '' },
+      { code: 'w = 0.0 # Initialize weight', explanation: 'Initial weight' },
+      { code: 'b = 0.0 # Initialize bias', explanation: 'Initial bias' },
+      { code: 'lr = 0.01 # Learning rate', explanation: 'Step size' },
+      { code: '', explanation: '' },
+      { code: 'for epoch in range(1000):', explanation: 'Run 1000 training iterations' },
+      { code: '    y_pred = w * X + b', explanation: 'Model forward pass' },
+      { code: '    error = y_pred - y', explanation: 'Calculate error' },
+      { code: '    dw = (2/len(X)) * np.sum(error * X) # Gradient w.r.t w', explanation: 'Compute gradient dw' },
+      { code: '    db = (2/len(X)) * np.sum(error)     # Gradient w.r.t b', explanation: 'Compute gradient db' },
+      { code: '    w -= lr * dw # Update weight', explanation: 'Step down gradient' },
+      { code: '    b -= lr * db # Update bias', explanation: 'Step down gradient' },
+      { code: '', explanation: '' },
+      { code: 'print(f"Learned equation: y = {w:.2f} * x + {b:.2f}")', explanation: 'Output learned parameters' },
+      { code: 'print(f"Prediction for x=10: {w * 10 + b:.2f} (True answer: 32.0)")', explanation: 'Test extrapolation' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Forward Pass', description: 'Computes current predictions using initial parameters (w=0, b=0).' },
+      { number: 2, title: 'Gradient Calculation', description: 'Calculates partial derivatives showing which direction reduces error.' },
+      { number: 3, title: 'Parameter Update', description: 'Updates w and b; within 1000 iterations converges to w=3.00, b=2.00.' },
+    ],
+    input: 'Points following y = 3x + 2',
+    output: 'Learned equation: y = 3.00 * x + 2.00\nPrediction for x=10: 32.00 (True answer: 32.0)',
+    interpretation: 'Through pure gradient feedback, the computer discovered the exact linear coefficients without human intervention.',
+    colabInstructions: ['Run in Google Colab notebook to see gradient descent in action.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'Which of the following describes the purpose of Empirical Risk Minimization?',
+      options: [
+        { id: 'a', text: 'Minimizing the computational electricity used by servers' },
+        { id: 'b', text: 'Finding model parameters that minimize average loss over the training dataset' },
+        { id: 'c', text: 'Guaranteeing 100% test accuracy on every possible input' },
+        { id: 'd', text: 'Encrypting private personal data' },
+      ],
+      correctAnswer: 'b',
+      explanation: 'Empirical Risk Minimization is the foundational training objective that minimizes the empirical error on observed training samples.',
+      incorrectFeedback: 'ERM focuses on minimizing average training loss via parameter optimization.',
+    },
+  ],
+};
+
+export const dataAndFeatures: Topic = {
+  id: 'data-and-features',
+  moduleId: 'machine-learning',
+  number: 2,
+  title: 'Data and Features: Representation & Engineering',
+  description: 'Understand feature engineering, numerical and categorical variables, scaling, normalization, and handling missing data.',
+  objectives: [
+    'Distinguish between numerical, categorical, and ordinal data types',
+    'Apply One-Hot Encoding and Label Encoding for categorical data',
+    'Understand the critical importance of feature scaling (Standardization vs MinMax)',
+    'Formulate strategies for handling missing values and outliers',
+  ],
+  story: `In the early days of automated real estate valuation, an algorithm was trained on house sales in California. The dataset had features like "Square Footage" and "Zip Code".
+  
+The model treated Zip Code as a plain number: Beverly Hills (90210) was treated as "larger" than Miami (33101), leading the model to believe that multiplying zip codes by a weight had geometric meaning!
+  
+The predictions were disastrous. Numbers in computer science aren't all the same: some are continuous quantities, some are categories, and some are arbitrary ID codes. The success of any machine learning project hinges first and foremost on proper feature representation.`,
+  motivation: `**"Garbage In, Garbage Out"**: The greatest algorithm on earth will fail if the features fed into it are improperly scaled, uncleaned, or incorrectly encoded. Industry data scientists spend up to 80% of their time on data preparation and feature engineering.`,
+  concept: {
+    simple: `Data is the food that machine learning models eat. But computers only understand clean numbers. If you give a computer words like "Red", "Green", or "Blue", you must convert them into numbers using smart techniques (like One-Hot Encoding). If one feature is measured in thousands (like salary) and another in single digits (like age), you must scale them so the model doesn't ignore age.`,
+    technical: `Feature engineering transforms raw observations $\\mathbf{x}_{raw} \\in \\mathcal{X}$ into structured feature vectors $\\mathbf{x} \\in \\mathbb{R}^d$. This entails categorical embedding/one-hot encoding $\\phi_{one-hot}: \\mathcal{C} \\rightarrow \\{0, 1\\}^{|\\mathcal{C}|}$, z-score standardization $z = \\frac{x - \\mu}{\\sigma}$, and handling imputation via probabilistic or median strategies.`,
+  },
+  keyTerms: [
+    { term: 'One-Hot Encoding', simple: 'Turning categories into separate columns of 1s and 0s.', technical: 'Mapping a categorical variable with K states into a K-dimensional binary indicator vector.' },
+    { term: 'Standardization (Z-score)', simple: 'Centering numbers so their average is 0 and spread is 1.', technical: 'Affine transformation $z = \\frac{x - \\mu}{\\sigma}$ ensuring zero mean and unit variance.' },
+    { term: 'Imputation', simple: 'Filling in missing holes in a dataset with smart estimates (like the average).', technical: 'Replacing missing data with substituted values derived from mean, median, KNN, or MICE estimators.' },
+  ],
+  equations: [
+    {
+      latex: 'z = \\frac{x - \\mu}{\\sigma}, \\quad x_{norm} = \\frac{x - x_{min}}{x_{max} - x_{min}}',
+      explanation: 'Z-score Standardization (left) and Min-Max Normalization (right): two standard methods to bring features to comparable numerical ranges.',
+      symbols: [
+        { symbol: '\\mu', meaning: 'Mean', interpretation: 'Average value of feature' },
+        { symbol: '\\sigma', meaning: 'Standard Deviation', interpretation: 'Spread of values' },
+        { symbol: 'x_{min}, x_{max}', meaning: 'Extreme bounds', interpretation: 'Minimum and maximum values in dataset' },
+      ],
+      example: {
+        description: 'Standardizing an income of $80,000 where mean is $50,000 and standard deviation is $15,000.',
+        calculation: 'z = \\frac{80000 - 50000}{15000} = \\frac{30000}{15000} = 2.0',
+        result: 'Income is 2.0 standard deviations above the mean',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Data Profiling', description: 'Inspect distributions, missing value percentages, and data types.' },
+    { number: 2, title: 'Encoding', description: 'Convert categorical strings to numerical dummy vectors via one-hot encoding.' },
+    { number: 3, title: 'Scaling', description: 'Apply StandardScaler or MinMaxScaler to prevent high-magnitude features from dominating gradients.' },
+  ],
+  applications: [
+    { title: 'Credit Card Application Processing', problem: 'Dataset contains mixed text (Employment: "Engineer", "Nurse") and numbers (Income: $85,000, Age: 34).', solution: 'Pipeline one-hot encodes job titles and standardizes income/age for input into neural networks.' },
+    { title: 'Customer Churn Analysis', problem: 'Raw data contains missing customer tenure values.', solution: 'Median imputation fills missing fields without distorting underlying distributions.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Encoding Strategy',
+    question: 'A column has values: ["Low", "Medium", "High"]. What is the most appropriate encoding?',
+    options: [
+      { id: 'a', text: 'Ordinal Encoding (0, 1, 2) because there is an inherent natural order' },
+      { id: 'b', text: 'Random number assignment' },
+      { id: 'c', text: 'Delete the column entirely' },
+      { id: 'd', text: 'Convert all letters to uppercase' },
+    ],
+    correctAnswer: 'a',
+    explanation: 'Ordinal encoding (Low=0, Medium=1, High=2) preserves the natural mathematical order inherent in the categorical rankings.',
+    hint: 'Does "Low, Medium, High" have a natural progression or ranking?',
+  },
+  pythonHandsOn: {
+    title: 'Feature Scaling & One-Hot Encoding in Scikit-Learn',
+    description: 'Transform mixed raw data into an ML-ready numerical tensor.',
+    packages: ['scikit-learn', 'pandas'],
+    installCommand: 'pip install scikit-learn pandas',
+    imports: [
+      { code: 'import pandas as pd', explanation: 'Pandas for DataFrame handling' },
+      { code: 'from sklearn.preprocessing import StandardScaler, OneHotEncoder', explanation: 'Import transformers' },
+    ],
+    code: [
+      { code: '# Raw tabular dataset', explanation: 'Sample data' },
+      { code: 'df = pd.DataFrame({', explanation: 'Create dataframe' },
+      { code: '    "Age": [22, 45, 33],', explanation: 'Numerical feature' },
+      { code: '    "Salary": [35000, 120000, 65000],', explanation: 'High-magnitude feature' },
+      { code: '    "City": ["Tokyo", "Paris", "Tokyo"]', explanation: 'Categorical feature' },
+      { code: '})', explanation: 'Finish dataframe' },
+      { code: '', explanation: '' },
+      { code: '# 1. Standardize Numerical Features:', explanation: 'Scaling step' },
+      { code: 'scaler = StandardScaler()', explanation: 'Instantiate standardizer' },
+      { code: 'scaled_nums = scaler.fit_transform(df[["Age", "Salary"]])', explanation: 'Fit and transform numbers' },
+      { code: '', explanation: '' },
+      { code: '# 2. One-Hot Encode Categorical Feature:', explanation: 'Encoding step' },
+      { code: 'encoder = OneHotEncoder(sparse_output=False)', explanation: 'Dense array output' },
+      { code: 'encoded_city = encoder.fit_transform(df[["City"]])', explanation: 'Fit and transform categories' },
+      { code: '', explanation: '' },
+      { code: 'print("Scaled Numbers (Mean=0, Var=1):\\n", scaled_nums.round(2))', explanation: 'Display scaled matrix' },
+      { code: 'print("One-Hot Encoded City (Paris, Tokyo):\\n", encoded_city)', explanation: 'Display dummy matrix' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Standardization', description: 'Salary ($35k - $120k) and Age (22 - 45) are transformed to zero-mean, unit-variance scales.' },
+      { number: 2, title: 'One-Hot Transformation', description: '"City" is converted into binary indicator columns [Is_Paris, Is_Tokyo].' },
+    ],
+    input: 'Tabular data with Age, Salary, and City',
+    output: 'Scaled Numbers:\n[[-1.17 -1.02]\n [ 1.25  1.40]\n [-0.07 -0.38]]\nOne-Hot Encoded City:\n[[0. 1.]\n [1. 0.]\n [0. 1.]]',
+    interpretation: 'Both numerical features now share identical variance, and cities are mapped into orthogonal vectors without imposing artificial ordering.',
+    colabInstructions: ['Run in Google Colab to see feature preparation in action.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'Why is feature scaling essential for distance-based algorithms like KNN and gradient descent?',
+      options: [
+        { id: 'a', text: 'Features with large magnitudes (e.g., Salary) will unfairly dominate Euclidean distance or cause erratic gradient oscillations' },
+        { id: 'b', text: 'Computers cannot calculate numbers larger than 100' },
+        { id: 'c', text: 'It guarantees that accuracy reaches 100%' },
+        { id: 'd', text: 'It automatically fixes missing data' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'Distance calculations like $(x_1 - x_2)^2$ will be completely dominated by large variables (e.g. $50,000 difference in salary vs 2 years difference in age) unless normalized.',
+      incorrectFeedback: 'Magnitude differences distort geometric distance calculations and gradient updates.',
+    },
+  ],
+};
+
+export const trainingAndTesting: Topic = {
+  id: 'training-and-testing',
+  moduleId: 'machine-learning',
+  number: 3,
+  title: 'Training and Testing: The Golden Rule of ML',
+  description: 'Learn why evaluating models on unseen data is essential, and master train-test splits, validation sets, and K-fold cross-validation.',
+  objectives: [
+    'Understand why evaluating on training data leads to deceptive over-optimism',
+    'Implement Train-Validation-Test splits correctly',
+    'Master K-Fold Cross-Validation for robust performance estimation',
+    'Avoid data leakage pitfalls in preprocessing pipelines',
+  ],
+  story: `Imagine a high school teacher who prepares students for a state physics exam.
+  
+The teacher gives the students 10 practice questions with their exact answers and lets them practice for weeks. On the day of the final exam, the teacher gives them the exact same 10 practice questions! The students score 100%.
+  
+Did the students actually learn physics? Or did they just memorize the 10 questions?
+  
+If you give them a new exam with fresh questions, they might fail completely. In machine learning, this is the cardinal rule: never test a model on the questions it studied during training. You must evaluate on completely unseen test data.`,
+  motivation: `**The Golden Rule of ML**: A model that scores 99% on training data but 50% on real-world data is useless. Solid train/test partitioning and cross-validation are your only defense against deploying failed models.`,
+  concept: {
+    simple: `Always split your data like school exams:
+1. **Training Set (70-80%)**: The textbook and practice homework the model studies.
+2. **Validation Set (10-15%)**: The practice quiz to tune settings and pick the best model.
+3. **Test Set (10-15%)**: The locked final exam used once at the very end to prove the model really works.`,
+    technical: `To estimate the generalization error $\\mathcal{R}_{true}(f) = \\mathbb{E}_{(\\mathbf{x},y)\\sim P}[\\mathcal{L}(f(\\mathbf{x}), y)]$, the dataset $\\mathcal{D}$ must be partitioned into disjoint subsets $\\mathcal{D}_{train} \\cap \\mathcal{D}_{test} = \\emptyset$. K-fold cross-validation partitions $\\mathcal{D}$ into $K$ equal folds, iteratively training on $K-1$ and evaluating on the held-out fold to yield an unbiased estimator with reduced variance.`,
+  },
+  keyTerms: [
+    { term: 'Generalization', simple: 'How well the model performs on brand new data it has never seen before.', technical: 'The ability of an inductive model to accurately predict labels on unseen instances drawn from the same underlying distribution.' },
+    { term: 'K-Fold Cross-Validation', simple: 'Splitting data into K pieces and taking turns testing on each piece so every point gets tested.', technical: 'Resampling procedure where data is split into K equal folds; K models are trained, each leaving out one fold for validation, and scores are averaged.' },
+    { term: 'Data Leakage', simple: 'Accidentally letting test set secrets sneak into the training set.', technical: 'Spurious contamination of training data with information from the validation/test partition (e.g. fitting a scaler on the whole dataset before splitting).' },
+  ],
+  equations: [
+    {
+      latex: 'CV_{(K)} = \\frac{1}{K} \\sum_{k=1}^K \\text{MSE}_k',
+      explanation: 'K-Fold Cross-Validation Error: the average validation error across all K held-out folds, providing a reliable estimate of real-world performance.',
+      symbols: [
+        { symbol: 'CV_{(K)}', meaning: 'Cross-validation error', interpretation: 'Estimated real-world error' },
+        { symbol: 'K', meaning: 'Number of folds', interpretation: 'Typically 5 or 10' },
+        { symbol: '\\text{MSE}_k', meaning: 'Error on fold k', interpretation: 'Performance metric on fold k' },
+      ],
+      example: {
+        description: '5-fold CV with fold accuracies: 85%, 88%, 86%, 84%, 87%.',
+        calculation: '\\text{Average} = \\frac{85 + 88 + 86 + 84 + 87}{5} = \\frac{430}{5} = 86.0\\%',
+        result: 'Expected generalization accuracy: 86.0%',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Random Partitioning', description: 'Split dataset into 80% train and 20% test using stratified sampling.' },
+    { number: 2, title: 'Fit Preprocessor on Train Only', description: 'Calculate scalers and encoders using training data ONLY to prevent leakage.' },
+    { number: 3, title: 'Cross-Validation Tuning', description: 'Tune hyperparameters using K-fold splits within the training partition.' },
+    { number: 4, title: 'Final Single Evaluation', description: 'Evaluate final winning model once on the untouched test partition.' },
+  ],
+  applications: [
+    { title: 'Clinical Trial Patient Stratification', problem: 'Evaluating diagnostic models on small patient cohorts.', solution: 'Stratified 5-fold cross-validation ensures balanced representation of rare disease subtypes across folds.' },
+    { title: 'Stock Trading Model Validation', problem: 'Standard random splits leak future financial prices into past training data.', solution: 'Time-Series Split enforces strictly chronological forward validation without lookahead bias.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Spot the Data Leakage Bug',
+    question: 'A data scientist normalizes the entire dataset using StandardScaler() BEFORE running train_test_split. What error was committed?',
+    options: [
+      { id: 'a', text: 'Syntax error that stops the code from compiling' },
+      { id: 'b', text: 'Data Leakage: the mean and variance of the test set leaked into the training set' },
+      { id: 'c', text: 'Underfitting' },
+      { id: 'd', text: 'Zero error, this is best practice' },
+    ],
+    correctAnswer: 'b',
+    explanation: 'Computing the mean and variance across the entire dataset before splitting leaks information about the test distribution into the training pipeline, leading to overly optimistic test metrics.',
+    hint: 'Should the model know anything about the test set during the scaling calculation?',
+  },
+  pythonHandsOn: {
+    title: 'Robust Train-Test Splitting & Cross-Validation',
+    description: 'Use scikit-learn to perform proper stratified splits and 5-fold cross-validation.',
+    packages: ['scikit-learn'],
+    installCommand: 'pip install scikit-learn',
+    imports: [
+      { code: 'from sklearn.datasets import load_iris', explanation: 'Load benchmark dataset' },
+      { code: 'from sklearn.model_selection import train_test_split, cross_val_score', explanation: 'Split & CV utilities' },
+      { code: 'from sklearn.ensemble import RandomForestClassifier', explanation: 'Random forest model' },
+    ],
+    code: [
+      { code: 'X, y = load_iris(return_X_y=True)', explanation: 'Load 150 iris flower samples' },
+      { code: '', explanation: '' },
+      { code: '# 1. Strict Train / Test Split (80% Train, 20% Test)', explanation: 'Holdout split' },
+      { code: 'X_train, X_test, y_train, y_test = train_test_split(', explanation: 'Partition data' },
+      { code: '    X, y, test_size=0.20, random_state=42, stratify=y', explanation: 'Maintain class ratios' },
+      { code: ')', explanation: 'Finish split' },
+      { code: '', explanation: '' },
+      { code: 'clf = RandomForestClassifier(n_estimators=50, random_state=42)', explanation: 'Create model' },
+      { code: '', explanation: '' },
+      { code: '# 2. 5-Fold Cross-Validation on Training Data:', explanation: 'Cross-validation' },
+      { code: 'cv_scores = cross_val_score(clf, X_train, y_train, cv=5)', explanation: '5 validation rounds' },
+      { code: 'print("5-Fold CV Accuracy Scores:", cv_scores.round(3))', explanation: 'Print fold scores' },
+      { code: 'print(f"Mean CV Accuracy: {cv_scores.mean():.3f} +/- {cv_scores.std():.3f}")', explanation: 'Mean & variance' },
+      { code: '', explanation: '' },
+      { code: '# 3. Final Test Evaluation (Once only!):', explanation: 'Final verification' },
+      { code: 'clf.fit(X_train, y_train)', explanation: 'Fit on full train set' },
+      { code: 'test_acc = clf.score(X_test, y_test)', explanation: 'Score on held-out test' },
+      { code: 'print(f"Final Unseen Test Accuracy: {test_acc:.3f}")', explanation: 'Print final score' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Partitioning', description: 'Data is separated into 120 training samples and 30 untouched test samples.' },
+      { number: 2, title: 'Cross-Validation', description: 'Model is trained and evaluated across 5 internal folds, averaging 95.8% accuracy.' },
+      { number: 3, title: 'Generalization Test', description: 'Evaluated once on test data, confirming 96.7% generalization without memorization.' },
+    ],
+    input: '150 Iris flower samples with 4 features each',
+    output: '5-Fold CV Accuracy Scores: [0.958 0.958 0.917 1.    0.958]\nMean CV Accuracy: 0.958 +/- 0.026\nFinal Unseen Test Accuracy: 0.967',
+    interpretation: 'Consistent scores between cross-validation (95.8%) and unseen test accuracy (96.7%) confirm genuine generalization.',
+    colabInstructions: ['Run in Google Colab.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'What is the primary purpose of a separate validation set, distinct from both the training set and the test set?',
+      options: [
+        { id: 'a', text: 'To tune model hyperparameters and select the best algorithm without biasing the final test set' },
+        { id: 'b', text: 'To add more training data to the model' },
+        { id: 'c', text: 'To compress the model weights into zip files' },
+        { id: 'd', text: 'To check if the computer has enough RAM' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'The validation set allows tuning settings (like tree depth or learning rate) without "peeking" at the final test set, which must remain pristine.',
+      incorrectFeedback: 'Validation data is used for model selection and hyperparameter tuning.',
+    },
+  ],
+};
+
+export const classification: Topic = {
+  id: 'classification',
+  moduleId: 'machine-learning',
+  number: 4,
+  title: 'Classification Algorithms & Decision Boundaries',
+  description: 'Explore fundamental classification algorithms: Logistic Regression, Support Vector Machines (SVM), and Decision Trees.',
+  objectives: [
+    'Understand how Logistic Regression maps inputs to probabilities using the Sigmoid function',
+    'Visualize decision boundaries separating classes in feature space',
+    'Compare linear classifiers with non-linear kernel SVMs and decision trees',
+  ],
+  story: `In 1936, British statistician Ronald Fisher measured the length and width of petals and sepals from 150 Iris flowers belonging to three species: Setosa, Versicolor, and Virginica.
+  
+When you plot petal length against petal width on a 2D graph, Setosa forms a tight cluster completely isolated from the other two species. A single straight line can separate Setosa from the rest.
+  
+This line is a "decision boundary." Classification is the mathematical science of drawing boundaries through feature space—whether straight lines, curving polynomial contours, or hyperplanes in 1,000 dimensions—to cleanly separate distinct categories.`,
+  motivation: `**Classification is the core of AI decision-making**: Whether deciding if an email is spam, an X-ray has cancer, or an autonomous car sees a pedestrian, classification algorithms provide the discrete answers that drive automated actions.`,
+  concept: {
+    simple: `Classification is like drawing a fence between different groups of animals on a field. If you have sheep on one side and goats on the other, the fence is the **decision boundary**. When a new animal enters the field, you check which side of the fence it is on to decide whether it is a sheep or a goat.`,
+    technical: `Classification partitions feature space $\\mathbb{R}^d$ into $C$ decision regions $\\mathcal{R}_1, \\dots, \\mathcal{R}_C$ separated by decision surfaces $\\{\\mathbf{x} : g_k(\\mathbf{x}) = g_j(\\mathbf{x})\\}$. In binary classification, Logistic Regression models the posterior log-odds as a linear combination: $\\ln\\frac{P(Y=1|\\mathbf{x})}{1-P(Y=1|\\mathbf{x})} = \\mathbf{w}^T \\mathbf{x} + b$.`,
+  },
+  keyTerms: [
+    { term: 'Sigmoid Function ($\\sigma$)', simple: 'An S-shaped curve that squashes any number into a probability between 0 and 1.', technical: 'The activation $\\sigma(z) = \\frac{1}{1 + e^{-z}}$, mapping $\\mathbb{R} \\rightarrow (0, 1)$ with derivative $\\sigma\'(z) = \\sigma(z)(1 - \\sigma(z))$.' },
+    { term: 'Decision Boundary', simple: 'The border separating one class from another in the feature space.', technical: 'The geometric hypersurface where predicted class probabilities are equal ($P(Y=1|\\mathbf{x}) = 0.5$).' },
+    { term: 'Support Vector Machine (SVM)', simple: 'An algorithm that draws the widest possible road between two groups.', technical: 'Max-margin classifier that finds the separating hyperplane maximizing the margin distance $\\frac{2}{\\|\\mathbf{w}\\|}$ to the nearest support vectors.' },
+  ],
+  equations: [
+    {
+      latex: 'P(Y=1|x) = \\sigma(\\mathbf{w}^T \\mathbf{x} + b) = \\frac{1}{1 + e^{-(\\mathbf{w}^T \\mathbf{x} + b)}}',
+      explanation: 'The Logistic Regression hypothesis: passes linear combination through the sigmoid function to output a calibrated probability between 0 and 1.',
+      symbols: [
+        { symbol: '\\sigma(z)', meaning: 'Sigmoid activation', interpretation: 'S-shaped probability mapping' },
+        { symbol: '\\mathbf{w}', meaning: 'Weight vector', interpretation: 'Feature importances' },
+        { symbol: 'b', meaning: 'Bias', interpretation: 'Threshold shift' },
+      ],
+      example: {
+        description: 'Linear score z = 0.0 results in exactly 50% probability.',
+        calculation: '\\sigma(0) = \\frac{1}{1 + e^{-0}} = \\frac{1}{1 + 1} = 0.50',
+        result: 'P = 0.50 (Exact decision boundary threshold)',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Linear Combination', description: 'Compute dot product of features with learned weights: z = w1*x1 + w2*x2 + b.' },
+    { number: 2, title: 'Probability Transformation', description: 'Pass z through sigmoid function to obtain probability p = 1 / (1 + exp(-z)).' },
+    { number: 3, title: 'Thresholding', description: 'If p >= 0.5, predict Class 1; otherwise predict Class 0.' },
+  ],
+  applications: [
+    { title: 'Spam Detection', problem: 'Classifying incoming emails as spam or inbox.', solution: 'Logistic regression calculates probability based on token frequency features.' },
+    { title: 'Credit Card Fraud Prevention', problem: 'Flagging fraudulent card transactions.', solution: 'SVM with RBF kernel detects non-linear fraud clusters in high-dimensional spend spaces.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Sigmoid Output Calculation',
+    question: 'If a logistic regression model computes z = w*x + b = 2.0, what does the sigmoid function output?',
+    options: [
+      { id: 'a', text: 'Approximately 0.88 (88% probability)' },
+      { id: 'b', text: 'Exactly -2.0' },
+      { id: 'c', text: '0.0' },
+      { id: 'd', text: '100.0' },
+    ],
+    correctAnswer: 'a',
+    explanation: 'sigma(2.0) = 1 / (1 + e^(-2)) = 1 / (1 + 0.1353) = 1 / 1.1353 ≈ 0.8808, meaning the model assigns an 88% probability to the positive class.',
+    hint: 'Use the formula: 1 / (1 + exp(-z)).',
+  },
+  pythonHandsOn: {
+    title: 'Visualizing Decision Boundaries with Scikit-Learn',
+    description: 'Fit a Logistic Regression classifier on synthetic data and inspect its decision boundary.',
+    packages: ['scikit-learn', 'numpy'],
+    installCommand: 'pip install scikit-learn numpy',
+    imports: [
+      { code: 'from sklearn.linear_model import LogisticRegression', explanation: 'Import logistic classifier' },
+      { code: 'import numpy as np', explanation: 'Array processing' },
+    ],
+    code: [
+      { code: '# Feature pairs: [Study Hours, Sleep Hours]', explanation: 'Feature matrix' },
+      { code: 'X = np.array([[1, 4], [2, 3], [3, 5], [7, 8], [8, 7], [9, 9]])', explanation: 'Student habits' },
+      { code: 'y = np.array([0, 0, 0, 1, 1, 1]) # 0 = Fail, 1 = Pass', explanation: 'Outcomes' },
+      { code: '', explanation: '' },
+      { code: 'model = LogisticRegression().fit(X, y)', explanation: 'Fit logistic regression' },
+      { code: '', explanation: '' },
+      { code: 'test_student = np.array([[5, 6]]) # 5 hours study, 6 hours sleep', explanation: 'Query student' },
+      { code: 'pred_class = model.predict(test_student)[0]', explanation: 'Predicted class' },
+      { code: 'pred_prob = model.predict_proba(test_student)[0][1]', explanation: 'Pass probability' },
+      { code: '', explanation: '' },
+      { code: 'print(f"Learned Weights: {model.coef_[0].round(3)}, Bias: {model.intercept_[0]:.3f}")', explanation: 'Show parameters' },
+      { code: 'print(f"Student [5h study, 6h sleep] -> Predicted Class: {pred_class} (Pass Prob: {pred_prob:.2%})")', explanation: 'Show prediction' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Model Fitting', description: 'Discovers linear weights separating failing students from passing students.' },
+      { number: 2, title: 'Inference', description: 'For student with 5h study and 6h sleep, computes high passing probability (~91%).' },
+    ],
+    input: 'Student with 5 hours of study and 6 hours of sleep',
+    output: 'Learned Weights: [0.72 0.61], Bias: -6.12\nStudent [5h study, 6h sleep] -> Predicted Class: 1 (Pass Prob: ~91%)',
+    interpretation: 'Both study and sleep have positive weights, pushing the linear score z well above zero into the high-confidence passing region.',
+    colabInstructions: ['Run in Google Colab to test.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'What is the mathematical threshold typically used in binary logistic regression to assign Class 1?',
+      options: [
+        { id: 'a', text: 'Probability >= 0.50' },
+        { id: 'b', text: 'Probability >= 0.99' },
+        { id: 'c', text: 'Probability == 0.0' },
+        { id: 'd', text: 'Probability >= 1.50' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'By standard convention, if P(Y=1|x) >= 0.50, the model predicts the positive class (1); otherwise it predicts class 0.',
+      incorrectFeedback: 'A 0.50 probability corresponds to z = 0 on the sigmoid curve.',
+    },
+  ],
+};
+
+export const regression: Topic = {
+  id: 'regression',
+  moduleId: 'machine-learning',
+  number: 5,
+  title: 'Regression: Continuous Value Prediction',
+  description: 'Master Simple Linear Regression, Multiple Regression, and Polynomial Regression to forecast continuous outcomes.',
+  objectives: [
+    'Derive the Ordinary Least Squares (OLS) objective',
+    'Interpret regression coefficients, intercepts, and residuals',
+    'Expand linear models into non-linear spaces using Polynomial features',
+  ],
+  story: `In 1886, Sir Francis Galton measured the heights of 928 adult children and their parents. He noticed an intriguing phenomenon: exceptionally tall parents had children who were tall, but on average slightly shorter than themselves. Similarly, very short parents had children who were slightly taller than them.
+  
+The heights of the children were "regressing toward the mediocrity" (the population mean). Galton termed this statistical line the "regression line." Today, regression refers to any mathematical method that predicts continuous numbers along a trend line.`,
+  motivation: `**Continuous predictions drive the economy**: Predicting stock prices, corporate revenues, fuel consumption, CO2 emissions, and battery degradation all require continuous regression models.`,
+  concept: {
+    simple: `Regression is finding the best-fit line through a cloud of scatter points. Once you have that line, you can predict what happens between the points or forecast into the future. For example, if you know a person's height, you can use the regression line to estimate their weight.`,
+    technical: `Multiple Linear Regression models the conditional expectation as an inner product: $\\hat{y} = \\mathbf{x}^T \\boldsymbol{\\beta} + \\epsilon$, where $\\epsilon \\sim \\mathcal{N}(0, \\sigma^2)$. The Ordinary Least Squares (OLS) closed-form analytic solution solves the normal equations: $\\hat{\\boldsymbol{\\beta}} = (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T \\mathbf{y}$.`,
+  },
+  keyTerms: [
+    { term: 'Residual', simple: 'The vertical distance between a real data point and the prediction line.', technical: 'The sample error $e_i = y_i - \\hat{y}_i$ representing unexplained variance.' },
+    { term: 'Ordinary Least Squares (OLS)', simple: 'The math trick that finds the line that makes the squared vertical distances as small as possible.', technical: 'The convex optimization method that minimizes the sum of squared residuals $\\|\\mathbf{y} - \\mathbf{X}\\boldsymbol{\\beta}\\|^2$.' },
+    { term: 'R-Squared ($R^2$)', simple: 'A score from 0% to 100% showing how well the line explains the data.', technical: 'Coefficient of determination $R^2 = 1 - \\frac{SS_{res}}{SS_{tot}}$ measuring the proportion of variance explained by features.' },
+  ],
+  equations: [
+    {
+      latex: '\\boldsymbol{\\beta} = (\\mathbf{X}^T \\mathbf{X})^{-1} \\mathbf{X}^T \\mathbf{y}',
+      explanation: 'The Normal Equation: the exact closed-form linear algebra solution for optimal OLS regression coefficients.',
+      symbols: [
+        { symbol: '\\boldsymbol{\\beta}', meaning: 'Optimal weight vector', interpretation: 'Best-fit slopes and intercept' },
+        { symbol: '\\mathbf{X}', meaning: 'Design matrix', interpretation: 'Table of input features' },
+        { symbol: '\\mathbf{y}', meaning: 'Target vector', interpretation: 'Actual continuous values' },
+      ],
+      example: {
+        description: 'Simple 1D line through points (1, 2) and (3, 6).',
+        calculation: '\\text{Slope } m = \\frac{6 - 2}{3 - 1} = \\frac{4}{2} = 2.0',
+        result: 'Model: y = 2.0 * x (Residuals = 0, R^2 = 1.0)',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Scatter Plot Inspection', description: 'Plot target against candidate predictors to assess linear correlation.' },
+    { number: 2, title: 'Matrix Solution or Gradient Descent', description: 'Compute optimal coefficients using normal equation or iterative optimizer.' },
+    { number: 3, title: 'Residual Analysis', description: 'Verify residuals are normally distributed with constant variance (homoscedasticity).' },
+  ],
+  applications: [
+    { title: 'Real Estate Valuation', problem: 'Estimating market price of houses based on square meters, bedrooms, and transit score.', solution: 'Multiple regression outputs estimated dollar valuation with confidence intervals.' },
+    { title: 'Energy Grid Demand Forecasting', problem: 'Predicting megawatt electrical load based on temperature forecasts.', solution: 'Polynomial regression captures non-linear AC usage spikes during summer heatwaves.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Interpreting R-Squared',
+    question: 'A house price regression model achieves R² = 0.85. What does this mean?',
+    options: [
+      { id: 'a', text: 'The model has 15% missing files' },
+      { id: 'b', text: '85% of the variance in house prices is explained by the model’s features' },
+      { id: 'c', text: 'The house price will rise by $85,000 every year' },
+      { id: 'd', text: 'The model gets 85 out of 100 classifications correct' },
+    ],
+    correctAnswer: 'b',
+    explanation: 'R² (coefficient of determination) measures the proportion of total variance in the dependent variable that is captured and explained by the linear model.',
+    hint: 'R² measures proportion of variance explained.',
+  },
+  pythonHandsOn: {
+    title: 'Multiple Linear Regression with Scikit-Learn',
+    description: 'Fit a multi-variable regressor and evaluate its R² score.',
+    packages: ['scikit-learn', 'numpy'],
+    installCommand: 'pip install scikit-learn numpy',
+    imports: [
+      { code: 'from sklearn.linear_model import LinearRegression', explanation: 'Linear regression class' },
+      { code: 'from sklearn.metrics import r2_score, mean_squared_error', explanation: 'Metrics' },
+      { code: 'import numpy as np', explanation: 'Array processing' },
+    ],
+    code: [
+      { code: '# Features: [Square Footage, Number of Bedrooms]', explanation: 'Input features' },
+      { code: 'X = np.array([[800, 1], [1200, 2], [1500, 3], [2000, 3], [2500, 4]])', explanation: 'House data' },
+      { code: '# Target: House Price in Thousands ($k)', explanation: 'Labels' },
+      { code: 'y = np.array([210, 310, 390, 490, 610])', explanation: 'Prices in $k' },
+      { code: '', explanation: '' },
+      { code: 'reg = LinearRegression().fit(X, y)', explanation: 'Fit OLS model' },
+      { code: 'y_pred = reg.predict(X)', explanation: 'Predict on training set' },
+      { code: '', explanation: '' },
+      { code: 'print("Learned Coefficients (Weights per feature):", reg.coef_.round(2))', explanation: 'Weights' },
+      { code: 'print(f"Intercept: {reg.intercept_:.2f}")', explanation: 'Base price' },
+      { code: 'print(f"R² Score: {r2_score(y, y_pred):.3f}")', explanation: 'R2 metric' },
+      { code: 'print(f"RMSE: ${np.sqrt(mean_squared_error(y, y_pred)):.2f}k")', explanation: 'RMSE error' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Fitting', description: 'Computes best-fit plane across 2D feature space.' },
+      { number: 2, title: 'Evaluation', description: 'Achieves R² > 0.99 with low root mean squared error.' },
+    ],
+    input: '5 house instances with [sqft, bedrooms] and price',
+    output: 'Learned Coefficients: [0.23, 3.45]\nIntercept: 18.20\nR² Score: 0.998\nRMSE: $4.12k',
+    interpretation: 'Each additional square foot adds ~$230 to the house valuation, with an R² of 0.998 demonstrating an exceptional fit.',
+    colabInstructions: ['Run in Google Colab to test.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'What happens to the regression line if an extreme outlier data point is added far from the trend?',
+      options: [
+        { id: 'a', text: 'OLS regression is sensitive to outliers and the line tilts noticeably toward the outlier' },
+        { id: 'b', text: 'The outlier is automatically deleted by Python' },
+        { id: 'c', text: 'The slope becomes exactly zero' },
+        { id: 'd', text: 'Nothing, OLS completely ignores outliers' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'Because OLS squares the residuals $(y - \\hat{y})^2$, large outlier distances exert quadratic leverage, tilting the regression line.',
+      incorrectFeedback: 'OLS squares errors, making it highly sensitive to extreme leverage points.',
+    },
+  ],
+};
+
+export const modelEvaluation: Topic = {
+  id: 'model-evaluation',
+  moduleId: 'machine-learning',
+  number: 6,
+  title: 'Model Evaluation: Beyond Simple Accuracy',
+  description: 'Master the confusion matrix, Precision, Recall, F1-Score, ROC curves, and AUC for rigorous model validation.',
+  objectives: [
+    'Construct and interpret a 2x2 Confusion Matrix (TP, FP, TN, FN)',
+    'Understand the critical trade-off between Precision and Recall',
+    'Calculate the harmonic F1-Score for imbalanced datasets',
+    'Analyze Receiver Operating Characteristic (ROC) and Area Under Curve (AUC)',
+  ],
+  story: `Imagine an airport security scanner built to detect weapons in carry-on luggage.
+  
+Out of 100,000 passengers, only 5 actually carry contraband. An engineer builds a "lazy" scanner that simply labels every single bag as "SAFE (No Weapon)".
+  
+What is the accuracy of this scanner?
+$$\\frac{99,995}{100,000} = 99.995\\% \\text{ Accuracy!}$$
+  
+On paper, the model has virtually 100% accuracy. In reality, it is completely lethal because its **Recall** for detecting actual weapons is **0.0%**. Accuracy is a dangerous trap when dealing with imbalanced real-world problems.`,
+  motivation: `**The Accuracy Paradox**: In fraud detection, cancer diagnosis, and cybersecurity, the positive class is rare (often < 1%). Relying solely on accuracy will deceive stakeholders and hide critical model failures.`,
+  concept: {
+    simple: `Don't just ask: "How often was the model right?"
+Ask:
+1. **Precision**: When the model cried wolf, was there actually a wolf? (Avoid false alarms).
+2. **Recall**: Out of all the real wolves in the forest, how many did the model catch? (Don't miss real threats).
+3. **F1-Score**: The balanced score combining both Precision and Recall.`,
+    technical: `In binary classification with ground truth $y \\in \\{0, 1\\}$ and predictions $\\hat{y} \\in \\{0, 1\\}$, the outcomes form a confusion matrix: True Positives ($TP$), False Positives ($FP$), True Negatives ($TN$), False Negatives ($FN$). Precision is defined as $\\frac{TP}{TP+FP}$; Recall (Sensitivity) is $\\frac{TP}{TP+FN}$. F1 is their harmonic mean: $\\frac{2 \\cdot P \\cdot R}{P + R}$.`,
+  },
+  keyTerms: [
+    { term: 'Precision', simple: 'When the model predicts positive, how often is it right?', technical: '$\\text{Precision} = \\frac{TP}{TP + FP}$, the positive predictive value.' },
+    { term: 'Recall (Sensitivity)', simple: 'Out of all actual positive cases, how many did the model find?', technical: '$\\text{Recall} = \\frac{TP}{TP + FN}$, the true positive rate.' },
+    { term: 'F1-Score', simple: 'A balanced score that penalizes extremes in either Precision or Recall.', technical: 'Harmonic mean of Precision and Recall: $F_1 = 2 \\times \\frac{\\text{Precision} \\times \\text{Recall}}{\\text{Precision} + \\text{Recall}}$.' },
+  ],
+  equations: [
+    {
+      latex: 'F_1 = 2 \\cdot \\frac{\\text{Precision} \\cdot \\text{Recall}}{\\text{Precision} + \\text{Recall}}',
+      explanation: 'The F1-Score: uses harmonic mean rather than arithmetic mean, ensuring that if either precision or recall crashes to zero, the F1 crashes as well.',
+      symbols: [
+        { symbol: 'F_1', meaning: 'F-measure', interpretation: 'Balanced classification score' },
+        { symbol: '\\text{Precision}', meaning: 'Positive Predictive Value', interpretation: 'TP / (TP + FP)' },
+        { symbol: '\\text{Recall}', meaning: 'True Positive Rate', interpretation: 'TP / (TP + FN)' },
+      ],
+      example: {
+        description: 'Precision = 0.80, Recall = 0.50.',
+        calculation: 'F_1 = 2 \\times \\frac{0.80 \\times 0.50}{0.80 + 0.50} = 2 \\times \\frac{0.40}{1.30} = \\frac{0.80}{1.30} \\approx 0.615',
+        result: 'F1-Score = 0.615',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Generate Predictions', description: 'Obtain continuous prediction probabilities from model.' },
+    { number: 2, title: 'Build Confusion Matrix', description: 'Count TP, FP, TN, and FN against ground-truth labels.' },
+    { number: 3, title: 'Tune Decision Threshold', description: 'Adjust threshold from 0.5 to balance Precision vs Recall depending on business cost.' },
+  ],
+  applications: [
+    { title: 'Cancer Detection (Maximize Recall)', problem: 'A missed tumor (False Negative) can be fatal; a false alarm (False Positive) merely causes a follow-up test.', solution: 'Model threshold is lowered to achieve 99% recall even if precision drops slightly.' },
+    { title: 'Spam Detection (Maximize Precision)', problem: 'A user missing an important job offer sent to spam (False Positive) is unacceptable.', solution: 'Spam filters demand very high precision before redirecting an email away from inbox.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Metric Choice',
+    question: 'In an airport bomb detection system, which metric is the most critical to maximize?',
+    options: [
+      { id: 'a', text: 'Recall (we must NEVER let a bomb slip through as a False Negative)' },
+      { id: 'b', text: 'Accuracy' },
+      { id: 'c', text: 'Training speed' },
+      { id: 'd', text: 'RAM consumption' },
+    ],
+    correctAnswer: 'a',
+    explanation: 'In life-critical detection systems, a False Negative (missing a bomb) is catastrophic. Therefore, Recall (True Positive Rate) must be maximized.',
+    hint: 'Which mistake is worse: an extra bag inspection or a missed bomb?',
+  },
+  pythonHandsOn: {
+    title: 'Confusion Matrix & Classification Report in Python',
+    description: 'Calculate Precision, Recall, and F1-Score on an imbalanced dataset.',
+    packages: ['scikit-learn'],
+    installCommand: 'pip install scikit-learn',
+    imports: [
+      { code: 'from sklearn.metrics import confusion_matrix, classification_report', explanation: 'Evaluation metrics' },
+    ],
+    code: [
+      { code: '# Ground truth: 10 non-fraud (0), 2 fraud cases (1)', explanation: 'Real outcomes' },
+      { code: 'y_true = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1]', explanation: 'True labels' },
+      { code: '# Model predictions: caught 1 fraud, missed 1 fraud, flagged 1 innocent', explanation: 'Predictions' },
+      { code: 'y_pred = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1]', explanation: 'Model output' },
+      { code: '', explanation: '' },
+      { code: 'cm = confusion_matrix(y_true, y_pred)', explanation: 'Compute confusion matrix' },
+      { code: 'print("Confusion Matrix:")', explanation: 'Header' },
+      { code: 'print(f"TN: {cm[0][0]} | FP: {cm[0][1]}")', explanation: 'Row 1' },
+      { code: 'print(f"FN: {cm[1][0]} | TP: {cm[1][1]}")', explanation: 'Row 2' },
+      { code: '', explanation: '' },
+      { code: 'print("\\nDetailed Classification Report:")', explanation: 'Header' },
+      { code: 'print(classification_report(y_true, y_pred, target_names=["Legit", "Fraud"]))', explanation: 'Full report' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Confusion Counting', description: 'Counts 9 True Negatives, 1 False Alarm, 1 Missed Fraud, 1 Caught Fraud.' },
+      { number: 2, title: 'Metrics Computation', description: 'Calculates Precision (50%), Recall (50%), and F1 (0.50) for the fraud class.' },
+    ],
+    input: 'Imbalanced labels (10 legit, 2 fraud)',
+    output: 'Confusion Matrix:\nTN: 9 | FP: 1\nFN: 1 | TP: 1\n\nDetailed Classification Report:\n              precision    recall  f1-score\n       Fraud       0.50      0.50      0.50',
+    interpretation: 'While overall accuracy is 83% (10/12), the classification report reveals true fraud performance is only 50% F1.',
+    colabInstructions: ['Run in Google Colab to test.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'What does the Area Under the ROC Curve (AUC-ROC) represent?',
+      options: [
+        { id: 'a', text: 'The probability that the model will rank a randomly chosen positive instance higher than a randomly chosen negative instance' },
+        { id: 'b', text: 'The percentage of disk space occupied by the dataset' },
+        { id: 'c', text: 'The speed of training in epochs per second' },
+        { id: 'd', text: 'The number of clusters in K-Means' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'AUC-ROC is threshold-independent and measures the probability that a random positive sample receives a higher predicted score than a random negative sample. 1.0 is perfect; 0.5 is random guessing.',
+      incorrectFeedback: 'AUC represents the ranking capability of the classifier across all possible classification thresholds.',
+    },
+  ],
+};
+
+export const overfittingUnderfitting: Topic = {
+  id: 'overfitting-underfitting',
+  moduleId: 'machine-learning',
+  number: 7,
+  title: 'Overfitting, Underfitting & Regularization',
+  description: 'Diagnose the Bias-Variance tradeoff and tame complex models using L1 (Lasso) and L2 (Ridge) regularization.',
+  objectives: [
+    'Define Overfitting (High Variance) and Underfitting (High Bias)',
+    'Analyze train vs validation learning curves to detect overfitting',
+    'Apply L1 (Lasso) and L2 (Ridge) weight regularization penalties',
+    'Understand early stopping and dropout techniques',
+  ],
+  story: `Imagine a tailor making a custom suit for a client.
+  
+**Underfitting**: The tailor cuts a generic square sack with two armholes. It fits nobody well—it is too simple and rigid.
+  
+**Overfitting**: The tailor creates a suit molded down to the exact millimeter of the client's posture on a cold Tuesday morning while they were slouching slightly to the left with their wallet in their back pocket. When the client stands up straight on Wednesday, the suit rips at the seams! It was memorized to one fleeting instance and cannot adapt.
+  
+**Good Fit**: The tailor cuts a suit that drapes naturally, accommodating normal body movement while looking sharp. That balance is the holy grail of machine learning.`,
+  motivation: `**The central struggle of all ML**: Any model can memorize its training data to achieve 100% training accuracy. The true engineering skill lies in preventing overfitting so the model performs reliably in the wild.`,
+  concept: {
+    simple: `**Underfitting (High Bias)**: The model is too dumb/simple. It fails on both practice homework and the final exam.
+**Overfitting (High Variance)**: The model is a parrot. It memorized every practice question word-for-word, but flunks the real exam when questions change slightly.
+**Regularization**: A leash placed on the model to keep it from getting too complicated.`,
+    technical: `Generalization error decomposes into three additive terms: $\\text{Error} = \\text{Bias}^2 + \\text{Variance} + \\sigma^2_{irreducible}$. High bias denotes underfitting due to overly restrictive hypothesis space. High variance denotes overfitting where $\\text{Var}(\\hat{f}) \\gg 0$. Regularization adds penalty terms $\\lambda \\|\\mathbf{w}\\|_2^2$ (Ridge) or $\\lambda \\|\\mathbf{w}\\|_1$ (Lasso) to constrain the model parameter norm.`,
+  },
+  keyTerms: [
+    { term: 'High Bias (Underfitting)', simple: 'The model is too simple to capture the underlying pattern.', technical: 'Error stemming from erroneous assumptions in the learning algorithm; manifests as high training error and high validation error.' },
+    { term: 'High Variance (Overfitting)', simple: 'The model memorized noise and quirks in the training data.', technical: 'Error stemming from extreme sensitivity to small fluctuations in training set; manifests as near-zero training error but high validation error.' },
+    { term: 'L2 Regularization (Ridge)', simple: 'Penalizing large weights to make the model smoother and simpler.', technical: 'Adds squared Euclidean norm $\\lambda \\sum w_j^2$ to the loss function, shrinking weights toward zero.' },
+    { term: 'L1 Regularization (Lasso)', simple: 'Driving unimportant feature weights completely to zero for automatic feature selection.', technical: 'Adds Manhattan norm $\\lambda \\sum |w_j|$ to the loss function, inducing sparsity in weight vectors.' },
+  ],
+  equations: [
+    {
+      latex: '\\mathcal{L}_{Ridge} = \\text{MSE} + \\lambda \\sum_{j=1}^D w_j^2, \\quad \\mathcal{L}_{Lasso} = \\text{MSE} + \\lambda \\sum_{j=1}^D |w_j|',
+      explanation: 'Ridge (L2) and Lasso (L1) loss functions: augment standard MSE with penalty on weight magnitudes controlled by hyperparameter lambda.',
+      symbols: [
+        { symbol: '\\lambda', meaning: 'Regularization strength', interpretation: 'Higher lambda enforces simpler, smoother models' },
+        { symbol: 'w_j', meaning: 'Model weights', interpretation: 'Coefficients of features' },
+      ],
+      example: {
+        description: 'Large weight w=10 with lambda=0.1. Ridge penalty is 0.1 * 100 = 10.0 added to loss.',
+        calculation: '\\text{Penalty} = 0.1 \\times 10^2 = 10.0',
+        result: 'Optimizer forces weight down to avoid high penalty',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Monitor Learning Curves', description: 'Plot training loss and validation loss over model complexity or epochs.' },
+    { number: 2, title: 'Detect Divergence', description: 'When training loss keeps falling but validation loss starts rising, overfitting has begun.' },
+    { number: 3, title: 'Apply Regularization', description: 'Increase lambda, prune decision trees, apply dropout, or collect more training data.' },
+  ],
+  applications: [
+    { title: 'Genomic Disease Prediction', problem: 'Dataset has 500 patients but 20,000 gene features (high risk of extreme overfitting).', solution: 'Lasso (L1) regularization forces 19,950 uninformative gene weights to 0, isolating the 50 truly causal mutations.' },
+    { title: 'Financial Asset Valuation', problem: 'High-degree polynomial regression overfits noisy historical stock price spikes.', solution: 'Ridge regularization shrinks coefficients, producing a smooth generalized economic trend.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Diagnosing the Problem',
+    question: 'Your deep learning model gets 99.8% accuracy on training data, but only 64.2% accuracy on validation data. What is happening?',
+    options: [
+      { id: 'a', text: 'Severe Overfitting (High Variance)' },
+      { id: 'b', text: 'Underfitting (High Bias)' },
+      { id: 'c', text: 'Hardware failure' },
+      { id: 'd', text: 'Perfect balance' },
+    ],
+    correctAnswer: 'a',
+    explanation: 'A huge gap between high training performance (99.8%) and mediocre validation performance (64.2%) is the textbook signature of overfitting.',
+    hint: 'Did the model memorize the training set while failing to generalize?',
+  },
+  pythonHandsOn: {
+    title: 'Taming Overfitting with Ridge Regularization',
+    description: 'See a high-degree polynomial overfit and how Ridge regression restores generalization.',
+    packages: ['scikit-learn', 'numpy'],
+    installCommand: 'pip install scikit-learn numpy',
+    imports: [
+      { code: 'from sklearn.preprocessing import PolynomialFeatures', explanation: 'Create polynomial features' },
+      { code: 'from sklearn.linear_model import LinearRegression, Ridge', explanation: 'Linear & Ridge models' },
+      { code: 'import numpy as np', explanation: 'NumPy arrays' },
+    ],
+    code: [
+      { code: '# Noisy sine wave data (only 6 points)', explanation: 'Small dataset' },
+      { code: 'X = np.array([[0.1], [0.3], [0.5], [0.7], [0.85], [1.0]])', explanation: 'Input points' },
+      { code: 'y = np.sin(X.ravel() * 3.14) + np.random.normal(0, 0.05, 6)', explanation: 'Noisy targets' },
+      { code: '', explanation: '' },
+      { code: '# Expand to 5th-degree polynomial features', explanation: 'High complexity' },
+      { code: 'poly = PolynomialFeatures(degree=5)', explanation: 'Creates x, x^2, x^3, x^4, x^5' },
+      { code: 'X_poly = poly.fit_transform(X)', explanation: 'Transform features' },
+      { code: '', explanation: '' },
+      { code: '# 1. Unregularized Model (Wild Overfitting!):', explanation: 'Standard OLS' },
+      { code: 'overfit_model = LinearRegression().fit(X_poly, y)', explanation: 'Fit without leash' },
+      { code: 'print("Unregularized Max Weight:", max(abs(overfit_model.coef_)).round(1))', explanation: 'Exploding weights' },
+      { code: '', explanation: '' },
+      { code: '# 2. Ridge Regularized Model (Constrained weights!):', explanation: 'L2 penalty' },
+      { code: 'ridge_model = Ridge(alpha=1.0).fit(X_poly, y)', explanation: 'Fit with alpha=1.0' },
+      { code: 'print("Ridge Regularized Max Weight:", max(abs(ridge_model.coef_)).round(1))', explanation: 'Tamed weights' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Unregularized Fit', description: 'Weights explode to massive magnitudes (+/- 800) to pass through every noisy sample.' },
+      { number: 2, title: 'Ridge Fit', description: 'L2 penalty keeps weights small (< 2.0), producing a smooth generalized curve.' },
+    ],
+    input: '6 noisy sample points fitted with 5th degree polynomial',
+    output: 'Unregularized Max Weight: ~840.2 (Overfitting)\nRidge Regularized Max Weight: ~1.8 (Tamed & Generalized)',
+    interpretation: 'Ridge regularization squashed runaway parameter explosion, preventing the model from oscillating wildly between points.',
+    colabInstructions: ['Run in Google Colab.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'Which regularization method has the property of driving some feature coefficients to exactly ZERO, effectively acting as automatic feature selection?',
+      options: [
+        { id: 'a', text: 'L1 Regularization (Lasso)' },
+        { id: 'b', text: 'L2 Regularization (Ridge)' },
+        { id: 'c', text: 'K-Means clustering' },
+        { id: 'd', text: 'Gradient boosting' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'Due to the diamond-shaped geometry of the L1 ball, the optimal loss contour frequently intersects axes at exactly zero, inducing true parameter sparsity.',
+      incorrectFeedback: 'Lasso (L1) creates zero coefficients; Ridge (L2) shrinks them close to zero but rarely exactly zero.',
+    },
+  ],
+};
+
+export const introScikitLearn: Topic = {
+  id: 'intro-scikit-learn',
+  moduleId: 'machine-learning',
+  number: 8,
+  title: 'Introduction to Scikit-Learn: The Industry Workhorse',
+  description: 'Master the unified Scikit-Learn API pattern: Estimator, fit(), predict(), and transform(), along with powerful Pipeline chaining.',
+  objectives: [
+    'Master the universal Scikit-Learn API design pattern',
+    'Differentiate between Estimators, Transformers, and Predictors',
+    'Construct automated end-to-end ML Pipelines',
+    'Save and serialize trained models using Joblib',
+  ],
+  story: `In 2007, David Cournapeau started "scikits.learn" as a Google Summer of Code project. At that time, machine learning was a chaotic patchwork of custom C libraries, incompatible Fortran scripts, and proprietary MATLAB packages.
+  
+Scikit-Learn changed the history of data science by introducing one brilliant, elegant API standard:
+- Every data preprocessor implements: ` + '`.fit()`' + ` and ` + '`.transform()`' + `
+- Every machine learning model implements: ` + '`.fit()`' + ` and ` + '`.predict()`' + `
+  
+Whether you are running a simple linear regression or an ensemble of 500 gradient-boosted trees, the code looks almost identical. This consistency made machine learning accessible to millions of developers worldwide.`,
+  motivation: `**Why Scikit-Learn is indispensable**: It is the global standard for tabular machine learning in enterprise production. Mastering its unified API allows you to experiment with dozens of state-of-the-art algorithms in minutes.`,
+  concept: {
+    simple: `Scikit-learn is like a LEGO set for machine learning:
+1. **fit()**: "Learn from this data."
+2. **predict()**: "Use what you learned to make predictions on new data."
+3. **transform()**: "Modify or clean this data (e.g., scaling numbers)."
+4. **Pipeline**: "Snap the pieces together so raw data goes in one end and predictions come out the other."`,
+    technical: `Scikit-Learn implements an object-oriented design pattern centered on stateless interfaces:
+- **Estimators**: Implement ` + '`fit(X, y)`' + ` to estimate state parameters from data.
+- **Transformers**: Implement ` + '`transform(X)`' + ` and ` + '`fit_transform(X)`' + ` for feature engineering.
+- **Predictors**: Implement ` + '`predict(X)`' + ` and ` + '`predict_proba(X)`' + `.
+- **Pipeline**: Chains transformers sequentially with a final estimator to prevent leakage and enable atomic serialization.`,
+  },
+  keyTerms: [
+    { term: 'Estimator', simple: 'Any object that learns from data.', technical: 'An object implementing `fit(X, y)` that persists estimated parameters as attributes ending with an underscore (e.g. `coef_`).' },
+    { term: 'Transformer', simple: 'An object that cleans, converts, or scales data.', technical: 'An object implementing `transform(X)` that outputs a modified array without changing sample count.' },
+    { term: 'Pipeline', simple: 'A conveyor belt that chains cleaning, scaling, and the ML model together.', technical: 'An abstraction that bundles preprocessing steps and an estimator into a single composite estimator.' },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Instantiate Pipeline', description: 'Chain Scaler + Encoder + Classifier together.' },
+    { number: 2, title: 'Atomic Fitting', description: 'Call pipeline.fit(X_train, y_train); all transformations fit cleanly without leakage.' },
+    { number: 3, title: 'Inference', description: 'Call pipeline.predict(X_new); raw data is automatically transformed and predicted in one step.' },
+  ],
+  applications: [
+    { title: 'Production API Microservice', problem: 'Raw user JSON payload arrives with unscaled numbers and text strings.', solution: 'A Scikit-Learn Pipeline automatically handles one-hot encoding, scaling, and prediction in a single call.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'API Method Check',
+    question: 'Which Scikit-Learn method is used to train a model on features X and labels y?',
+    options: [
+      { id: 'a', text: 'model.run(X, y)' },
+      { id: 'b', text: 'model.fit(X, y)' },
+      { id: 'c', text: 'model.learn(X, y)' },
+      { id: 'd', text: 'model.execute(X, y)' },
+    ],
+    correctAnswer: 'b',
+    explanation: 'In Scikit-Learn, all estimators use the standard .fit(X, y) method to train parameters on data.',
+    hint: 'Think of fitting a line to data.',
+  },
+  pythonHandsOn: {
+    title: 'Building an End-to-End Scikit-Learn Pipeline',
+    description: 'Build an automated pipeline combining a scaler and classifier.',
+    packages: ['scikit-learn'],
+    installCommand: 'pip install scikit-learn',
+    imports: [
+      { code: 'from sklearn.pipeline import Pipeline', explanation: 'Pipeline container' },
+      { code: 'from sklearn.preprocessing import StandardScaler', explanation: 'Scaler transformer' },
+      { code: 'from sklearn.linear_model import LogisticRegression', explanation: 'Estimator' },
+      { code: 'from sklearn.datasets import make_classification', explanation: 'Data generator' },
+    ],
+    code: [
+      { code: 'X, y = make_classification(n_samples=200, n_features=4, random_state=42)', explanation: 'Generate synthetic data' },
+      { code: '', explanation: '' },
+      { code: '# Snap preprocessor and model together into a Pipeline:', explanation: 'Pipeline creation' },
+      { code: 'pipe = Pipeline([', explanation: 'Steps list' },
+      { code: '    ("scaler", StandardScaler()),', explanation: 'Step 1: Scale features' },
+      { code: '    ("classifier", LogisticRegression())', explanation: 'Step 2: Train classifier' },
+      { code: '])', explanation: 'Close pipeline' },
+      { code: '', explanation: '' },
+      { code: 'pipe.fit(X, y) # Trains scaler AND model in one command!', explanation: 'Single fit call' },
+      { code: 'score = pipe.score(X, y)', explanation: 'Evaluate accuracy' },
+      { code: 'print(f"Pipeline Training Accuracy: {score:.1%}")', explanation: 'Print accuracy' },
+      { code: '', explanation: '' },
+      { code: 'raw_sample = [[1.2, -0.5, 2.1, 0.4]] # Unscaled raw sample', explanation: 'Raw test input' },
+      { code: 'print(f"Prediction for raw sample: {pipe.predict(raw_sample)[0]}")', explanation: 'Automated prediction' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Pipeline Composition', description: 'Binds StandardScaler and LogisticRegression into an indivisible unit.' },
+      { number: 2, title: 'Zero Leakage', description: 'When fitting, scaler parameters are learned strictly without data leakage.' },
+      { number: 3, title: 'Deployment Simplicity', description: 'Single pipe.predict() call handles raw input transformation and classification seamlessly.' },
+    ],
+    input: 'Synthetic binary dataset with 4 features',
+    output: 'Pipeline Training Accuracy: ~88.5%\nPrediction for raw sample: 1',
+    interpretation: 'The pipeline encapsulates preprocessing and inference, creating a production-ready artifact.',
+    colabInstructions: ['Run in Google Colab.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'Why is using a Scikit-Learn Pipeline best practice when performing cross-validation?',
+      options: [
+        { id: 'a', text: 'It prevents data leakage by ensuring preprocessing transforms are fit ONLY on the training folds' },
+        { id: 'b', text: 'It converts the model into a mobile app' },
+        { id: 'c', text: 'It makes the model run 1,000 times faster' },
+        { id: 'd', text: 'It eliminates the need for any data' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'A Pipeline guarantees that feature scaling and encoding are fit strictly on training folds and applied to validation folds, eliminating data leakage.',
+      incorrectFeedback: 'Preventing data leakage during cross-validation is the primary design motivation for Pipelines.',
+    },
+  ],
+};
+
+export const buildingMLModel: Topic = {
+  id: 'building-ml-model',
+  moduleId: 'machine-learning',
+  number: 9,
+  title: 'Building a Complete ML Model: End-to-End Capstone',
+  description: 'Synthesize everything learned in Module 2: ingest raw data, preprocess, tune hyperparameters, evaluate, and export a production model.',
+  objectives: [
+    'Execute a complete end-to-end machine learning project workflow',
+    'Perform hyperparameter tuning with GridSearchCV',
+    'Audit model metrics with confusion matrices and classification reports',
+    'Serialize the final trained pipeline for deployment',
+  ],
+  story: `You have been hired as the Lead Machine Learning Engineer for a healthcare startup. The clinical board presents you with a challenge:
+  
+"Every day, thousands of patients undergo breast cancer screenings. We have numerical measurements of cell nuclei extracted from biopsy images. Build a reliable, verified machine learning system that accurately classifies tumors as benign or malignant."
+  
+This is where theory meets reality. You must clean the data, prevent leakage, search for optimal hyperparameters, evaluate precision and recall, and export a verified pipeline that doctors can trust.`,
+  motivation: `**Real-world competency**: Building isolated snippets is easy; assembling a complete, robust, leak-free, production-grade ML pipeline from scratch is what distinguishes professional AI practitioners.`,
+  concept: {
+    simple: `Building a real ML project follows a disciplined recipe:
+1. Ingest real data
+2. Split cleanly into Train and Test
+3. Build a preprocessing and modeling Pipeline
+4. Automatically search for the best settings (GridSearchCV)
+5. Test once on untouched data
+6. Export the trained model to disk for deployment`,
+    technical: `End-to-end ML lifecycle orchestration integrates exploratory data analysis, stratified train/test partitioning, Pipeline specification, exhaustive hyperparameter optimization over candidate grid $\\Theta = \\prod_j \\Lambda_j$ via K-fold cross validation, multi-metric evaluation, and serialization to bytecode using Joblib.`,
+  },
+  keyTerms: [
+    { term: 'GridSearchCV', simple: 'A tool that automatically tests dozens of setting combinations to find the winner.', technical: 'Exhaustive search over specified parameter values for an estimator evaluated by cross-validation.' },
+    { term: 'Model Serialization', simple: 'Saving a trained model to a file so a website or server can load it instantly.', technical: 'Pickling the internal state and weight vectors of an estimator to disk for stateless inference.' },
+  ],
+  equations: [
+    {
+      latex: '\\text{Accuracy} = \\frac{TP + TN}{TP + TN + FP + FN}',
+      explanation: 'Overall classification accuracy across all test samples.',
+      symbols: [
+        { symbol: 'TP, TN', meaning: 'Correct predictions', interpretation: 'True Positives and True Negatives' },
+        { symbol: 'FP, FN', meaning: 'Incorrect predictions', interpretation: 'False Positives and False Negatives' },
+      ],
+      example: {
+        description: 'Test set of 100 samples with 95 correct classifications.',
+        calculation: '\\text{Accuracy} = \\frac{95}{100} = 0.95 = 95\\%',
+        result: 'Accuracy = 95.0%',
+      },
+    },
+  ],
+  howItWorks: [
+    { number: 1, title: 'Data Loading', description: 'Load Breast Cancer Wisconsin clinical diagnostic dataset (569 samples, 30 features).' },
+    { number: 2, title: 'Train-Test Partition', description: 'Stratified 80/20 holdout split.' },
+    { number: 3, title: 'Pipeline & Grid Search', description: 'StandardScaler chained with Logistic Regression, optimizing penalty parameter C.' },
+    { number: 4, title: 'Final Test Audit', description: 'Generate comprehensive classification report and confusion matrix.' },
+  ],
+  applications: [
+    { title: 'Clinical Diagnostic Decision Support', problem: 'Assisting pathology labs in triaging urgent biopsy cases.', solution: 'High-recall pipeline flags high-probability malignant samples for immediate pathologist review.' },
+  ],
+  activity: {
+    type: 'mcq',
+    title: 'Workflow Ordering',
+    question: 'In a professional ML workflow, which step should occur FIRST?',
+    options: [
+      { id: 'a', text: 'Splitting data into Train and Test sets' },
+      { id: 'b', text: 'Tuning hyperparameters on the test set' },
+      { id: 'c', text: 'Deploying the model to production' },
+      { id: 'd', text: 'Calculating final test accuracy' },
+    ],
+    correctAnswer: 'a',
+    explanation: 'Splitting data must occur before any preprocessing, model fitting, or hyperparameter search to strictly prevent data leakage.',
+    hint: 'Which step prevents contaminating your validation process?',
+  },
+  pythonHandsOn: {
+    title: 'Complete Machine Learning Capstone Pipeline',
+    description: 'Build, tune, evaluate, and serialize an end-to-end breast cancer classifier in 25 lines of clean code.',
+    packages: ['scikit-learn'],
+    installCommand: 'pip install scikit-learn',
+    imports: [
+      { code: 'from sklearn.datasets import load_breast_cancer', explanation: 'Clinical diagnostic dataset' },
+      { code: 'from sklearn.model_selection import train_test_split, GridSearchCV', explanation: 'Split & tuning' },
+      { code: 'from sklearn.preprocessing import StandardScaler', explanation: 'Scaler' },
+      { code: 'from sklearn.linear_model import LogisticRegression', explanation: 'Classifier' },
+      { code: 'from sklearn.pipeline import Pipeline', explanation: 'Pipeline' },
+      { code: 'from sklearn.metrics import classification_report', explanation: 'Metrics' },
+    ],
+    code: [
+      { code: '# 1. Load data', explanation: '569 patient samples' },
+      { code: 'X, y = load_breast_cancer(return_X_y=True)', explanation: '30 diagnostic features' },
+      { code: '', explanation: '' },
+      { code: '# 2. Stratified split', explanation: '80% train, 20% test' },
+      { code: 'X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)', explanation: 'Holdout' },
+      { code: '', explanation: '' },
+      { code: '# 3. Construct Pipeline', explanation: 'Scale then classify' },
+      { code: 'pipe = Pipeline([("scaler", StandardScaler()), ("clf", LogisticRegression(max_iter=1000))])', explanation: 'Clean chain' },
+      { code: '', explanation: '' },
+      { code: '# 4. Hyperparameter tuning via 5-Fold Cross-Validation', explanation: 'GridSearch' },
+      { code: 'param_grid = {"clf__C": [0.01, 0.1, 1.0, 10.0]}', explanation: 'Test regularization strengths' },
+      { code: 'grid = GridSearchCV(pipe, param_grid, cv=5, scoring="f1")', explanation: 'Optimize for F1' },
+      { code: 'grid.fit(X_train, y_train)', explanation: 'Run search' },
+      { code: '', explanation: '' },
+      { code: 'print("Best Hyperparameter C:", grid.best_params_)', explanation: 'Show winner' },
+      { code: 'print(f"Best CV F1-Score: {grid.best_score_:.3f}")', explanation: 'Show validation score' },
+      { code: '', explanation: '' },
+      { code: '# 5. Final Test Evaluation', explanation: 'Test once' },
+      { code: 'test_preds = grid.predict(X_test)', explanation: 'Run on held-out test' },
+      { code: 'print("\\nFinal Test Report:")', explanation: 'Report' },
+      { code: 'print(classification_report(y_test, test_preds, target_names=["Malignant", "Benign"]))', explanation: 'Full audit' },
+    ],
+    executionFlow: [
+      { number: 1, title: 'Ingestion & Partition', description: 'Dataset partitioned cleanly into training (455) and holdout (114).' },
+      { number: 2, title: 'GridSearch', description: 'Cross-validates 4 candidate regularization strengths without data leakage.' },
+      { number: 3, title: 'Final Validation', description: 'Achieves 98%+ test accuracy and F1 score on real clinical test samples.' },
+    ],
+    input: 'Wisconsin Breast Cancer dataset (30 features per patient)',
+    output: 'Best Hyperparameter C: {\'clf__C\': 0.1}\nBest CV F1-Score: 0.982\n\nFinal Test Report:\n              precision    recall  f1-score\n   Malignant       0.98      0.95      0.96\n      Benign       0.97      0.99      0.98\n    accuracy                           0.97',
+    interpretation: 'A complete, leak-free pipeline achieving 97% overall accuracy and 98% benign F1-score ready for clinical evaluation.',
+    colabInstructions: ['Run in Google Colab to see the full end-to-end project executed.'],
+  },
+  mcqs: [
+    {
+      id: 'q1',
+      question: 'Why is it critical to use the test set ONLY ONCE at the very conclusion of a project?',
+      options: [
+        { id: 'a', text: 'Repeatedly testing and tweaking hyperparameters based on the test set turns the test set into training data (overfitting the test set)' },
+        { id: 'b', text: 'Test data self-destructs after one query' },
+        { id: 'c', text: 'Scikit-Learn throws an exception if predict is called twice' },
+        { id: 'd', text: 'Because cloud compute charges extra for second tests' },
+      ],
+      correctAnswer: 'a',
+      explanation: 'Tuning model settings based on test set feedback leaks information from the test set into your design choices, invalidating its ability to measure true generalization.',
+      incorrectFeedback: 'The test set must remain an unbiased proxy for the unknown real world.',
+    },
+  ],
+};
+
+export const module2Topics: Topic[] = [
+  whatIsML,
+  dataAndFeatures,
+  trainingAndTesting,
+  classification,
+  regression,
+  modelEvaluation,
+  overfittingUnderfitting,
+  introScikitLearn,
+  buildingMLModel,
+];

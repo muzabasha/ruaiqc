@@ -42,7 +42,7 @@ export default function ModulePage() {
   }
 
   const completedCount = topics.filter((t) => completedTopics.includes(t.id)).length;
-  const progressPercentage = Math.round((completedCount / topics.length) * 100);
+  const progressPercentage = topics.length > 0 ? Math.round((completedCount / topics.length) * 100) : 0;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
