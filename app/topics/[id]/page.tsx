@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import EquationCard from '@/components/EquationCard';
+import MathRenderer from '@/components/MathRenderer';
 import PythonHandsOn from '@/components/PythonHandsOn';
 import MCQQuiz from '@/components/MCQQuiz';
 import { getTopicById, getPreviousTopic, getNextTopic } from '@/content/topics';
@@ -119,7 +120,7 @@ export default function TopicPage() {
               Let&apos;s Begin with a Story
             </h2>
             <div className="prose prose-lg max-w-none text-gray-800 whitespace-pre-line">
-              {topic.story}
+              <MathRenderer content={topic.story} />
             </div>
           </div>
         </section>
@@ -132,7 +133,7 @@ export default function TopicPage() {
               Why Should I Learn This?
             </h2>
             <div className="prose max-w-none text-gray-700 whitespace-pre-line">
-              {topic.motivation}
+              <MathRenderer content={topic.motivation} />
             </div>
           </div>
         </section>
@@ -148,7 +149,7 @@ export default function TopicPage() {
                   Simple Explanation
                 </span>
               </h3>
-              <p className="text-gray-700">{topic.concept.simple}</p>
+              <MathRenderer content={topic.concept.simple} className="text-gray-700 leading-relaxed" />
             </div>
 
             <div className="mb-6">
@@ -157,7 +158,7 @@ export default function TopicPage() {
                   Technical Explanation
                 </span>
               </h3>
-              <p className="text-gray-700">{topic.concept.technical}</p>
+              <MathRenderer content={topic.concept.technical} className="text-gray-700 leading-relaxed" />
             </div>
 
             {/* Key Terms */}
@@ -167,13 +168,17 @@ export default function TopicPage() {
                 <div className="grid gap-4">
                   {topic.keyTerms.map((term, index) => (
                     <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                      <h4 className="font-bold text-gray-900 mb-2">{term.term}</h4>
-                      <p className="text-sm text-gray-700 mb-2">
-                        <span className="font-semibold">Simple:</span> {term.simple}
-                      </p>
-                      <p className="text-sm text-gray-700">
-                        <span className="font-semibold">Technical:</span> {term.technical}
-                      </p>
+                      <h4 className="font-bold text-gray-900 mb-2">
+                        <MathRenderer content={term.term} inline />
+                      </h4>
+                      <div className="text-sm text-gray-700 mb-2">
+                        <span className="font-semibold">Simple:</span>{' '}
+                        <MathRenderer content={term.simple} inline />
+                      </div>
+                      <div className="text-sm text-gray-700">
+                        <span className="font-semibold">Technical:</span>{' '}
+                        <MathRenderer content={term.technical} inline />
+                      </div>
                     </div>
                   ))}
                 </div>

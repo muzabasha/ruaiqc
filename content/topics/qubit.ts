@@ -167,259 +167,244 @@ Total probability = 50% + 50% = 100% ✓`,
     },
   ],
   pythonHandsOn: {
-    title: 'Visualizing Qubit States',
-    description: 'We\'ll create and visualize different qubit states using Python and basic linear algebra.',
-    packages: ['numpy', 'matplotlib'],
-    installCommand: '!pip install numpy matplotlib',
+    title: 'Visualizing Qubit States with Qiskit',
+    description: 'Create, manipulate, and simulate different qubit states using IBM Qiskit and Statevector analysis.',
+    packages: ['qiskit', 'qiskit-aer', 'matplotlib', 'numpy'],
+    installCommand: 'pip install qiskit qiskit-aer matplotlib numpy',
     imports: [
       {
+        code: 'from qiskit import QuantumCircuit',
+        explanation: 'Qiskit class to define and assemble quantum circuits.',
+      },
+      {
+        code: 'from qiskit.quantum_info import Statevector',
+        explanation: 'Simulates exact quantum statevectors and calculates probabilities.',
+      },
+      {
         code: 'import numpy as np',
-        explanation: 'NumPy provides array operations and complex number support for quantum states.',
+        explanation: 'Numerical support for trigonometric angles and array operations.',
       },
       {
         code: 'import matplotlib.pyplot as plt',
-        explanation: 'Matplotlib helps visualize qubit states and probabilities.',
+        explanation: 'Visualizes probability distributions.',
       },
     ],
     code: [
       {
-        code: '# Define basis states',
-        explanation: 'Create the fundamental quantum states |0⟩ and |1⟩.',
+        code: '# 1. State |0>: Default initial state of a qubit',
+        explanation: 'Create 1-qubit circuit with no gates; state remains |0>.',
       },
       {
-        code: 'ket_0 = np.array([1, 0], dtype=complex)',
-        explanation: '|0⟩ represented as column vector [1, 0].',
+        code: 'qc_0 = QuantumCircuit(1)',
+        explanation: 'Initialize single qubit in state |0>.',
       },
       {
-        code: 'ket_1 = np.array([0, 1], dtype=complex)',
-        explanation: '|1⟩ represented as column vector [0, 1].',
-      },
-      {
-        code: '',
-        explanation: '',
-      },
-      {
-        code: '# Create different qubit states',
-        explanation: 'Define several interesting qubit states.',
-      },
-      {
-        code: 'state_0 = ket_0  # Pure |0⟩',
-        explanation: 'Qubit definitely in state 0.',
-      },
-      {
-        code: 'state_1 = ket_1  # Pure |1⟩',
-        explanation: 'Qubit definitely in state 1.',
-      },
-      {
-        code: 'state_plus = (ket_0 + ket_1) / np.sqrt(2)  # Equal superposition',
-        explanation: '|+⟩ = (|0⟩ + |1⟩)/√2, equal probability of 0 or 1.',
-      },
-      {
-        code: 'state_minus = (ket_0 - ket_1) / np.sqrt(2)  # Another superposition',
-        explanation: '|−⟩ = (|0⟩ − |1⟩)/√2, equal probability but different phase.',
-      },
-      {
-        code: 'state_custom = (0.6 * ket_0 + 0.8 * ket_1)  # Custom superposition',
-        explanation: 'Custom state: 36% chance of |0⟩, 64% chance of |1⟩.',
+        code: 'sv_0 = Statevector.from_instruction(qc_0)',
+        explanation: 'Extract statevector for |0>.',
       },
       {
         code: '',
         explanation: '',
       },
       {
-        code: '# Function to calculate probabilities',
-        explanation: 'Compute measurement probabilities from quantum state.',
+        code: '# 2. State |1>: Apply Pauli-X (quantum NOT) gate',
+        explanation: 'Flips |0> to |1>.',
       },
       {
-        code: 'def get_probabilities(state):',
-        explanation: 'Calculate |α|² and |β|² from the state vector.',
+        code: 'qc_1 = QuantumCircuit(1)',
+        explanation: 'Create new 1-qubit circuit.',
       },
       {
-        code: '    prob_0 = np.abs(state[0])**2',
-        explanation: 'Probability of measuring |0⟩.',
+        code: 'qc_1.x(0)',
+        explanation: 'Apply Pauli-X gate to rotate |0> to |1>.',
       },
       {
-        code: '    prob_1 = np.abs(state[1])**2',
-        explanation: 'Probability of measuring |1⟩.',
-      },
-      {
-        code: '    return prob_0, prob_1',
-        explanation: 'Return both probabilities.',
+        code: 'sv_1 = Statevector.from_instruction(qc_1)',
+        explanation: 'Extract statevector for |1>.',
       },
       {
         code: '',
         explanation: '',
       },
       {
-        code: '# Function to visualize qubit state',
-        explanation: 'Create visual representation of measurement probabilities.',
+        code: '# 3. State |+>: Equal superposition with Hadamard (H) gate',
+        explanation: 'Creates (|0> + |1>)/sqrt(2).',
       },
       {
-        code: 'def visualize_state(state, title):',
-        explanation: 'Plot probability distribution for a qubit state.',
+        code: 'qc_plus = QuantumCircuit(1)',
+        explanation: 'Create 1-qubit circuit.',
       },
       {
-        code: '    prob_0, prob_1 = get_probabilities(state)',
-        explanation: 'Get measurement probabilities.',
+        code: 'qc_plus.h(0)',
+        explanation: 'Apply Hadamard gate creating 50/50 superposition.',
       },
       {
-        code: '    labels = [\'|0⟩\', \'|1⟩\']',
-        explanation: 'Labels for the basis states.',
-      },
-      {
-        code: '    probabilities = [prob_0, prob_1]',
-        explanation: 'Store probabilities in a list.',
-      },
-      {
-        code: '    colors = [\'#3b82f6\', \'#8b5cf6\']',
-        explanation: 'Blue for |0⟩, purple for |1⟩.',
-      },
-      {
-        code: '    ',
-        explanation: '',
-      },
-      {
-        code: '    plt.figure(figsize=(6, 4))',
-        explanation: 'Create figure for the plot.',
-      },
-      {
-        code: '    plt.bar(labels, probabilities, color=colors, alpha=0.7, edgecolor=\'black\')',
-        explanation: 'Create bar chart of probabilities.',
-      },
-      {
-        code: '    plt.ylabel(\'Probability\')',
-        explanation: 'Label y-axis.',
-      },
-      {
-        code: '    plt.title(title)',
-        explanation: 'Add title to the plot.',
-      },
-      {
-        code: '    plt.ylim(0, 1)',
-        explanation: 'Set y-axis from 0 to 1 (100%).',
-      },
-      {
-        code: '    plt.grid(axis=\'y\', alpha=0.3)',
-        explanation: 'Add horizontal grid lines.',
-      },
-      {
-        code: '    ',
-        explanation: '',
-      },
-      {
-        code: '    # Add probability values on bars',
-        explanation: 'Display exact probabilities on each bar.',
-      },
-      {
-        code: '    for i, (label, prob) in enumerate(zip(labels, probabilities)):',
-        explanation: 'Loop through labels and probabilities.',
-      },
-      {
-        code: '        plt.text(i, prob + 0.02, f\'{prob:.3f}\', ha=\'center\', fontweight=\'bold\')',
-        explanation: 'Display probability value above each bar.',
-      },
-      {
-        code: '    ',
-        explanation: '',
-      },
-      {
-        code: '    plt.tight_layout()',
-        explanation: 'Adjust layout to prevent label cutoff.',
-      },
-      {
-        code: '    plt.show()',
-        explanation: 'Display the plot.',
+        code: 'sv_plus = Statevector.from_instruction(qc_plus)',
+        explanation: 'Extract statevector for |+>.',
       },
       {
         code: '',
         explanation: '',
       },
       {
-        code: '# Visualize different states',
-        explanation: 'Create visualizations for each qubit state.',
+        code: '# 4. Custom Superposition: 0.6|0> + 0.8|1> using Ry rotation',
+        explanation: 'Ry(theta) sets alpha = cos(theta/2) and beta = sin(theta/2).',
       },
       {
-        code: 'visualize_state(state_0, \'Pure State |0⟩\')',
-        explanation: 'Show 100% probability of measuring |0⟩.',
+        code: 'theta = 2 * np.arccos(0.6)  # cos(theta/2) = 0.6, sin(theta/2) = 0.8',
+        explanation: 'Calculate rotation angle for alpha=0.6, beta=0.8.',
       },
       {
-        code: 'visualize_state(state_1, \'Pure State |1⟩\')',
-        explanation: 'Show 100% probability of measuring |1⟩.',
+        code: 'qc_custom = QuantumCircuit(1)',
+        explanation: 'Create custom circuit.',
       },
       {
-        code: 'visualize_state(state_plus, \'Equal Superposition |+⟩\')',
-        explanation: 'Show 50-50 superposition.',
+        code: 'qc_custom.ry(theta, 0)',
+        explanation: 'Rotate qubit about Y-axis by calculated angle.',
       },
       {
-        code: 'visualize_state(state_custom, \'Custom Superposition (0.6|0⟩ + 0.8|1⟩)\')',
-        explanation: 'Show custom probability distribution.',
+        code: 'sv_custom = Statevector.from_instruction(qc_custom)',
+        explanation: 'Extract custom statevector.',
       },
       {
         code: '',
         explanation: '',
       },
       {
-        code: '# Verify normalization',
-        explanation: 'Check that probabilities sum to 1.',
+        code: '# Print Statevectors & Normalization Check',
+        explanation: 'Display complex amplitudes and verify sum of squared magnitudes equals 1.',
       },
       {
-        code: 'print("\\nVerifying Normalization:")',
-        explanation: 'Print section header.',
+        code: 'states = [("|0>", sv_0), ("|1>", sv_1), ("|+>", sv_plus), ("Custom (0.6|0>+0.8|1>)", sv_custom)]',
+        explanation: 'List of prepared quantum states.',
       },
       {
-        code: 'for name, state in [(\'|0⟩\', state_0), (\'|1⟩\', state_1), (\'|+⟩\', state_plus), (\'Custom\', state_custom)]:',
-        explanation: 'Loop through all states.',
+        code: 'print("=== Qiskit Qubit State Analysis ===")',
+        explanation: 'Section header.',
       },
       {
-        code: '    prob_0, prob_1 = get_probabilities(state)',
-        explanation: 'Calculate probabilities.',
+        code: 'for name, sv in states:',
+        explanation: 'Iterate over states.',
       },
       {
-        code: '    total = prob_0 + prob_1',
-        explanation: 'Sum probabilities.',
+        code: '    probs = sv.probabilities_dict()',
+        explanation: 'Calculate measurement probabilities for basis states.',
       },
       {
-        code: '    print(f\'{name}: P(0)={prob_0:.3f}, P(1)={prob_1:.3f}, Total={total:.3f}\')',
-        explanation: 'Display probabilities and their sum.',
+        code: '    p0 = probs.get("0", 0.0)',
+        explanation: 'Probability of measuring 0.',
+      },
+      {
+        code: '    p1 = probs.get("1", 0.0)',
+        explanation: 'Probability of measuring 1.',
+      },
+      {
+        code: '    print(f"{name:26s} -> State: {sv.data.round(3)} | P(0)={p0:.3f}, P(1)={p1:.3f} | Sum={p0+p1:.3f}")',
+        explanation: 'Display state amplitudes and verified normalization.',
+      },
+      {
+        code: '',
+        explanation: '',
+      },
+      {
+        code: '# Plot probabilities',
+        explanation: 'Generate bar chart comparison in Matplotlib.',
+      },
+      {
+        code: 'labels = ["|0>", "|1>", "|+>", "Custom"]',
+        explanation: 'State labels for plotting.',
+      },
+      {
+        code: 'p0_vals = [s[1].probabilities()[0] for s in states]',
+        explanation: 'List of P(0) values.',
+      },
+      {
+        code: 'p1_vals = [s[1].probabilities()[1] for s in states]',
+        explanation: 'List of P(1) values.',
+      },
+      {
+        code: 'x = np.arange(len(labels))',
+        explanation: 'X-axis positions.',
+      },
+      {
+        code: 'plt.figure(figsize=(8, 4))',
+        explanation: 'Create figure.',
+      },
+      {
+        code: 'plt.bar(x - 0.15, p0_vals, width=0.3, label="P(0)", color="#3b82f6")',
+        explanation: 'Blue bars for P(0).',
+      },
+      {
+        code: 'plt.bar(x + 0.15, p1_vals, width=0.3, label="P(1)", color="#8b5cf6")',
+        explanation: 'Purple bars for P(1).',
+      },
+      {
+        code: 'plt.xticks(x, labels)',
+        explanation: 'Set state label tickmarks.',
+      },
+      {
+        code: 'plt.ylabel("Measurement Probability")',
+        explanation: 'Set y-axis label.',
+      },
+      {
+        code: 'plt.title("Qubit Measurement Probabilities simulated in Qiskit")',
+        explanation: 'Set plot title.',
+      },
+      {
+        code: 'plt.ylim(0, 1.1)',
+        explanation: 'Set y limit.',
+      },
+      {
+        code: 'plt.legend()',
+        explanation: 'Show legend.',
+      },
+      {
+        code: 'plt.grid(axis="y", alpha=0.3)',
+        explanation: 'Add grid lines.',
+      },
+      {
+        code: 'plt.tight_layout()',
+        explanation: 'Adjust layout.',
+      },
+      {
+        code: 'plt.show()',
+        explanation: 'Display plot.',
       },
     ],
     executionFlow: [
       {
         number: 1,
-        title: 'Define Basis States',
-        description: 'Create mathematical representations of |0⟩ and |1⟩ as vectors.',
+        title: 'Initialize Circuits with Qiskit',
+        description: 'Construct QuantumCircuit instances for |0>, |1>, |+>, and custom superposition.',
       },
       {
         number: 2,
-        title: 'Create Superpositions',
-        description: 'Build various qubit states including equal and custom superpositions.',
+        title: 'Apply Unitary Gates',
+        description: 'Use Pauli-X for bit-flip, Hadamard for equal superposition, and Ry for custom amplitude angles.',
       },
       {
         number: 3,
-        title: 'Calculate Probabilities',
-        description: 'Compute measurement probabilities from probability amplitudes.',
+        title: 'Extract Statevectors',
+        description: 'Use Qiskit Statevector simulator to compute complex probability amplitudes.',
       },
       {
         number: 4,
-        title: 'Visualize States',
-        description: 'Create bar charts showing the probability distribution for each state.',
+        title: 'Verify Normalization',
+        description: 'Calculate probabilities using the Born rule (|alpha|^2 + |beta|^2 = 1.0).',
       },
       {
         number: 5,
-        title: 'Verify Normalization',
-        description: 'Confirm that all probabilities sum to 1 (100%).',
+        title: 'Visualize Probabilities',
+        description: 'Plot P(0) and P(1) bar chart comparison across all prepared states.',
       },
     ],
-    input: 'Quantum state vectors representing different qubit states.',
-    output: 'Bar charts visualizing measurement probabilities and normalization verification.',
-    interpretation: 'The visualizations show that pure states (|0⟩ and |1⟩) have 100% probability for one outcome, while superposition states show distributed probabilities. The equal superposition |+⟩ has exactly 50% for each outcome. The custom state shows 36% for |0⟩ and 64% for |1⟩, demonstrating how probability amplitudes determine measurement outcomes.',
+    input: 'Qiskit QuantumCircuits on 1 qubit with X, H, and Ry gates.',
+    output: '|0>: P(0)=1.000, P(1)=0.000\n|1>: P(0)=0.000, P(1)=1.000\n|+>: P(0)=0.500, P(1)=0.500\nCustom: P(0)=0.360, P(1)=0.640',
+    interpretation: 'Qiskit demonstrates that qubits can be precisely rotated across the continuous Bloch sphere. While classical bits are strictly 0 or 1, a qubit in superposition simultaneously carries probability amplitudes for both states, collapsing to 0 or 1 upon measurement according to the Born rule.',
     colabInstructions: [
-      'Open Google Colab',
-      'Create a new notebook',
-      'Copy the complete code',
-      'Paste into a cell',
-      'Run the cell',
-      'Observe the probability distributions for different qubit states',
+      'Click "Copy for Google Colab" to copy the complete runnable script',
+      'Open Google Colab at colab.research.google.com',
+      'Paste into the first cell and press Shift + Enter to run',
     ],
   },
   mcqs: [
