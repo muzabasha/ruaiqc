@@ -83,7 +83,7 @@ export default function TopicPage() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <span className="bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold">
-                Topic {module.number}.{topic.number}
+                Topic {currentModule.number}.{topic.number}
               </span>
               {completed && (
                 <div className="flex items-center space-x-2 text-green-600">
