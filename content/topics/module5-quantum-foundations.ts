@@ -809,11 +809,6 @@ Just as you don't need to understand the solid-state silicon physics of transist
       incorrectFeedback: 'Planck\'s constant is the fundamental quantum of action, setting the scale of quantum phenomena.',
     },
   ],
-      correctAnswer: 'a',
-      explanation: 'Unit vector normalization <psi|psi> = 1 ensures that the Born rule measurement probabilities sum to exactly 1.0.',
-      incorrectFeedback: 'Normalization corresponds to the conservation of total probability.',
-    },
-  ],
 };
 
 export const classicalBit: Topic = {
