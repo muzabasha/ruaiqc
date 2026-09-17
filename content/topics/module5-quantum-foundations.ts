@@ -982,11 +982,6 @@ Shannon coined the word **bit** (short for "binary digit"). For 75 years, the bi
       incorrectFeedback: 'Claude Shannon founded information theory and coined the term "bit" in 1948.',
     },
   ],
-      correctAnswer: 'a',
-      explanation: 'A single classical bit has 2 states. Maximum entropy occurs when both are equally likely (p=0.5), yielding log2(2) = 1.0 bit.',
-      incorrectFeedback: 'A single binary variable has a maximum entropy of 1.0 bit.',
-    },
-  ],
 };
 
 export const quantumState: Topic = {
@@ -1176,11 +1171,6 @@ where $\\theta \\in [0, \\pi]$ is the polar angle and $\\phi \\in [0, 2\\pi)$ is
       incorrectFeedback: 'Density matrices generalize state vectors to handle mixed states and decoherence.',
     },
   ],
-      correctAnswer: 'a',
-      explanation: 'Pure states have norm 1.0 and reside strictly on the 2D spherical surface. Mixed states undergo decoherence and have vector lengths strictly less than 1.0 inside the sphere.',
-      incorrectFeedback: 'Pure states reside on the surface with unit radius r = 1.',
-    },
-  ],
 };
 
 export const superposition: Topic = {
@@ -1363,11 +1353,6 @@ Superposition is the spinning coin! Measurement is slamming your hand down.`,
       incorrectFeedback: 'Qubits provide computational advantage through superposition and interference, not classical data storage.',
     },
   ],
-      correctAnswer: 'a',
-      explanation: 'Decoherence is the interaction between a quantum system and its thermal environment that washes out phase coherence, collapsing superpositions into classical noise.',
-      incorrectFeedback: 'Decoherence destroys quantum superpositions.',
-    },
-  ],
 };
 
 export const measurement: Topic = {
@@ -1545,11 +1530,6 @@ The ghost is gone. You cannot undo the photo. The quantum state has collapsed.`,
       correctAnswer: 'b',
       explanation: 'After the first measurement, the qubit collapses to an eigenstate (|0⟩ or |1⟩). Measuring again immediately in the same basis yields the same result with 100% probability—this is called projective measurement idempotency.',
       incorrectFeedback: 'Repeated measurements in the same basis give identical results after the first measurement collapse.',
-    },
-  ],
-      correctAnswer: 'a',
-      explanation: 'Projective measurement causes irreversible collapse. Once collapsed to eigenstate |0>, any immediate follow-up measurement in the same basis returns outcome 0 with probability 1.0.',
-      incorrectFeedback: 'Measurement projects the state into the observed eigenstate.',
     },
   ],
 };
@@ -1735,11 +1715,6 @@ Quantum amplitudes are like ocean waves:
       correctAnswer: 'a',
       explanation: 'Quantum algorithms like Grover\'s search use destructive interference: probability amplitudes from different computational paths cancel exactly (e.g., α₁ + α₂ = 0.5 − 0.5 = 0), making incorrect answers impossible while amplifying correct ones.',
       incorrectFeedback: 'Destructive interference occurs when probability amplitudes sum to zero.',
-    },
-  ],
-      correctAnswer: 'a',
-      explanation: 'Complex amplitudes add linearly before squaring. If amplitudes have opposite signs or phases, they subtract destructively to zero.',
-      incorrectFeedback: 'Destructive phase interference cancels out amplitudes.',
     },
   ],
 };
@@ -1928,11 +1903,6 @@ Measuring qubit A yields 0 or 1 with 50% probability, but instantly projects qub
       incorrectFeedback: 'The 2022 Nobel Prize confirmed Bell inequality violations and quantum nonlocality.',
     },
   ],
-      correctAnswer: 'a',
-      explanation: 'The 2022 Nobel Prize recognized experimental confirmation of quantum entanglement and the violation of local realism via Bell inequality tests.',
-      incorrectFeedback: 'The 2022 Nobel Prize honored pioneering experiments on quantum entanglement and Bell inequalities.',
-    },
-  ],
 };
 
 export const quantumInterference: Topic = {
@@ -2114,11 +2084,6 @@ The cross-term $2 r_1 r_2 \\cos(\\Delta\\phi)$ represents quantum interference: 
       incorrectFeedback: 'Opposite phases cause destructive interference (amplitudes cancel).',
     },
   ],
-      correctAnswer: 'a',
-      explanation: 'Quantum speedups rely on designing algorithms that cancel out undesirable answer paths via destructive interference while amplifying correct solutions.',
-      incorrectFeedback: 'Quantum algorithms use interference to amplify correct answers and cancel incorrect paths.',
-    },
-  ],
 };
 
 export const qcApplications: Topic = {
@@ -2289,11 +2254,6 @@ With quantum computers, biochemists will simulate molecular binding affinity in 
       correctAnswer: 'b',
       explanation: 'Quantum machine learning exploits quantum superposition and interference to potentially accelerate tasks like support vector machines, principal component analysis, and neural network training—though practical advantages remain under research.',
       incorrectFeedback: 'QML uses quantum computers to potentially accelerate certain machine learning algorithms.',
-    },
-  ],
-      correctAnswer: 'a',
-      explanation: 'Quantum simulation allows modeling electron interactions and chemical reaction barriers with high precision, transforming drug discovery.',
-      incorrectFeedback: 'Accurate in silico molecular simulation is the key value driver.',
     },
   ],
 };
@@ -2482,11 +2442,6 @@ Furthermore, quantum computers are terrible at everyday tasks: they cannot brows
       correctAnswer: 'b',
       explanation: 'While quantum computers excel at specific problems (factoring, unstructured search), there\'s no evidence they can solve NP-complete problems in polynomial time. Grover\'s algorithm provides only quadratic speedup for NP search, not exponential.',
       incorrectFeedback: 'Quantum computers don\'t provide exponential speedup for NP-complete problems.',
-    },
-  ],
-      correctAnswer: 'a',
-      explanation: 'Topological Surface Codes require approximately 1,000 noisy physical qubits to detect and correct bit and phase flip errors for each single clean logical qubit.',
-      incorrectFeedback: 'Quantum error correction overhead is the primary reason for high physical qubit requirements.',
     },
   ],
 };
