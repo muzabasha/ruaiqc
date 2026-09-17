@@ -8,6 +8,8 @@ import EquationCard from '@/components/EquationCard';
 import MathRenderer from '@/components/MathRenderer';
 import PythonHandsOn from '@/components/PythonHandsOn';
 import MCQQuiz from '@/components/MCQQuiz';
+import FunLearningCard from '@/components/FunLearningCard';
+import QSphereVisualizer from '@/components/QSphereVisualizer';
 import { getTopicById, getPreviousTopic, getNextTopic } from '@/content/topics';
 import { getModuleById } from '@/content/modules';
 import { markTopicComplete, isTopicCompleted } from '@/lib/progress';
@@ -138,6 +140,11 @@ export default function TopicPage() {
           </div>
         </section>
 
+        {/* Fun Learning Zone (Zero Prerequisites) */}
+        {topic.funLearning && (
+          <FunLearningCard funLearning={topic.funLearning} />
+        )}
+
         {/* What Is It? Section */}
         <section className="mb-8">
           <div className="bg-white rounded-lg shadow-md p-8">
@@ -186,6 +193,25 @@ export default function TopicPage() {
             )}
           </div>
         </section>
+
+        {/* Interactive Q-Sphere View & Quantum State Laboratory */}
+        {(topic.moduleId.includes('quantum') || topic.id.includes('quantum') || topic.id === 'qubit') && (
+          <section className="mb-8">
+            <QSphereVisualizer
+              initialState={
+                topic.id === 'superposition'
+                  ? '+'
+                  : topic.id === 'quantum-interference'
+                  ? '+i'
+                  : topic.id === 'measurement'
+                  ? '+'
+                  : '0'
+              }
+              title={`Q-Sphere Lab: ${topic.title}`}
+              subtitle={`Interactive 3D state vector exploration, unitary transformation gates, and Born rule collapse for Topic ${currentModule.number}.${topic.number}`}
+            />
+          </section>
+        )}
 
         {/* Equations */}
         {topic.equations && topic.equations.map((equation, index) => (

@@ -90,6 +90,13 @@ export interface Illustration {
   content: string | React.ComponentType;
 }
 
+export interface FunLearning {
+  analogyTitle: string;
+  storyAnalogy: string;
+  interactiveThoughtExperiment: string;
+  takeaway: string;
+}
+
 export interface Topic {
   id: string;
   moduleId: string;
@@ -108,6 +115,7 @@ export interface Topic {
   illustration?: Illustration;
   howItWorks: Step[];
   applications: Application[];
+  funLearning?: FunLearning;
   activity?: Activity;
   pythonHandsOn?: PythonActivity;
   mcqs: MCQ[];
