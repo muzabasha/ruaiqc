@@ -12,6 +12,14 @@ export const qLearning: Topic = {
     'Implement a simple Q-learning example in Python',
     'Visualize the learning process',
   ],
+  learningResource: {
+    title: 'Lesson 6: Reinforcement Learning Foundations',
+    pdfUrl: '/presentations/Lesson6.pdf',
+    description: 'Q-learning, Bellman optimality equation, exploration-exploitation trade-offs, and deep Q-learning.',
+    lessonNumber: 6,
+    pages: 12,
+    author: 'Dr. Syed Muzamil Basha',
+  },
   story: `Imagine you're in a new city trying to find the best route from your hotel to a famous landmark. You don't have a map, but you can explore.
 
 On your first attempt, you take random turns, sometimes getting closer, sometimes farther away. When you finally reach your destination, you remember which turns led you forward and which led you astray.

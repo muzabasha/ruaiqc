@@ -10,8 +10,10 @@ import PythonHandsOn from '@/components/PythonHandsOn';
 import MCQQuiz from '@/components/MCQQuiz';
 import FunLearningCard from '@/components/FunLearningCard';
 import QSphereVisualizer from '@/components/QSphereVisualizer';
+import LearningResourceCard from '@/components/LearningResourceCard';
 import { getTopicById, getPreviousTopic, getNextTopic } from '@/content/topics';
 import { getModuleById } from '@/content/modules';
+import { getTopicLearningResource } from '@/lib/resources';
 import { markTopicComplete, isTopicCompleted } from '@/lib/progress';
 import { ArrowLeft, ArrowRight, CheckCircle, Target, Lightbulb } from 'lucide-react';
 
@@ -280,6 +282,19 @@ export default function TopicPage() {
         {topic.pythonHandsOn && (
           <PythonHandsOn activity={topic.pythonHandsOn} />
         )}
+
+        {/* Learning Resource: Presentation Slide Deck (PDF) */}
+        {(() => {
+          const learningData = topic.learningResource
+            ? { primary: topic.learningResource }
+            : getTopicLearningResource(topic.id, topic.moduleId);
+          return (
+            <LearningResourceCard
+              resource={learningData.primary}
+              secondaryResource={learningData.secondary}
+            />
+          );
+        })()}
 
         {/* MCQ Quiz */}
         <MCQQuiz mcqs={topic.mcqs} topicId={topic.id} />

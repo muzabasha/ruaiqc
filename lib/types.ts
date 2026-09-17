@@ -97,6 +97,15 @@ export interface FunLearning {
   takeaway: string;
 }
 
+export interface LearningResource {
+  title: string;
+  pdfUrl: string;
+  description: string;
+  lessonNumber?: number;
+  author?: string;
+  pages?: number;
+}
+
 export interface Topic {
   id: string;
   moduleId: string;
@@ -118,6 +127,7 @@ export interface Topic {
   funLearning?: FunLearning;
   activity?: Activity;
   pythonHandsOn?: PythonActivity;
+  learningResource?: LearningResource;
   mcqs: MCQ[];
 }
 
