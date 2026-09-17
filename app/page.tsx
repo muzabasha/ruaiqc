@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Brain, Atom, Code, BookOpen, Lightbulb, Users } from 'lucide-react';
+import { ArrowRight, Brain, Atom, Code, BookOpen, Lightbulb, Users, ExternalLink, GraduationCap, Sparkles } from 'lucide-react';
 import Header from '@/components/Header';
 
 export default function HomePage() {
@@ -10,6 +10,21 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto text-center">
+          {/* Resource Person Tab / Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/90 border border-purple-200 shadow-sm mb-6 hover:shadow-md transition-all">
+            <Sparkles size={16} className="text-purple-600" />
+            <span className="text-sm font-medium text-gray-700">Resource Person:</span>
+            <a
+              href="https://scholar-sparkle-web.lovable.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-purple-700 hover:text-purple-900 inline-flex items-center gap-1 hover:underline"
+            >
+              <span>Scholar Sparkle Portal</span>
+              <ExternalLink size={14} />
+            </a>
+          </div>
+
           <div className="mb-8">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
               AI & Quantum Computing <br />
@@ -37,9 +52,11 @@ export default function HomePage() {
               href="https://scholar-sparkle-web.lovable.app/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors shadow-lg hover:shadow-xl"
+              className="flex items-center space-x-2 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-700 hover:to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
-              <span>👨‍🏫 For Professors</span>
+              <GraduationCap size={22} />
+              <span>Resource Person</span>
+              <ExternalLink size={18} className="opacity-80" />
             </a>
             <a
               href="#how-it-works"

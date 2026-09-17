@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, X, Home, BookOpen } from 'lucide-react';
+import { Menu, X, Home, BookOpen, GraduationCap, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Header() {
@@ -23,21 +23,31 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
-              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
             >
               <Home size={18} />
               <span>Home</span>
             </Link>
             <Link
               href="/modules"
-              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
             >
               <BookOpen size={18} />
               <span>Modules</span>
             </Link>
+            <a
+              href="https://scholar-sparkle-web.lovable.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-1.5 text-purple-700 hover:text-purple-900 bg-purple-50 hover:bg-purple-100 border border-purple-200 px-3 py-1.5 rounded-lg transition-all font-medium text-sm shadow-sm"
+            >
+              <GraduationCap size={16} />
+              <span>Resource Person</span>
+              <ExternalLink size={13} className="opacity-70" />
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -73,6 +83,17 @@ export default function Header() {
                 <BookOpen size={18} />
                 <span>Modules</span>
               </Link>
+              <a
+                href="https://scholar-sparkle-web.lovable.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-purple-700 hover:text-purple-900 bg-purple-50 p-2 rounded-lg border border-purple-200 font-medium text-sm"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <GraduationCap size={18} />
+                <span>Resource Person</span>
+                <ExternalLink size={14} className="ml-auto opacity-70" />
+              </a>
             </div>
           </div>
         )}
