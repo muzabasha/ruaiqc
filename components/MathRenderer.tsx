@@ -50,6 +50,25 @@ export default function MathRenderer({
       }
     }
 
+    // Helper to format regular text with markdown bold, italic, inline code and escape HTML
+    const formatTextWithMarkdown = (text: string) => {
+      let escaped = text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      
+      // Convert markdown bold: **text** -> <strong class="font-bold text-gray-900">text</strong>
+      escaped = escaped.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-gray-900">$1</strong>');
+
+      // Convert markdown italic: *text* -> <em>text</em>
+      escaped = escaped.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+      // Convert markdown inline code: `code` -> <code>code</code>
+      escaped = escaped.replace(/`([^`]+)`/g, '<code class="bg-gray-100 text-primary-700 px-1 py-0.5 rounded text-sm font-mono">$1</code>');
+
+      return escaped;
+    };
+
     // If content has inline math delimiters ($...$ or $$...$$)
     if (content.includes('$')) {
       // Split by $$ for display math and $ for inline math
@@ -77,20 +96,14 @@ export default function MathRenderer({
               return `<span class="katex-error">${part}</span>`;
             }
           }
-          // Regular text: escape HTML entities for safety
-          return part
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;');
+          // Regular text: parse markdown and escape HTML
+          return formatTextWithMarkdown(part);
         })
         .join('');
     }
 
-    // If no math delimiters, return escaped regular text
-    return content
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    // If no math delimiters, parse markdown and escape HTML
+    return formatTextWithMarkdown(content);
   }, [content, displayMode]);
 
   const Tag = inline ? 'span' : 'div';

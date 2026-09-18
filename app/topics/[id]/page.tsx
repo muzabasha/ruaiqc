@@ -95,6 +95,12 @@ export default function TopicPage() {
     ''
   );
 
+  // Check if motivation starts with a bold headline e.g. "**The next technological revolution**: ..."
+  // Extract it as a clean heading, removing any surrounding quotes, asterisks (**), or colons
+  const motivationHeadlineMatch = cleanedMotivation.match(/^\s*\*\*([^*]+)\*\*[:\s]*([\s\S]*)$/);
+  const motivationSubheading = motivationHeadlineMatch ? motivationHeadlineMatch[1].trim() : null;
+  const motivationBody = motivationHeadlineMatch ? motivationHeadlineMatch[2].trim() : cleanedMotivation;
+
   const isQuantum =
     topic.moduleId.includes('quantum') || topic.id.includes('quantum') || topic.id === 'qubit';
 
@@ -226,8 +232,17 @@ export default function TopicPage() {
                 🎯 Practical & Engineering Stakes
               </span>
             </div>
+
+            {/* Subheading rendered as a clean heading without quotes or asterisks */}
+            {motivationSubheading && (
+              <h3 className="text-xl font-bold text-gray-900 mb-3 text-amber-950 flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block flex-shrink-0"></span>
+                <span>{motivationSubheading}</span>
+              </h3>
+            )}
+
             <div className="prose max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
-              <MathRenderer content={cleanedMotivation} />
+              <MathRenderer content={motivationBody} />
             </div>
           </div>
         </section>
