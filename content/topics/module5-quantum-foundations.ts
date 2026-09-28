@@ -34,16 +34,21 @@ A quantum computer is like a wave of water flooding into the maze all at once. I
   ],
   equations: [
     {
-      latex: '\\dim(\\mathcal{H}) = 2^n',
-      explanation: 'Exponential dimensionality of quantum state space: adding just one qubit doubles the mathematical dimensions of the system.',
+      latex: '\dim(\mathcal{H}) = 2^n',
+      explanation: 'Exponential Dimensionality of Quantum State Space: Adding just ONE physical qubit ($n+1$) doubles the entire mathematical capacity of the quantum computer ($2 \times 2 \times 2...$), creating an astronomical state space that classical supercomputers can never simulate.',
       symbols: [
-        { symbol: 'n', meaning: 'Number of qubits', interpretation: 'Quantum bits' },
-        { symbol: '2^n', meaning: 'Number of simultaneous basis states', interpretation: 'Classical bits needed to simulate the quantum system' },
+        { symbol: 'n', meaning: 'Number of physical qubits', interpretation: 'Number of quantum particles (e.g., electrons, trapped ions) in the processor' },
+        { symbol: '2^n', meaning: 'Number of simultaneous basis states', interpretation: 'Total parallel slots/realities held in superposition at once' },
+        { symbol: '\dim(\mathcal{H})', meaning: 'Dimension of Hilbert state space', interpretation: 'The size of the mathematical universe housing the quantum wave' },
       ],
       example: {
-        description: '50 qubits require 2^50 = 1,125,899,906,842,624 complex numbers to simulate on a classical supercomputer (16 petabytes of RAM). 300 qubits require more numbers than all atoms in the universe.',
-        calculation: '2^{50} \\approx 1.125 \\times 10^{15} \\text{ state amplitudes}',
-        result: 'Exponential classical simulation barrier',
+        description: 'Comparing simultaneous states and classical RAM needed to simulate n qubits:',
+        calculation: `• n = 1 qubit:   2^1 = 2 states (Spin Down and Spin Up)
+• n = 3 qubits:  2^3 = 2 × 2 × 2 = 8 simultaneous states
+• n = 10 qubits: 2^10 = 1,024 states (requires ~16 KB RAM)
+• n = 50 qubits: 2^50 ≈ 1.125 × 10^15 states (requires ~18 Petabytes of RAM!)
+• n = 300 qubits: 2^300 ≈ 2.03 × 10^90 states`,
+        result: 'At 300 qubits, 2^300 exceeds all 10^80 atoms in the observable universe. Classical supercomputers hit an absolute mathematical wall.',
       },
     },
   ],
@@ -224,6 +229,30 @@ Shor's algorithm proved that a quantum computer could break that encryption in a
     { term: 'Shor’s Algorithm', simple: 'The famous quantum algorithm that can crack modern internet encryption (RSA) by factoring large numbers quickly.', technical: 'Polynomial-time quantum algorithm for integer factorization and discrete logarithms using Quantum Fourier Transform.' },
     { term: 'NISQ Era', simple: 'Noisy Intermediate-Scale Quantum: our current era of 50-1,000 qubit machines that are powerful but prone to noise and errors.', technical: 'Current computational epoch characterized by 50–1000 noisy physical qubits without fault-tolerant quantum error correction (John Preskill, 2018).' },
   ],
+  equations: [
+    {
+      latex: 'N_{\\text{eval, classical}} = 2 \\quad \\text{vs} \\quad N_{\\text{eval, quantum}} = 1',
+      explanation: "Deutsch's Query Complexity Theorem (1985): Proves that a quantum computer can determine whether an unknown black-box function f(x) is constant or balanced in just ONE single query, whereas any classical computer on Earth mathematically requires TWO queries.",
+      symbols: [
+        { symbol: 'f(x)', meaning: 'Black-box function (Oracle)', interpretation: 'A mystery computer program that maps input bit x ∈ {0, 1} to an output bit' },
+        { symbol: 'N_{\\text{eval}}', meaning: 'Number of function evaluations', interpretation: 'Number of queries or calls made to the mystery function' },
+        { symbol: 'N_{\\text{eval, classical}} = 2', meaning: 'Classical query requirement', interpretation: 'Must evaluate f(0), then evaluate f(1), and compare them' },
+        { symbol: 'N_{\\text{eval, quantum}} = 1', meaning: 'Quantum query requirement', interpretation: 'Evaluates global property f(0) ⊕ f(1) in a single shot using superposition' },
+      ],
+      example: {
+        description: 'Testing if a coin-toss black-box is fair (balanced) or rigged (constant):',
+        calculation: `Classical Evaluation:
+Step 1: Query x = 0 → f(0) = 1 (Outcome uncertain, answer still unknown!)
+Step 2: Query x = 1 → f(1) = 1 (Total: 2 evaluations needed to determine constant)
+
+Quantum Evaluation (Deutsch Algorithm):
+Step 1: Prepare input state |ψ⟩ = (|0⟩ - |1⟩)/√2
+Step 2: Query Oracle once with phase kickback: (-1)^{f(x)}
+Step 3: Measure first qubit: 0 indicates Constant, 1 indicates Balanced!`,
+        result: 'The global property is unlocked in 1 quantum step vs 2 classical steps (50% reduction in query complexity).',
+      },
+    },
+  ],
   howItWorks: [
     { number: 1, title: 'Theoretical Foundation (1980s)', description: 'Deutsch proves quantum parallelism using unitary quantum gates.' },
     { number: 2, title: 'Algorithmic Speedup (1990s)', description: 'Shor and Grover prove exponential and polynomial advantages over classical computing.' },
@@ -390,17 +419,25 @@ As soon as your conscious eyes look at Page 42, the quantum haze instantly freez
   ],
   equations: [
     {
-      latex: 'U^\\dagger U = I, \\quad \\sum_i |\\alpha_i|^2 = 1',
-      explanation: 'Unitary Condition (left) and Probability Conservation (right): ensures total measurement probability is strictly conserved at 1.0 across all transformations.',
+      latex: 'U^\dagger U = I, \quad \sum_{i=1}^{2^n} |\alpha_i|^2 = 1',
+      explanation: 'Unitary Reversibility & Conservation of Total Probability: Every quantum gate U has a perfect mathematical undo operation U† that runs computation backwards without losing energy or information, while the sum of all outcome probabilities is strictly locked at 100% (1.0).',
       symbols: [
-        { symbol: 'U^\\dagger', meaning: 'Conjugate transpose (Hermitian adjoint)', interpretation: 'The reverse transformation' },
-        { symbol: 'I', meaning: 'Identity matrix', interpretation: 'Unchanged state' },
-        { symbol: '|\\alpha_i|^2', meaning: 'Probability of outcome i', interpretation: 'Born rule measurement probability' },
+        { symbol: 'U', meaning: 'Unitary transformation matrix', interpretation: 'A quantum logic gate or operation that rotates the quantum state vector' },
+        { symbol: 'U^\dagger', meaning: 'Conjugate transpose (Hermitian adjoint)', interpretation: 'The exact reverse or "Undo" button of the quantum gate' },
+        { symbol: 'I', meaning: 'Identity matrix', interpretation: 'The unchanged base state (equivalent to multiplying by 1)' },
+        { symbol: '|\alpha_i|^2', meaning: 'Born rule probability of outcome i', interpretation: 'The percentage likelihood of reading state i upon measurement' },
+        { symbol: '\sum |\alpha_i|^2 = 1', meaning: 'Total probability normalization', interpretation: 'All possibilities combined must always total exactly 100% (1.0)' },
       ],
       example: {
-        description: 'Applying a Hadamard gate H twice in succession: H * H = Identity matrix I.',
-        calculation: 'H \\cdot H = I \\implies H(H|0\\rangle) = |0\\rangle',
-        result: 'Reversible: running gate twice restores initial state',
+        description: 'Applying a Quantum NOT Gate (Pauli-X) to state |ψ⟩ = [0.6, 0.8]^T:',
+        calculation: `Step 1: Check Reversibility (X† × X = I):
+   X = [[0, 1], [1, 0]],  X† = [[0, 1], [1, 0]]
+   X† × X = [[0×0 + 1×1, 0×1 + 1×0], [1×0 + 0×1, 1×1 + 0×0]] = [[1, 0], [0, 1]] = I ✓
+Step 2: Apply Gate to Qubit:
+   X |ψ⟩ = [[0, 1], [1, 0]] × [0.6, 0.8]^T = [0.8, 0.6]^T (flips amplitudes)
+Step 3: Verify Probability Conservation:
+   P(0) + P(1) = |0.8|^2 + |0.6|^2 = 0.64 + 0.36 = 1.00 (100% conserved) ✓`,
+        result: 'Operation is 100% reversible with zero information loss, and total probability remains exactly 1.00.',
       },
     },
   ],
@@ -520,17 +557,26 @@ With Dirac's elegant language, complex multidimensional matrix transformations b
   ],
   equations: [
     {
-      latex: '|\\psi\\rangle = \\alpha |0\\rangle + \\beta |1\\rangle = \\begin{pmatrix} \\alpha \\\\ \\beta \\end{pmatrix}, \\quad |\\alpha|^2 + |\\beta|^2 = 1',
-      explanation: 'The state of a single qubit in Dirac notation: linear combination of basis states |0> and |1> with complex probability amplitudes alpha and beta.',
+      latex: '|\psi\rangle = \alpha |0\rangle + \beta |1\rangle = \begin{pmatrix} \alpha \\ \beta \end{pmatrix}, \quad |\alpha|^2 + |\beta|^2 = 1',
+      explanation: 'General Single-Qubit State Vector: A qubit exists in a continuous linear combination of ground state |0⟩ with weight α and excited state |1⟩ with weight β. The squared magnitudes of these amplitudes dictate the exact measurement odds and must sum to 100%.',
       symbols: [
-        { symbol: '|0\\rangle', meaning: 'Computational basis state zero', interpretation: 'Vector [1, 0]^T' },
-        { symbol: '|1\\rangle', meaning: 'Computational basis state one', interpretation: 'Vector [0, 1]^T' },
-        { symbol: '\\alpha, \\beta', meaning: 'Complex amplitudes', interpretation: 'Numbers whose squared magnitudes give measurement probabilities' },
+        { symbol: '|\psi\rangle', meaning: 'Quantum state vector (Ket-Psi)', interpretation: 'The total current state and recipe of the qubit' },
+        { symbol: '|0\rangle, |1\rangle', meaning: 'Computational basis states', interpretation: 'The two baseline states: |0⟩ = [1, 0]^T and |1⟩ = [0, 1]^T' },
+        { symbol: '\alpha', meaning: 'Probability amplitude for state |0⟩', interpretation: 'Square root of the probability of measuring 0' },
+        { symbol: '\beta', meaning: 'Probability amplitude for state |1⟩', interpretation: 'Square root of the probability of measuring 1' },
+        { symbol: '|\alpha|^2 + |\beta|^2 = 1', meaning: 'Normalization constraint', interpretation: 'Ensures the sum of all physical outcomes equals 100% (1.0)' },
       ],
       example: {
-        description: 'Equal superposition state |+>: alpha = 1/sqrt(2), beta = 1/sqrt(2).',
-        calculation: '|\\alpha|^2 = (1/\\sqrt{2})^2 = 0.5, \\quad |\\beta|^2 = (1/\\sqrt{2})^2 = 0.5',
-        result: '50% chance of measuring 0, 50% chance of measuring 1',
+        description: 'Evaluating a qubit prepared with α = √3 / 2 ≈ 0.866 and β = 1 / 2 = 0.5:',
+        calculation: `Step 1: Write State Vector:
+   |ψ⟩ = (√3/2)|0⟩ + (1/2)|1⟩ = [0.866, 0.5]^T
+Step 2: Calculate Chance of 0:
+   P(0) = |α|^2 = (√3/2)^2 = 3/4 = 0.75 (75% probability)
+Step 3: Calculate Chance of 1:
+   P(1) = |β|^2 = (1/2)^2 = 1/4 = 0.25 (25% probability)
+Step 4: Check Normalization:
+   P(0) + P(1) = 0.75 + 0.25 = 1.00 (100% certainty that one outcome occurs) ✓`,
+        result: 'The qubit has a 75% chance of collapsing to 0 and a 25% chance of collapsing to 1.',
       },
     },
   ],
@@ -659,17 +705,24 @@ Just as you don't need to understand the solid-state silicon physics of transist
   ],
   equations: [
     {
-      latex: 'p(m) = \\langle \\psi \\mid M_m^\\dagger M_m \\mid \\psi \\rangle, \\quad |\\psi_{\\text{after}}\\rangle = \\frac{M_m |\\psi\\rangle}{\\sqrt{p(m)}}',
-      explanation: 'Postulate 3 (Measurement & Collapse): computes probability of outcome m and the state collapse formula.',
+      latex: 'P(m) = \langle \psi \mid M_m^\dagger M_m \mid \psi \rangle, \quad |\psi_{\text{after}}\rangle = \frac{M_m |\psi\rangle}{\sqrt{P(m)}}',
+      explanation: 'Projective Measurement & State Collapse: Calculates the exact probability P(m) that a detector clicks with outcome m, and gives the post-measurement state vector |ψ_after⟩ immediately following the collapse of the wavefunction.',
       symbols: [
-        { symbol: 'p(m)', meaning: 'Probability of outcome m', interpretation: 'Chance of seeing result m' },
-        { symbol: 'M_m', meaning: 'Measurement operator', interpretation: 'Filter for outcome m' },
-        { symbol: '|\\psi_{\\text{after}}\\rangle', meaning: 'Post-measurement state', interpretation: 'Frozen collapsed state' },
+        { symbol: 'P(m)', meaning: 'Measurement probability for outcome m', interpretation: 'Percentage chance of reading outcome m when looking' },
+        { symbol: 'M_m', meaning: 'Measurement projection operator', interpretation: 'Mathematical filter/sieve that isolates outcome m (e.g. M_0 = |0⟩⟨0| = [[1,0],[0,0]])' },
+        { symbol: '\langle \psi |', meaning: 'Bra vector (row matrix)', interpretation: 'Conjugate transpose of ket |ψ⟩, representing apparatus projection' },
+        { symbol: '|\psi_{\text{after}}\rangle', meaning: 'Post-measurement state vector', interpretation: 'The new surviving state immediately after measurement collapse' },
+        { symbol: '\sqrt{P(m)}', meaning: 'Renormalization factor', interpretation: 'Re-inflates the collapsed state so its new length equals 1.0' },
       ],
       example: {
-        description: 'Measuring state |+> in Z-basis: M_0 = |0><0|. p(0) = 0.5. Post-measurement state collapses to |0>.',
-        calculation: 'p(0) = 0.5 \\implies |\\psi_{\\text{after}}\\rangle = |0\\rangle',
-        result: 'State permanently collapses to |0>',
+        description: 'Measuring state |ψ⟩ = [0.6, 0.8]^T using projector M_0 = [[1, 0], [0, 0]]:',
+        calculation: `Step 1: Filter state through M_0:
+   M_0 |ψ⟩ = [[1, 0], [0, 0]] × [0.6, 0.8]^T = [0.6, 0]^T
+Step 2: Calculate Probability P(0):
+   P(0) = ⟨ψ| M_0† M_0 |ψ⟩ = [0.6, 0.8] × [0.6, 0]^T = (0.6 × 0.6) + (0.8 × 0) = 0.36 (36%)
+Step 3: Calculate Post-Measurement Collapsed State:
+   |ψ_after⟩ = [0.6, 0]^T / √0.36 = [0.6, 0]^T / 0.6 = [1, 0]^T = |0⟩`,
+        result: 'With 36% probability, the state collapses irreversibly into pure ground state |0⟩, with 100% certainty for all future measurements.',
       },
     },
   ],
@@ -839,16 +892,25 @@ Shannon coined the word **bit** (short for "binary digit"). For 75 years, the bi
   ],
   equations: [
     {
-      latex: 'H(X) = -\\sum_{i=1}^n P(x_i) \\log_2 P(x_i)',
-      explanation: 'Shannon Entropy: calculates the average amount of information (in bits) produced by an uncertain source.',
+      latex: 'H(X) = -\sum_{i=1}^n P(x_i) \log_2 P(x_i)',
+      explanation: 'Shannon Entropy: Measures the fundamental limit of uncertainty or information content (in bits) delivered by a random binary variable. If an outcome is completely predictable, entropy is 0; if it is completely balanced, entropy reaches maximum (1.0 bit).',
       symbols: [
-        { symbol: 'H(X)', meaning: 'Entropy in bits', interpretation: 'Uncertainty or information density' },
-        { symbol: 'P(x_i)', meaning: 'Probability of outcome i', interpretation: 'Likelihood of event' },
+        { symbol: 'H(X)', meaning: 'Shannon Entropy (measured in bits)', interpretation: 'Average surprise or information content generated by the bit' },
+        { symbol: 'P(x_i)', meaning: 'Probability of bit outcome i', interpretation: 'Likelihood of receiving 0 or 1' },
+        { symbol: '\log_2 P(x_i)', meaning: 'Logarithm base 2 of probability', interpretation: 'Number of binary yes/no questions needed to identify the outcome' },
+        { symbol: '-\sum', meaning: 'Negative sum', interpretation: 'Turns negative logarithms into a positive measure of information' },
       ],
       example: {
-        description: 'A fair coin flip where heads has P = 0.5 and tails has P = 0.5.',
-        calculation: 'H = -[0.5 \\log_2(0.5) + 0.5 \\log_2(0.5)] = -[0.5(-1) + 0.5(-1)] = -[-1.0] = 1.0',
-        result: 'A fair coin flip yields exactly 1.0 bit of Shannon information',
+        description: 'Comparing the entropy of deterministic, fair, and biased bits:',
+        calculation: `Case 1: Deterministic Bit (P(0) = 1.0, P(1) = 0):
+   H = -(1.0 × log2(1.0)) = -(1.0 × 0) = 0.0 bits (Zero surprise!)
+
+Case 2: Fair Random Bit (P(0) = 0.5, P(1) = 0.5):
+   H = -[0.5 × log2(0.5) + 0.5 × log2(0.5)] = -[0.5(-1) + 0.5(-1)] = 1.0 bit (Maximum information!)
+
+Case 3: Biased Bit (P(0) = 0.8, P(1) = 0.2):
+   H = -[0.8 × log2(0.8) + 0.2 × log2(0.2)] = -[0.8(-0.322) + 0.2(-2.322)] ≈ 0.72 bits`,
+        result: 'A fair classical bit delivers exactly 1.0 bit of Shannon information; any predictability reduces its informational value.',
       },
     },
   ],
@@ -1023,16 +1085,28 @@ where $\\theta \\in [0, \\pi]$ is the polar angle and $\\phi \\in [0, 2\\pi)$ is
   ],
   equations: [
     {
-      latex: '|\\psi\\rangle = \\cos\\left(\\frac{\\theta}{2}\\right)|0\\rangle + e^{i\\phi}\\sin\\left(\\frac{\\theta}{2}\\right)|1\\rangle',
-      explanation: 'The universal Bloch Sphere parameterization of any single qubit state using polar angle theta and azimuthal phase phi.',
+      latex: '|\psi\rangle = \cos\left(\frac{\theta}{2}\right)|0\rangle + e^{i\phi}\sin\left(\frac{\theta}{2}\right)|1\rangle',
+      explanation: 'The Bloch Sphere Parameterization: Every single pure qubit state in nature maps directly to a unique coordinate on a 3D unit sphere, governed by polar latitude angle θ and azimuthal longitude phase angle ϕ.',
       symbols: [
-        { symbol: '\\theta', meaning: 'Polar angle (0 to pi)', interpretation: 'Latitude: 0 is North Pole (|0>), pi is South Pole (|1>)' },
-        { symbol: '\\phi', meaning: 'Azimuthal phase angle (0 to 2pi)', interpretation: 'Longitude: relative phase around the equator' },
+        { symbol: '\theta', meaning: 'Polar angle (0 to π radians)', interpretation: 'Latitude: θ = 0 is North Pole (|0⟩), θ = π is South Pole (|1⟩), θ = π/2 is the Equator' },
+        { symbol: '\phi', meaning: 'Azimuthal phase angle (0 to 2π radians)', interpretation: 'Longitude: relative quantum phase rotating around the equator' },
+        { symbol: '\cos(\theta/2)', meaning: 'Amplitude of basis state |0⟩', interpretation: 'Probability of measuring 0: P(0) = cos²(θ/2)' },
+        { symbol: 'e^{i\phi}\sin(\theta/2)', meaning: 'Amplitude of basis state |1⟩', interpretation: 'Probability of measuring 1: P(1) = sin²(θ/2), carrying relative phase ϕ' },
       ],
       example: {
-        description: 'Equator point theta = pi/2, phi = 0: cos(pi/4)|0> + sin(pi/4)|1> = (1/sqrt(2))|0> + (1/sqrt(2))|1> = |+>.',
-        calculation: '\\cos(\\pi/4) = \\frac{1}{\\sqrt{2}}, \\quad \\sin(\\pi/4) = \\frac{1}{\\sqrt{2}}',
-        result: 'State |+> on the positive X-axis of the equator',
+        description: 'Evaluating a qubit on the Equator pointing along the +X axis (θ = π/2 = 90°, ϕ = 0°):',
+        calculation: `Step 1: Calculate Half-Angle:
+   θ / 2 = (π/2) / 2 = π/4 = 45°
+Step 2: Evaluate Trigonometric Amplitudes:
+   cos(45°) = 1/√2 ≈ 0.7071
+   sin(45°) = 1/√2 ≈ 0.7071
+Step 3: Evaluate Phase Factor:
+   e^(i × 0) = 1
+Step 4: Form State Vector:
+   |ψ⟩ = (1/√2)|0⟩ + 1 × (1/√2)|1⟩ = (|0⟩ + |1⟩)/√2 = |+⟩
+Step 5: Probabilities:
+   P(0) = (1/√2)^2 = 0.50 (50%), P(1) = (1/√2)^2 = 0.50 (50%)`,
+        result: 'The state lies precisely on the Equator at (+X), representing an equal 50/50 superposition state |+⟩.',
       },
     },
   ],
@@ -1210,16 +1284,23 @@ Superposition is the spinning coin! Measurement is slamming your hand down.`,
   ],
   equations: [
     {
-      latex: '|+\\rangle = \\frac{|0\\rangle + |1\\rangle}{\\sqrt{2}}, \\quad |-\\rangle = \\frac{|0\\rangle - |1\\rangle}{\\sqrt{2}}',
-      explanation: 'The fundamental superposition states |+> and |->: created by applying a Hadamard gate to |0> and |1>. They differ only by a relative minus sign (phase).',
+      latex: '|+\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}}, \quad |-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}',
+      explanation: 'The Fundamental Superposition Basis States: Formed by applying a Hadamard gate to |0⟩ and |1⟩. While both yield identical 50/50 measurement probabilities when measured alone, their opposite relative signs (+ vs -) cause dramatic constructive or destructive interference when combined.',
       symbols: [
-        { symbol: '|+\\rangle', meaning: 'Plus state', interpretation: 'Equal superposition with positive phase' },
-        { symbol: '|-\\rangle', meaning: 'Minus state', interpretation: 'Equal superposition with 180-degree negative phase' },
+        { symbol: '|+\rangle', meaning: 'Plus state (equal superposition)', interpretation: 'Basis states |0⟩ and |1⟩ are in-phase with positive sign (+)' },
+        { symbol: '|-\rangle', meaning: 'Minus state (equal superposition)', interpretation: 'Basis states |0⟩ and |1⟩ are 180° out-of-phase with negative sign (-)' },
+        { symbol: '1/\sqrt{2}', meaning: 'Normalization coefficient ≈ 0.7071', interpretation: 'Ensures total probability: (1/√2)² + (±1/√2)² = 0.5 + 0.5 = 1.00' },
       ],
       example: {
-        description: 'Both |+> and |-> have a 50% probability of measuring 0 and 50% for 1, but their internal phase causes opposite interference behavior.',
-        calculation: 'P(0)_{|+\\rangle} = |1/\\sqrt{2}|^2 = 0.5, \\quad P(0)_{|-\\rangle} = |1/\\sqrt{2}|^2 = 0.5',
-        result: 'Identical measurement probabilities, but opposite quantum phases',
+        description: 'Demonstrating destructive interference by combining |+⟩ and |-⟩:',
+        calculation: `Step 1: Write sum of both states:
+   |+⟩ + |-⟩ = [(|0⟩ + |1⟩)/√2] + [(|0⟩ - |1⟩)/√2]
+Step 2: Group like basis terms:
+   = [(|0⟩ + |0⟩) + (|1⟩ - |1⟩)] / √2
+   = [2|0⟩ + 0|1⟩] / √2 = √2 |0⟩
+Step 3: Normalize by dividing by √2:
+   (|+⟩ + |-⟩) / √2 = |0⟩`,
+        result: 'The |1⟩ states completely cancelled out (1 - 1 = 0), leaving only pure |0⟩. Superposition enables selective path cancellation.',
       },
     },
   ],
@@ -1389,16 +1470,22 @@ The ghost is gone. You cannot undo the photo. The quantum state has collapsed.`,
   ],
   equations: [
     {
-      latex: 'P(0) = |\\alpha|^2, \\quad P(1) = |\\beta|^2, \\quad |\\alpha|^2 + |\\beta|^2 = 1',
-      explanation: 'The Born Rule for a single qubit state alpha|0> + beta|1>: the probability of measuring 0 is the magnitude-squared of alpha; measuring 1 is magnitude-squared of beta.',
+      latex: 'P(s) = |\langle s \mid \psi \rangle|^2 = |\alpha_s|^2, \quad \sum_{s} P(s) = 1',
+      explanation: 'The Born Rule for Quantum Measurement: The probability of measuring any specific classical bitstring outcome s equals the squared magnitude of its probability amplitude α_s, with all possible measurement outcomes summing to 100%.',
       symbols: [
-        { symbol: '\\alpha', meaning: 'Amplitude of |0>', interpretation: 'Square root of probability of 0' },
-        { symbol: '\\beta', meaning: 'Amplitude of |1>', interpretation: 'Square root of probability of 1' },
+        { symbol: 's', meaning: 'Classical measurement outcome', interpretation: 'Specific bitstring result observed by detectors (e.g. "00", "01", "10", "11")' },
+        { symbol: '\alpha_s', meaning: 'State probability amplitude', interpretation: 'Complex number coefficient sitting in front of basis state |s⟩' },
+        { symbol: '|\alpha_s|^2', meaning: 'Modulus squared of amplitude', interpretation: 'The real-world percentage probability of observing outcome s' },
+        { symbol: '\sum P(s) = 1', meaning: 'Axiom of total probability', interpretation: 'Certainty that one of the possible basis states must physically occur' },
       ],
       example: {
-        description: 'Qubit state with alpha = sqrt(3)/2 and beta = 1/2.',
-        calculation: 'P(0) = |\\sqrt{3}/2|^2 = 3/4 = 75\\%, \\quad P(1) = |1/2|^2 = 1/4 = 25\\%',
-        result: '75% chance of measuring 0; 25% chance of measuring 1',
+        description: 'Measuring a 2-qubit register in state |ψ⟩ = 0.5|00⟩ + 0.5i|01⟩ - 0.5|10⟩ + 0.5|11⟩:',
+        calculation: `• Outcome 00: P(00) = |0.5|^2 = 0.25 (25%)
+• Outcome 01: P(01) = |0.5i|^2 = (0.5i)(-0.5i) = -0.25 × i^2 = -0.25(-1) = 0.25 (25%)
+• Outcome 10: P(10) = |-0.5|^2 = (-0.5) × (-0.5) = 0.25 (25%)
+• Outcome 11: P(11) = |0.5|^2 = 0.25 (25%)
+• Total Check: 0.25 + 0.25 + 0.25 + 0.25 = 1.00 (100% total certainty) ✓`,
+        result: 'Each 2-bit outcome has an equal 25% chance of being observed when measured by detectors.',
       },
     },
   ],
@@ -1570,17 +1657,25 @@ Quantum amplitudes are like ocean waves:
   ],
   equations: [
     {
-      latex: '|c|^2 = c \\cdot c^* = (a + bi)(a - bi) = a^2 + b^2',
-      explanation: 'Formula to compute the real probability from a complex probability amplitude by multiplying by its complex conjugate.',
+      latex: '|c|^2 = c \cdot c^* = (a + bi)(a - bi) = a^2 + b^2',
+      explanation: 'Modulus Squared of Complex Probability Amplitudes: Quantum mechanics calculates probabilities using 2D complex numbers c = a + bi. Multiplying by the complex conjugate mirror c* = a - bi cancels out all imaginary terms (since i² = -1), yielding the Pythagorean squared distance a² + b² as physical probability.',
       symbols: [
-        { symbol: 'c = a + bi', meaning: 'Complex amplitude', interpretation: 'Number with real part a and imaginary part b' },
-        { symbol: 'c^* = a - bi', meaning: 'Complex conjugate', interpretation: 'Sign of imaginary part inverted' },
-        { symbol: '|c|^2', meaning: 'Modulus squared', interpretation: 'Physical observable probability' },
+        { symbol: 'c = a + bi', meaning: 'Complex probability amplitude', interpretation: 'A 2D arrow with horizontal coordinate a (real) and vertical coordinate b (imaginary)' },
+        { symbol: 'c^* = a - bi', meaning: 'Complex conjugate', interpretation: 'The exact mirror reflection across the real horizontal axis' },
+        { symbol: 'i = \sqrt{-1}', meaning: 'Imaginary unit', interpretation: 'A 90-degree rotation operator satisfying i² = -1' },
+        { symbol: '|c|^2 = a^2 + b^2', meaning: 'Modulus squared (Physical Probability)', interpretation: 'Pythagorean length-squared: real-world observable percentage' },
       ],
       example: {
-        description: 'Amplitude c = (1/2) + (1/2)i.',
-        calculation: '|c|^2 = (1/2)^2 + (1/2)^2 = 1/4 + 1/4 = 2/4 = 0.50',
-        result: '50% physical measurement probability',
+        description: 'Calculating the real probability from complex amplitude c = 1/2 + (√3/2)i:',
+        calculation: `Step 1: Identify real and imaginary components:
+   a = 1/2 = 0.5,   b = √3/2 ≈ 0.866
+Step 2: Method 1 (Conjugate Multiplication):
+   c × c* = (0.5 + 0.866i) × (0.5 - 0.866i)
+   = (0.5)^2 - (0.5)(0.866i) + (0.866i)(0.5) - (0.866)^2(i^2)
+   = 0.25 - 0 + 0 - 0.75(-1) = 0.25 + 0.75 = 1.00 ✓
+Step 3: Method 2 (Pythagorean Shortcut):
+   |c|^2 = a^2 + b^2 = (0.5)^2 + (0.866)^2 = 0.25 + 0.75 = 1.00 ✓`,
+        result: 'The physical observable probability is exactly 1.00 (100%).',
       },
     },
   ],
@@ -1774,16 +1869,29 @@ Measuring qubit A yields 0 or 1 with 50% probability, but instantly projects qub
   ],
   equations: [
     {
-      latex: '|\\Phi^+\\rangle = \\frac{|00\\rangle + |11\\rangle}{\\sqrt{2}} \\ne |\\phi_A\\rangle \\otimes |\\phi_B\\rangle',
-      explanation: 'The Bell State Phi+: a superposition of both qubits being 0 and both qubits being 1. Notice that the states |01> and |10> have exactly 0% probability!',
+      latex: '|\Phi^+\rangle = \frac{|00\rangle + |11\rangle}{\sqrt{2}} \ne |\psi_A\rangle \otimes |\psi_B\rangle',
+      explanation: 'The Bell State Φ+ & Non-Separability: Represents two maximally entangled qubits that cannot be factored into two separate individual particles. Neither qubit has a definite state on its own, but measuring one instantly determines the other with 100% correlation regardless of physical distance.',
       symbols: [
-        { symbol: '|00\\rangle', meaning: 'Both qubits are zero', interpretation: '50% measurement probability' },
-        { symbol: '|11\\rangle', meaning: 'Both qubits are one', interpretation: '50% measurement probability' },
+        { symbol: '|\Phi^+\rangle', meaning: 'Maximally entangled Bell state', interpretation: 'Equal superposition of both qubits being 0 and both qubits being 1' },
+        { symbol: '|00\rangle', meaning: 'Both qubits in state 0', interpretation: 'Alice measures 0 and Bob measures 0 (50% probability)' },
+        { symbol: '|11\rangle', meaning: 'Both qubits in state 1', interpretation: 'Alice measures 1 and Bob measures 1 (50% probability)' },
+        { symbol: '\ne |\psi_A\rangle \otimes |\psi_B\rangle', meaning: 'Non-separability (Entanglement)', interpretation: 'Mathematically impossible to describe particle A without mentioning particle B' },
       ],
       example: {
-        description: 'Measure qubit 1. If result is 0, qubit 2 collapses to 0 with 100% certainty. If result is 1, qubit 2 collapses to 1 with 100% certainty.',
-        calculation: 'P(\\text{Q2}=0 \\mid \\text{Q1}=0) = 1.0, \\quad P(\\text{Q2}=1 \\mid \\text{Q1}=1) = 1.0',
-        result: 'Perfect non-local correlation',
+        description: 'Mathematical proof of non-separability & instantaneous correlation:',
+        calculation: `1. Factoring attempt:
+   (a0|0⟩ + a1|1⟩) ⊗ (b0|0⟩ + b1|1⟩) = a0b0|00⟩ + a0b1|01⟩ + a1b0|10⟩ + a1b1|11⟩
+   Matching to |Φ+⟩ requires: a0b1 = 0 AND a1b0 = 0, but a0b0 = 1/√2 AND a1b1 = 1/√2.
+   If a0b1 = 0, either a0 = 0 or b1 = 0.
+   If a0 = 0, then a0b0 = 0 ≠ 1/√2! Contradiction!
+   If b1 = 0, then a1b1 = 0 ≠ 1/√2! Contradiction!
+   Conclusion: No individual states exist!
+
+2. Instantaneous Measurement Correlation:
+   P(Alice measures 0) = |1/√2|^2 = 50%
+   Upon Alice getting 0, the state collapses instantly to |00⟩.
+   P(Bob measures 0 | Alice measured 0) = 1.00 (100% guaranteed!)`,
+        result: 'Zero individual states exist; their joint reality creates perfect non-local correlation.',
       },
     },
   ],
@@ -1970,16 +2078,25 @@ The cross-term $2 r_1 r_2 \\cos(\\Delta\\phi)$ represents quantum interference: 
   ],
   equations: [
     {
-      latex: 'P(x) = |A_1 + A_2|^2 = |A_1|^2 + |A_2|^2 + 2 \\text{Re}(A_1^* A_2)',
-      explanation: 'The Quantum Interference Equation: classical probability (|A1|^2 + |A2|^2) is modified by the quantum interference term 2*Re(A1* * A2).',
+      latex: 'P(x) = |A_1 + A_2|^2 = |A_1|^2 + |A_2|^2 + 2 \,\text{Re}(A_1^* A_2)',
+      explanation: 'The Quantum Interference Equation: The probability of reaching destination x via two alternative computational paths is NOT simply the classical sum of individual probabilities (|A1|² + |A2|²), but is modified by the cross-term 2·Re(A1* A2), which can constructively amplify or destructively cancel the outcome.',
       symbols: [
-        { symbol: 'A_1, A_2', meaning: 'Complex path amplitudes', interpretation: 'Alternative computational branches' },
-        { symbol: '2\\text{Re}(A_1^* A_2)', meaning: 'Interference term', interpretation: 'Can be positive, negative, or zero' },
+        { symbol: 'A_1, A_2', meaning: 'Path probability amplitudes', interpretation: 'Complex wave numbers for computational route 1 and route 2' },
+        { symbol: '|A_1|^2 + |A_2|^2', meaning: 'Classical probability sum', interpretation: 'What ordinary classical intuition predicts without wave effects' },
+        { symbol: '2\,\text{Re}(A_1^* A_2)', meaning: 'Quantum interference cross-term', interpretation: 'Wave overlap: positive = constructive amplification, negative = destructive cancellation' },
       ],
       example: {
-        description: 'Two paths each with magnitude 0.5. If phases match (0 deg), P = |0.5 + 0.5|^2 = 1.0 (Constructive). If phases are opposite (180 deg), P = |0.5 - 0.5|^2 = 0.0 (Destructive).',
-        calculation: 'P_{\\text{constructive}} = 1.0, \\quad P_{\\text{destructive}} = 0.0',
-        result: 'Interference swings outcome probability from 100% down to 0%',
+        description: 'Comparing constructive vs destructive interference for two paths with amplitude magnitude 0.5:',
+        calculation: `Case 1: Constructive Interference (Both paths positive, A1 = +0.5, A2 = +0.5):
+   Classical guess: |0.5|^2 + |0.5|^2 = 0.25 + 0.25 = 0.50
+   Cross-term: 2(0.5 × 0.5) = +0.50
+   Quantum Reality: P = |0.5 + 0.5|^2 = (1.0)^2 = 1.00 (Doubled to 100%!)
+
+Case 2: Destructive Interference (Opposite signs, A1 = +0.5, A2 = -0.5):
+   Classical guess: |0.5|^2 + |-0.5|^2 = 0.25 + 0.25 = 0.50
+   Cross-term: 2(0.5 × -0.5) = -0.50
+   Quantum Reality: P = |0.5 - 0.5|^2 = (0.0)^2 = 0.00 (Cancelled to 0%!)`,
+        result: 'Destructive interference completely erases incorrect computation branches, while constructive interference boosts the correct answer to 100%.',
       },
     },
   ],
@@ -2146,6 +2263,49 @@ With quantum computers, biochemists will simulate molecular binding affinity in 
   keyTerms: [
     { term: 'Variational Quantum Eigensolver (VQE)', simple: 'A hybrid algorithm where a quantum computer works with a classical computer to find the lowest energy of a molecule.', technical: 'Hybrid quantum-classical algorithm using parameterized quantum circuits to minimize expectation values $\\langle \\psi(\\theta) | H | \\psi(\\theta) \\rangle$ via classical gradient descent.' },
     { term: 'QAOA', simple: 'A quantum algorithm designed to find the best solution to complex scheduling and logistics puzzles.', technical: 'Quantum Approximate Optimization Algorithm for combinatorial optimization on NISQ hardware.' },
+  ],
+  equations: [
+    {
+      latex: 'T_{\\text{Grover}} = \\mathcal{O}(\\sqrt{N}) \\quad \\text{vs} \\quad T_{\\text{classical}} = \\mathcal{O}(N)',
+      explanation: "Grover's Search Speedup: Quadratic speedup for searching unsorted databases, unstructured search spaces, or brute-forcing symmetric encryption keys (AES).",
+      symbols: [
+        { symbol: 'N', meaning: 'Size of database / search space', interpretation: 'Total items to search through' },
+        { symbol: '\\mathcal{O}(N)', meaning: 'Classical linear search complexity', interpretation: 'Checking items one-by-one sequentially' },
+        { symbol: '\\mathcal{O}(\\sqrt{N})', meaning: 'Quantum Grover complexity', interpretation: 'Amplifying the correct item amplitude using wave interference' },
+      ],
+      example: {
+        description: 'Searching an unsorted database of 1 trillion items (N = 10^12):',
+        calculation: `Classical Search Steps:
+   Average checks: N / 2 = 10^12 / 2 = 500,000,000,000 checks
+   At 1,000 checks/sec = 500,000,000 seconds ≈ 15.8 YEARS!
+
+Quantum Grover Search Steps:
+   Optimal checks: (π/4) × √(10^12) = 0.785 × 1,000,000 = 785,000 checks
+   At 1,000 checks/sec = 785 seconds ≈ 13 MINUTES!`,
+        result: 'Reduces search time from 15.8 years to 13 minutes (a 637,000× real-world speedup).',
+      },
+    },
+    {
+      latex: 'T_{\\text{Shor}} = \\mathcal{O}\\left((\\log_2 N)^3\\right) \\quad \\text{vs} \\quad T_{\\text{classical}} = \\mathcal{O}\\left(e^{1.9 (\\ln N)^{1/3} (\\ln \\ln N)^{2/3}}\\right)',
+      explanation: "Shor's Factoring Breakthrough: Exponential speedup for factoring large composite integers and computing discrete logarithms, breaking classical RSA and ECC public-key cryptography.",
+      symbols: [
+        { symbol: 'N', meaning: 'The large composite RSA number', interpretation: 'Product of two prime numbers p × q' },
+        { symbol: '\\log_2 N', meaning: 'Key length in bits (k)', interpretation: 'Number of binary digits (e.g., 2,048 bits for RSA-2048)' },
+        { symbol: '(\\log_2 N)^3', meaning: 'Polynomial time complexity', interpretation: 'Feasible computation in hours or days on a quantum computer' },
+        { symbol: 'e^{...}', meaning: 'Sub-exponential complexity (GNFS)', interpretation: 'Classical factoring complexity requiring billions of years' },
+      ],
+      example: {
+        description: 'Factoring a 2,048-bit RSA key (k = 2,048):',
+        calculation: `Classical GNFS:
+   Requires ~10^30 operations
+   At 1 quadrillion ops/sec = ~31.7 billion years (> age of universe: 13.8 billion years)
+
+Quantum Shor's Algorithm:
+   Requires ~(2,048)^3 ≈ 8.59 × 10^9 operations
+   At 1 MHz gate clock rate ≈ 8,590 seconds ≈ 2.4 HOURS!`,
+        result: 'Breaks RSA-2048 in a few hours on a fault-tolerant quantum computer.',
+      },
+    },
   ],
   howItWorks: [
     { number: 1, title: 'Problem Mapping', description: 'Translate business problem (e.g. traveling salesperson or chemical molecule) into an Ising spin Hamiltonian matrix H.' },
@@ -2340,16 +2500,25 @@ Furthermore, quantum computers are terrible at everyday tasks: they cannot brows
   ],
   equations: [
     {
-      latex: 'N_{\\text{physical}} \\approx 1{,}000 \\times N_{\\text{logical}}',
-      explanation: 'Surface Code Overhead Rule of Thumb: due to current physical gate error rates (~10^-3), approximately 1,000 physical qubits are required to build a single fault-tolerant logical qubit.',
+      latex: 'N_{\text{physical}} \approx 1{,}000 \times N_{\text{logical}}, \quad P_{\text{fidelity}}(t) = e^{-t / T_2}',
+      explanation: 'Quantum Hardware Constraints: Surface code error correction requires approximately 1,000 noisy physical qubits to protect 1 clean fault-tolerant logical qubit, while environmental thermal noise causes quantum state coherence to decay exponentially over time T2.',
       symbols: [
-        { symbol: 'N_{\\text{logical}}', meaning: 'Number of clean logical qubits', interpretation: 'What the algorithm needs (e.g. 2,048 for RSA)' },
-        { symbol: 'N_{\\text{physical}}', meaning: 'Physical qubits on chip', interpretation: 'Hardware requirement (~2,000,000 physical qubits)' },
+        { symbol: 'N_{\text{logical}}', meaning: 'Number of clean logical qubits', interpretation: 'Ideal error-free qubits required by the algorithm (e.g. 4,096 for RSA-2048)' },
+        { symbol: 'N_{\text{physical}}', meaning: 'Physical qubits on chip', interpretation: 'Actual physical transmon or ion qubits that must be fabricated' },
+        { symbol: '1{,}000\times', meaning: 'Surface code redundancy ratio', interpretation: 'Sacrificial ancilla qubits needed to detect bit-flips and phase-flips' },
+        { symbol: 'T_2', meaning: 'Dephasing coherence time', interpretation: 'Lifespan of quantum information before turning into thermal noise (typically ~100 μs)' },
+        { symbol: 'e^{-t / T_2}', meaning: 'Coherence decay factor', interpretation: 'Exponential loss of quantum state fidelity over elapsed calculation time t' },
       ],
       example: {
-        description: 'Factoring 2048-bit RSA requires ~2,000 logical qubits. At 1,000 physical qubits per logical qubit, hardware requires ~2 million physical qubits.',
-        calculation: '2{,}000 \\times 1{,}000 = 2{,}000{,}000 \\text{ physical qubits}',
-        result: 'Explains why fault-tolerant codebreaking remains a multi-year hardware engineering roadmap',
+        description: 'Physical qubit requirement for RSA-2048 and coherence survival after 100 μs (T2 = 100 μs):',
+        calculation: `1. Physical Qubit Overhead for Shor's RSA-2048:
+   Logical qubits needed: N_logical = 4,096
+   Physical qubits needed: N_physical = 1,000 × 4,096 = 4,096,000 (~4.1 million physical qubits)
+
+2. Coherence Decay at t = 100 μs with T2 = 100 μs:
+   Exponent: -t / T2 = -100 μs / 100 μs = -1
+   Fidelity: P = e^(-1) ≈ 1 / 2.718 ≈ 0.368 (36.8% quantumness remains, 63.2% lost to noise)`,
+        result: 'Scaling requires multi-million qubit processors with active surface-code error correction to compute before decoherence sets in.',
       },
     },
   ],

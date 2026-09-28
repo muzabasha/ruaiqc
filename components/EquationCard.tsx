@@ -76,11 +76,11 @@ export default function EquationCard({ equation }: EquationCardProps) {
             <span className="mr-2">📊</span> Numerical Example
           </h4>
           <p className="text-gray-700 mb-2">{equation.example.description}</p>
-          <div className="bg-white rounded p-3 my-2 font-mono text-sm border border-blue-100 overflow-x-auto">
+          <div className="bg-white rounded p-3 my-2 font-mono text-sm border border-blue-100 overflow-x-auto whitespace-pre-line leading-relaxed">
             <MathRenderer content={equation.example.calculation} inline />
           </div>
           <p className="text-gray-700 font-medium mt-2">
-            <span className="text-blue-700">Result:</span> <MathRenderer content={equation.example.result} inline />
+            <span className="text-blue-700 font-semibold">Result:</span> <MathRenderer content={equation.example.result} inline />
           </p>
         </div>
       )}
