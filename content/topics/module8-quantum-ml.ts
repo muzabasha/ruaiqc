@@ -35,17 +35,35 @@ Together, they allow computers to find patterns in complex data that no classica
   ],
   equations: [
     {
-      latex: 'f(\\mathbf{x}; \\boldsymbol{\\theta}) = \\langle 0 | U^\\dagger(\\mathbf{x}) W^\\dagger(\\boldsymbol{\\theta}) M W(\\boldsymbol{\\theta}) U(\\mathbf{x}) | 0 \\rangle',
-      explanation: 'The fundamental mathematical model of a Quantum Neural Network: raw data x is embedded via U(x), transformed by learnable weights W(theta), and measured by observable M.',
+      latex: 'f(\mathbf{x}; \boldsymbol{\theta}) = \langle 0 | U^\dagger(\mathbf{x}) W^\dagger(\boldsymbol{\theta}) M W(\boldsymbol{\theta}) U(\mathbf{x}) | 0 \rangle = \text{Tr}\big( M \, W(\boldsymbol{\theta}) \rho(\mathbf{x}) W^\dagger(\boldsymbol{\theta}) \big)',
+      explanation: 'The Fundamental Quantum Machine Learning (QML) Model: In quantum machine learning, a quantum neural network processes classical data by first encoding input vector x into an entangled quantum state rho(x) = U(x)|0><0|U^dagger(x). Next, a parameterized variational ansatz W(theta) applies tunable rotation and entangling gates. Finally, a Hermitian observable M (such as Pauli-Z) is measured, yielding an expectation value in [-1, +1] that serves as the model’s prediction score.',
       symbols: [
-        { symbol: 'U(\\mathbf{x})', meaning: 'Quantum feature map', interpretation: 'Encodes classical data x into qubits' },
-        { symbol: 'W(\\boldsymbol{\\theta})', meaning: 'Variational ansatz', interpretation: 'Learnable weight rotations parameterized by theta' },
-        { symbol: 'M', meaning: 'Hermitian observable', interpretation: 'Readout measurement operator (e.g. Pauli Z)' },
+        { symbol: 'U(\mathbf{x})', meaning: 'Quantum Feature Map', interpretation: 'Unitary transformation mapping classical vector x into quantum Hilbert space' },
+        { symbol: 'W(\boldsymbol{\theta})', meaning: 'Parameterized Variational Ansatz', interpretation: 'Learnable quantum circuit weights theta optimized via gradient descent' },
+        { symbol: 'M', meaning: 'Hermitian Readout Observable', interpretation: 'Measurement operator whose statistical expectation value yields continuous prediction' },
+        { symbol: 'f(\mathbf{x}; \boldsymbol{\theta})', meaning: 'Model Prediction Score', interpretation: 'Output scalar bounded between the eigenvalues of observable M' },
       ],
       example: {
-        description: 'Input x=0.5 rotates qubit by 0.5 radians. Model weight theta=1.2 rotates further. Final Z measurement yields prediction score +0.82.',
-        calculation: 'f(x; \\theta) = \\langle Z \\rangle = \\cos(0.5 + 1.2) = \\cos(1.7) \\approx -0.129',
-        result: 'Prediction score: -0.129',
+        description: 'Evaluating a 1-qubit QML model with input feature x = 0.5 radians, trainable weight theta = 1.2 radians, and Pauli-Z readout observable:',
+        calculation: `Step 1: Quantum Feature Encoding U(x):
+   Apply Ry(x) on ground state |0⟩ with x = 0.5 rad (28.6°):
+   |ψ(x)⟩ = Ry(0.5)|0⟩ = cos(0.25)|0⟩ + sin(0.25)|1⟩
+   = 0.9689|0⟩ + 0.2474|1⟩
+
+Step 2: Apply Parameterized Ansatz W(θ):
+   Apply trainable rotation Ry(θ) with θ = 1.2 rad (68.8°):
+   Total rotation angle = x + θ = 0.5 + 1.2 = 1.70 radians
+   |ψ(x, θ)⟩ = Ry(1.70)|0⟩ = cos(0.85)|0⟩ + sin(0.85)|1⟩
+   = 0.6600|0⟩ + 0.7513|1⟩
+
+Step 3: Measure Expectation of Pauli-Z Observable (M = Z):
+   ⟨Z⟩ = |⟨0|ψ⟩|² - |⟨1|ψ⟩|²
+   = (0.6600)² - (0.7513)² = 0.4356 - 0.5644 = -0.1288
+   Analytical Check: cos(x + θ) = cos(1.70 rad) = -0.1288
+
+Step 4: Map to Binary Classification Probability:
+   P(Class 1) = (⟨Z⟩ + 1) / 2 = (-0.1288 + 1) / 2 = 0.4356 (43.56%)`,
+        result: 'The model predicts Class 0 with 56.44% confidence and Class 1 with 43.56% confidence.',
       },
     },
   ],
@@ -223,6 +241,37 @@ Reinforcement learning agents monitor qubit microwave pulse shapes, automaticall
     { term: 'Optimal Quantum Control (QOC)', simple: 'Using AI to shape microwave pulses so quantum gates execute with maximum precision.', technical: 'Numerical optimization of time-dependent control Hamiltonians $H(t) = H_0 + \\sum u_k(t) H_k$ via reinforcement learning or gradient ascent (GRAPE).' },
     { term: 'Quantum Advantage in ML', simple: 'When a quantum machine learning model outperforms any classical ML model on a specific dataset.', technical: 'Provable separation in sample complexity or computational complexity for learning discrete concept classes.' },
   ],
+  equations: [
+    {
+      latex: '\\epsilon \\le \\mathcal{O}\\left( \\sqrt{\\frac{d_{\\mathcal{H}}}{M}} \\right), \\quad F_Q(\\boldsymbol{\\theta}) = 4 \\, \\text{Re}\\left[ \\langle \\partial_i \\psi | \\partial_j \\psi \\rangle - \\langle \\partial_i \\psi | \\psi \\rangle \\langle \\psi | \\partial_j \\psi \\rangle \\right]',
+      explanation: 'Quantum Generalization Bound & Quantum Fisher Information: Evaluates the two-way synergy between AI and Quantum Computing. The Quantum Fisher Information Metric (QFIM) F_Q(theta) measures the geometric expressibility and capacity of quantum neural networks, revealing how quantum models can achieve lower generalization error epsilon with fewer training samples M when learning from quantum and high-dimensional data compared to classical models.',
+      symbols: [
+        { symbol: '\\epsilon', meaning: 'Generalization error bound', interpretation: 'Maximum expected gap between empirical training loss and true test loss' },
+        { symbol: 'd_{\\mathcal{H}}', meaning: 'Effective quantum dimension', interpretation: 'Hilbert space capacity accessible to the parameterized quantum ansatz' },
+        { symbol: 'M', meaning: 'Number of training samples', interpretation: 'Sample complexity required to achieve high classification accuracy' },
+        { symbol: 'F_Q(\\boldsymbol{\\theta})', meaning: 'Quantum Fisher Information Matrix', interpretation: 'Measures how sensitive the quantum state is to parameter updates theta' },
+      ],
+      example: {
+        description: 'Comparing the sample complexity of learning an entangled quantum concept with n = 10 qubits using Classical ML vs Quantum ML:',
+        calculation: `Step 1: Classical Learner Sample Requirement (Huang et al., 2022):
+   Classical ML must reconstruct the quantum state via shadow tomography.
+   Classical sample complexity: M_classical ~ Ω(2^n)
+   For n = 10 qubits: M_classical ~ 2^10 = 1,024 samples.
+   For n = 30 qubits: M_classical ~ 2^30 ≈ 1.07 × 10^9 samples!
+
+Step 2: Quantum Learner with Coherent Memory:
+   Quantum ML accesses entangled quantum states directly without collapse.
+   Quantum sample complexity: M_quantum ~ O(n)
+   For n = 10 qubits: M_quantum ~ 10 samples.
+   For n = 30 qubits: M_quantum ~ 30 samples!
+
+Step 3: Sample Advantage Ratio at n = 30:
+   Advantage = M_classical / M_quantum
+   = (1.07 × 10^9 samples) / (30 samples) ≈ 3.58 × 10^7× sample efficiency!`,
+        result: 'A quantum learner with quantum memory solves tasks with 35 million times fewer samples than any classical machine learning model.',
+      },
+    },
+  ],
   howItWorks: [
     { number: 1, title: 'Hardware Telemetry', description: 'Sensors record qubit drift, crosstalk, and frequency shifts in the dilution fridge.' },
     { number: 2, title: 'AI Calibration Loop', description: 'Deep RL agent adjusts microwave amplitude and phase envelopes to restore gate fidelity.' },
@@ -392,16 +441,30 @@ This is **Native Quantum Data**! The quantum computer ingests quantum states dir
   ],
   equations: [
     {
-      latex: '\\rho_{\\text{quantum}} = \\sum_{i} p_i |\\psi_i\\rangle\\langle\\psi_i|, \\quad \\text{Tr}(\\rho) = 1',
-      explanation: 'Density Matrix representation of native quantum data: encapsulates both quantum coherence and classical statistical mixtures.',
+      latex: 'S(\rho) = -\text{Tr}(\rho \log_2 \rho) = -\sum_{i} \lambda_i \log_2 \lambda_i, \quad \gamma(\rho) = \text{Tr}(\rho^2) \le 1',
+      explanation: 'Von Neumann Entropy and State Purity of Native Quantum Data: Unlike classical data vectors x in R^d, native quantum data from quantum sensors or molecular systems is characterized by density matrices rho. The Von Neumann Entropy S(rho) quantifies quantum disorder and entanglement entropy, while Purity gamma(rho) = Tr(rho^2) distinguishes pure quantum states (gamma = 1) from mixed statistical ensembles (gamma < 1).',
       symbols: [
-        { symbol: '\\rho', meaning: 'Density operator', interpretation: 'Complete representation of quantum data' },
-        { symbol: 'p_i', meaning: 'Ensemble probability', interpretation: 'Classical mixing fraction' },
+        { symbol: '\rho', meaning: 'Density matrix operator', interpretation: 'Positive semi-definite Hermitian matrix representing the quantum data state' },
+        { symbol: 'S(\rho)', meaning: 'Von Neumann Entropy', interpretation: 'Zero for pure states, maximum log2(d) for maximally mixed states' },
+        { symbol: '\lambda_i', meaning: 'Eigenvalues of density matrix rho', interpretation: 'Classical probabilities of the quantum state components, sum lambda_i = 1' },
+        { symbol: '\gamma(\rho)', meaning: 'Purity metric', interpretation: 'Tr(rho^2), indicating whether the data is pure (1.0) or noisy/mixed' },
       ],
       example: {
-        description: 'Native quantum sensor emits entangled Bell pair rho = |Phi+><Phi+| directly into quantum machine learning circuit.',
-        calculation: '\\rho = \\frac{1}{2}(|00\\rangle\\langle 00| + |00\\rangle\\langle 11| + |11\\rangle\\langle 00| + |11\\rangle\\langle 11|)',
-        result: 'Pure entangled quantum data input',
+        description: 'Analyzing a noisy quantum sensor output with 80% coherent state |0⟩ and 20% orthogonal state |1⟩:',
+        calculation: `Step 1: Construct the Density Matrix:
+   ρ = 0.80|0⟩⟨0| + 0.20|1⟩⟨1| = [[0.80, 0.0], [0.0, 0.20]]
+   Eigenvalues: λ1 = 0.80, λ2 = 0.20 (sum = 1.0)
+
+Step 2: Calculate State Purity γ(ρ) = Tr(ρ²):
+   ρ² = [[0.80², 0], [0, 0.20²]] = [[0.64, 0], [0, 0.04]]
+   γ(ρ) = 0.64 + 0.04 = 0.68 < 1.0 (Confirms state is mixed!)
+
+Step 3: Calculate Von Neumann Entropy S(ρ):
+   S(ρ) = -[ 0.80 log2(0.80) + 0.20 log2(0.20) ]
+   log2(0.80) = -0.3219, log2(0.20) = -2.3219
+   S(ρ) = -[ 0.80(-0.3219) + 0.20(-2.3219) ]
+   = -[ -0.2575 - 0.4644 ] = +0.7219 bits of entropy`,
+        result: 'The sensor data has 68% purity and 0.7219 bits of quantum entropy, providing the exact noise footprint for QML calibration.',
       },
     },
   ],
@@ -577,16 +640,30 @@ Choosing the right encoding strategy is the very first architectural decision of
   ],
   equations: [
     {
-      latex: '|\\mathbf{x}\\rangle = \\sum_{i=0}^{2^n-1} x_i |i\\rangle, \\quad \\sum_{i=0}^{2^n-1} |x_i|^2 = 1',
-      explanation: 'Amplitude Encoding: packs 2^n continuous features into the probability amplitudes of just n qubits.',
+      latex: '|\mathbf{x}_{\text{amp}}\rangle = \sum_{i=0}^{2^n-1} \frac{x_i}{\|\mathbf{x}\|_2} |i\rangle, \quad |\mathbf{x}_{\text{angle}}\rangle = \bigotimes_{j=1}^d \Big( \cos(x_j)|0\rangle + \sin(x_j)|1\rangle \Big)',
+      explanation: 'Amplitude Encoding vs Angle Encoding: The two foundational strategies for embedding classical datasets into quantum processors. Amplitude encoding achieves exponential compression by packing 2^n classical features into n qubits, but requires O(2^n) gates to synthesize. Angle encoding maps d features into d separate single-qubit rotations with constant depth O(1), ideal for NISQ processors.',
       symbols: [
-        { symbol: 'x_i', meaning: 'Normalized feature value', interpretation: 'Stored as amplitude of basis state i' },
-        { symbol: 'n', meaning: 'Qubits used', interpretation: 'log2 of dataset dimension' },
+        { symbol: '|\mathbf{x}_{\text{amp}}\rangle', meaning: 'Amplitude encoded state', interpretation: 'Superposition where amplitudes equal normalized feature values' },
+        { symbol: '|\mathbf{x}_{\text{angle}}\rangle', meaning: 'Angle encoded state', interpretation: 'Tensor product of independent single-qubit state rotations' },
+        { symbol: '\|\mathbf{x}\|_2', meaning: 'Euclidean L2 norm of feature vector', interpretation: 'Square root of sum of squares, ensuring quantum state normalizes to 1.0' },
+        { symbol: '2^n', meaning: 'Feature capacity of n qubits', interpretation: 'log2(N) qubits store N features in amplitude encoding' },
       ],
       example: {
-        description: 'Encoding 4 normalized features [0.5, 0.5, 0.5, 0.5] into 2 qubits: (1/2)|00> + (1/2)|01> + (1/2)|10> + (1/2)|11>.',
-        calculation: '\\|\\mathbf{x}\\|^2 = 4 \\times (0.5)^2 = 4 \\times 0.25 = 1.0',
-        result: '4 numbers stored in 2 qubits',
+        description: 'Encoding a 4-dimensional classical sensor reading x = [1.0, 2.0, 2.0, 1.0]^T using Amplitude Encoding on 2 qubits (n = log2 4 = 2):',
+        calculation: `Step 1: Compute Vector L2 Norm:
+   ||x||_2 = √(1.0² + 2.0² + 2.0² + 1.0²) = √(1 + 4 + 4 + 1) = √10 ≈ 3.1623
+
+Step 2: Normalize Feature Vector:
+   x_norm = [1/√10, 2/√10, 2/√10, 1/√10]^T
+   = [0.3162, 0.6325, 0.6325, 0.3162]^T
+   Check: 0.3162² + 0.6325² + 0.6325² + 0.3162² = 0.1 + 0.4 + 0.4 + 0.1 = 1.00
+
+Step 3: Construct the 2-Qubit Quantum State:
+   |ψ_amp⟩ = 0.3162|00⟩ + 0.6325|01⟩ + 0.6325|10⟩ + 0.3162|11⟩
+
+Step 4: Measurement Probabilities:
+   P(|00⟩) = 10%, P(|01⟩) = 40%, P(|10⟩) = 40%, P(|11⟩) = 10%`,
+        result: 'All 4 continuous features are successfully compressed into a single 2-qubit register with exact normalized amplitudes.',
       },
     },
   ],
@@ -757,16 +834,32 @@ Quantum Feature Maps pick up your tangled classical data and lift it into a vast
   ],
   equations: [
     {
-      latex: 'U_{\\Phi}(\\mathbf{x}) = \\exp\\left( i \\sum_{j} x_j Z_j + i \\sum_{j,k} (\\pi - x_j)(\\pi - x_k) Z_j Z_k \\right) H^{\\otimes n}',
-      explanation: 'The Havlicek ZZ-Feature Map unitary: combines Hadamard superposition with single-qubit Z rotations and two-qubit ZZ entangling interactions.',
+      latex: 'U_{\Phi}(\mathbf{x}) = \exp\left( i \sum_{j=1}^n x_j Z_j + i \sum_{j < k}^n (\pi - x_j)(\pi - x_k) Z_j Z_k \right) H^{\otimes n}',
+      explanation: 'The Havlicek ZZ-Feature Map (IBM Quantum): Maps classical data into non-linearly entangled quantum states. By combining initial Hadamard superpositions with single-qubit phase rotations and two-qubit Z_j Z_k entangling interactions whose phases scale as (pi - x_j)(pi - x_k), this feature map creates quantum correlations that are proven to be classically hard to simulate.',
       symbols: [
-        { symbol: 'x_j', meaning: 'Input feature j', interpretation: 'Rotates single qubit' },
-        { symbol: 'Z_j Z_k', meaning: 'Two-qubit Pauli-Z interaction', interpretation: 'Entangles feature cross-products' },
+        { symbol: 'U_\Phi(\mathbf{x})', meaning: 'Non-linear feature map unitary', interpretation: 'Prepares the quantum feature state |Phi(x)> = U_Phi(x)|0>^n' },
+        { symbol: 'H^{\otimes n}', meaning: 'Layer of Hadamard gates', interpretation: 'Initializes all qubits into uniform quantum superposition' },
+        { symbol: 'Z_j', meaning: 'Pauli-Z operator on qubit j', interpretation: 'Encodes individual feature x_j into single-qubit phase' },
+        { symbol: 'Z_j Z_k', meaning: 'Two-qubit Ising coupling', interpretation: 'Encodes non-linear cross-product interaction between features j and k' },
       ],
       example: {
-        description: 'For 2 features [x1, x2], the circuit creates entanglement proportional to (pi - x1)*(pi - x2), embedding non-linear correlations into quantum phase.',
-        calculation: '\\text{Phase}_{12} = (\\pi - x_1)(\\pi - x_2)',
-        result: 'Cross-feature interaction mapped to entanglement',
+        description: 'Computing the non-linear entangling phase for a 2-feature data sample x1 = 0.5 and x2 = 1.2 in a 2-qubit ZZ-Feature Map:',
+        calculation: `Step 1: Compute Single-Qubit Rotation Angles:
+   θ_1 = 2 × x1 = 2 × 0.5 = 1.00 radian (57.3°)
+   θ_2 = 2 × x2 = 2 × 1.2 = 2.40 radians (137.5°)
+
+Step 2: Compute Two-Qubit Non-linear Entangling Phase:
+   Phase_12 = 2 × (π - x1) × (π - x2)
+   π - x1 = 3.1416 - 0.5 = 2.6416
+   π - x2 = 3.1416 - 1.2 = 1.9416
+   Phase_12 = 2 × (2.6416 × 1.9416) = 2 × 5.1289 = 10.2578 radians
+
+Step 3: Modulo 2π Reduction for Hardware Execution:
+   10.2578 mod 2π = 10.2578 - 6.2832 = 3.9746 radians (227.7°)
+
+Step 4: Circuit Implementation:
+   Synthesized using CNOT(0, 1) -> Rz(3.9746, 1) -> CNOT(0, 1)`,
+        result: 'The non-linear product of features x1 and x2 is mapped directly into an entangled 2-qubit relative phase of 3.9746 radians.',
       },
     },
   ],
@@ -935,17 +1028,32 @@ The resulting Gram matrix $\\mathbf{K} \\in \\mathbb{R}^{N \\times N}$ is symmet
   ],
   equations: [
     {
-      latex: 'K(\\mathbf{x}, \\mathbf{x}\') = |\\langle 0 | U_\\Phi^\\dagger(\\mathbf{x}\') U_\\Phi(\\mathbf{x}) | 0 \\rangle|^2',
-      explanation: 'The Quantum Kernel circuit: apply feature map U(x) to encode x, then apply inverted feature map U_dagger(x\') to encode x_prime, and measure probability of returning to |00...0>.',
+      latex: 'K(\mathbf{x}, \mathbf{x}^\prime) = \big| \langle \Phi(\mathbf{x}^\prime) | \Phi(\mathbf{x}) \rangle \big|^2 = \big| \langle 0^{\otimes n} | U_\Phi^\dagger(\mathbf{x}^\prime) U_\Phi(\mathbf{x}) | 0^{\otimes n} \rangle \big|^2 = \text{Tr}\big( \rho(\mathbf{x}) \rho(\mathbf{x}^\prime) \big)',
+      explanation: 'Quantum Kernel Estimation (Transition Probability): Evaluates the similarity between two classical data samples x and x prime directly in 2^n-dimensional Hilbert space. The kernel value equals the transition probability of preparing state |Phi(x)>, applying the adjoint circuit U_dagger(x prime), and measuring the probability of collapsing back to the all-zero state |00...0>. The resulting Gram matrix is fed into a classical Support Vector Machine (QSVC).',
       symbols: [
-        { symbol: 'U_\\Phi(\\mathbf{x})', meaning: 'Feature map for data x', interpretation: 'Encodes first point' },
-        { symbol: 'U_\\Phi^\\dagger(\\mathbf{x}\')', meaning: 'Inverted feature map for x\'', interpretation: 'Encodes second point in reverse' },
-        { symbol: 'K(\\mathbf{x}, \\mathbf{x}\')', meaning: 'Quantum similarity score', interpretation: 'Between 0.0 (orthogonal) and 1.0 (identical)' },
+        { symbol: 'K(\mathbf{x}, \mathbf{x}^\prime)', meaning: 'Quantum kernel similarity score', interpretation: 'Bounded in [0.0, 1.0], where 1.0 is identical and 0.0 is orthogonal' },
+        { symbol: '|\Phi(\mathbf{x})\rangle', meaning: 'Quantum state of sample x', interpretation: 'State vector created by feature map U(x)|0>' },
+        { symbol: 'U_\Phi^\dagger(\mathbf{x}^\prime)', meaning: 'Adjoint feature map for sample x prime', interpretation: 'Inverted circuit running the second data point in reverse' },
+        { symbol: '|0^{\otimes n}\rangle', meaning: 'All-zero ground state', interpretation: 'Reference state measured to determine transition probability overlap' },
       ],
       example: {
-        description: 'Comparing identical points x = x\': U_dagger(x) * U(x) = Identity. State returns to |0> with 100% certainty: K(x, x) = 1.0.',
-        calculation: 'K(x, x) = |\\langle 0 | I | 0 \\rangle|^2 = 1.0',
-        result: 'Self-similarity is always exactly 1.0',
+        description: 'Computing the quantum kernel similarity between two 1-qubit data points x = 0.2 and x prime = 0.8 with angle feature map U(x) = Ry(2x):',
+        calculation: `Step 1: Compute State Overlap:
+   U(x)|0⟩ = Ry(0.4)|0⟩
+   U(x')|0⟩ = Ry(1.6)|0⟩
+   Combined Unitary: U_dagger(x') · U(x) = Ry(-1.6) · Ry(0.4) = Ry(0.4 - 1.6) = Ry(-1.2)
+
+Step 2: Evaluate Statevector After Inverted Circuit:
+   |ψ_test⟩ = Ry(-1.2)|0⟩ = cos(-0.6)|0⟩ + sin(-0.6)|1⟩
+   cos(-0.6) = 0.8253, sin(-0.6) = -0.5646
+   |ψ_test⟩ = 0.8253|0⟩ - 0.5646|1⟩
+
+Step 3: Measure Overlap with Ground State |0⟩:
+   K(x, x') = |⟨0|ψ_test⟩|² = |0.8253|² = 0.6812 (68.12%)
+
+Step 4: Self-Similarity Verification:
+   For identical points x = x': Ry(0.4 - 0.4) = Ry(0) = I → |⟨0|0⟩|² = 1.00 (100%)`,
+        result: 'Points x and x prime have a quantum kernel similarity score of 0.6812, populating matrix entry K_12 in the Gram matrix.',
       },
     },
   ],
@@ -1148,17 +1256,32 @@ For standard Pauli rotation generators with $r = 1/2$, the shift is $\\pm \\pi/2
   ],
   equations: [
     {
-      latex: '\\frac{\\partial \\langle M \\rangle}{\\partial \\theta} = \\frac{\\langle M \\rangle_{\\theta + \\frac{\\pi}{2}} - \\langle M \\rangle_{\\theta - \\frac{\\pi}{2}}}{2}',
-      explanation: 'The Parameter Shift Rule for single-qubit Pauli rotation generators: the exact derivative is half the difference between expectation values evaluated at theta + pi/2 and theta - pi/2.',
+      latex: '\frac{\partial \langle M \rangle}{\partial \theta_j} = \frac{\langle M \rangle_{\theta_j + \frac{\pi}{2}} - \langle M \rangle_{\theta_j - \frac{\pi}{2}}}{2}, \quad \boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t - \eta \nabla_{\boldsymbol{\theta}} \mathcal{L}',
+      explanation: 'The Parameter-Shift Rule for Parameterized Quantum Circuits (PQCs): Computes mathematically exact partial derivatives of quantum expectations on real quantum hardware without numerical finite-difference approximation errors. By evaluating the circuit at two macro-shifts (theta_j + pi/2 and theta_j - pi/2), the exact analytical gradient is obtained directly from hardware measurements, immune to small-step shot noise.',
       symbols: [
-        { symbol: '\\langle M \\rangle', meaning: 'Quantum expectation value', interpretation: 'Loss score' },
-        { symbol: '\\theta', meaning: 'Trainable gate parameter', interpretation: 'Angle in radians' },
-        { symbol: '\\pi/2', meaning: 'Shift angle', interpretation: '90 degrees' },
+        { symbol: '\frac{\partial \langle M \rangle}{\partial \theta_j}', meaning: 'Exact analytical gradient', interpretation: 'Derivative of expectation value with respect to gate parameter theta_j' },
+        { symbol: '\langle M \rangle_{\theta + \pi/2}', meaning: 'Forward shifted expectation', interpretation: 'Measurement outcome with parameter shifted forward by +90 degrees' },
+        { symbol: '\langle M \rangle_{\theta - \pi/2}', meaning: 'Backward shifted expectation', interpretation: 'Measurement outcome with parameter shifted backward by -90 degrees' },
+        { symbol: '\eta', meaning: 'Optimizer learning rate', interpretation: 'Step size taken along the negative gradient direction' },
       ],
       example: {
-        description: 'Testing a knob at theta = 1.0. Shifted forward (theta + pi/2) gives score 0.8. Shifted backward (theta - pi/2) gives score -0.2.',
-        calculation: '\\text{Gradient} = \\frac{0.8 - (-0.2)}{2} = \\frac{1.0}{2} = 0.50',
-        result: 'Exact analytical gradient = 0.50',
+        description: 'Optimizing a variational gate parameter currently at theta = 0.70 radians with learning rate eta = 0.20 using the Parameter-Shift Rule:',
+        calculation: `Step 1: Execute Forward Shift (θ + π/2):
+   θ_forward = 0.70 + 1.5708 = 2.2708 radians
+   Measure expectation on QPU: ⟨M⟩_forward = -0.6420
+
+Step 2: Execute Backward Shift (θ - π/2):
+   θ_backward = 0.70 - 1.5708 = -0.8708 radians
+   Measure expectation on QPU: ⟨M⟩_backward = +0.6420
+
+Step 3: Compute Exact Analytical Gradient:
+   ∂⟨M⟩/∂θ = [ ⟨M⟩_forward - ⟨M⟩_backward ] / 2
+   = [ -0.6420 - (+0.6420) ] / 2 = -1.2840 / 2 = -0.6420
+
+Step 4: Update Parameter via Gradient Descent:
+   θ_new = θ - η · (∂⟨M⟩/∂θ)
+   = 0.70 - (0.20 × -0.6420) = 0.70 + 0.1284 = 0.8284 radians`,
+        result: 'Parameter theta updates from 0.70 to 0.8284 radians, stepping directly toward the optimal minimum.',
       },
     },
   ],
@@ -1328,16 +1451,31 @@ In a **Variational Quantum Classifier (VQC)**, they form a tight feedback loop:
   ],
   equations: [
     {
-      latex: '\\hat{y}(\\mathbf{x}) = \\langle \\Phi(\\mathbf{x}) | W^\\dagger(\\boldsymbol{\\theta}) Z_0 W(\\boldsymbol{\\theta}) | \\Phi(\\mathbf{x}) \\rangle',
-      explanation: 'VQC Prediction: input x is encoded into state |Phi(x)>, evolved by trainable variational circuit W(theta), and measured by Pauli-Z on qubit 0 to yield expectation value in [-1, +1].',
+      latex: '\hat{y}(\mathbf{x}) = \frac{\langle Z_0 \rangle_{\mathbf{x}, \boldsymbol{\theta}} + 1}{2}, \quad \mathcal{L}_{\text{BCE}}(\boldsymbol{\theta}) = -\frac{1}{M}\sum_{m=1}^M \Big[ y^{(m)} \log \hat{y}^{(m)} + (1 - y^{(m)}) \log(1 - \hat{y}^{(m)}) \Big]',
+      explanation: 'Variational Quantum Classifier (VQC) Output Calibration & Binary Cross-Entropy Loss: In a VQC, the quantum expectation value <Z_0> in [-1, +1] is mapped onto a calibrated probability y_hat in [0, 1] via the affine transformation y_hat = (<Z> + 1)/2. The classical optimizer updates the ansatz rotation angles theta by minimizing the binary cross-entropy loss across the training dataset.',
       symbols: [
-        { symbol: '\\hat{y}', meaning: 'Predicted label score', interpretation: 'Positive = Class 1, Negative = Class 0' },
-        { symbol: 'Z_0', meaning: 'Pauli-Z observable on first qubit', interpretation: 'Measurement head' },
+        { symbol: '\hat{y}(\mathbf{x})', meaning: 'Predicted probability of Class 1', interpretation: 'Calibrated output probability bounded between 0.0 and 1.0' },
+        { symbol: '\langle Z_0 \rangle', meaning: 'Pauli-Z expectation value on qubit 0', interpretation: 'Physical QPU measurement value between -1.0 and +1.0' },
+        { symbol: '\mathcal{L}_{\text{BCE}}', meaning: 'Binary Cross-Entropy Loss', interpretation: 'Supervised classification error minimized by classical optimizer' },
+        { symbol: 'y^{(m)}', meaning: 'Ground-truth label', interpretation: 'True binary class label (1 or 0) for training sample m' },
       ],
       example: {
-        description: 'Expectation value <Z> = +0.75 maps to Class 1 with 87.5% probability; <Z> = -0.60 maps to Class 0.',
-        calculation: 'P(\\text{Class 1}) = \\frac{\\langle Z \\rangle + 1}{2} = \\frac{0.75 + 1}{2} = 0.875',
-        result: 'Calibrated binary class probability',
+        description: 'Evaluating VQC prediction and cross-entropy loss for a training sample with ground truth y = 1 when the quantum circuit yields <Z_0> = +0.72:',
+        calculation: `Step 1: Map Pauli-Z Expectation to Probability:
+   ⟨Z0⟩ = +0.72
+   y_hat = (⟨Z0⟩ + 1) / 2 = (+0.72 + 1) / 2 = 1.72 / 2 = 0.860 (86.0%)
+
+Step 2: Determine Binary Classification Decision (threshold = 0.5):
+   y_hat = 0.860 ≥ 0.50 → Predicted Label: Class 1 (Correct match!)
+
+Step 3: Compute Sample Cross-Entropy Loss:
+   Loss = -[ y · ln(y_hat) + (1 - y) · ln(1 - y_hat) ]
+   Since y = 1: Loss = -ln(0.860) = -(-0.1508) = 0.1508
+
+Step 4: Comparison with Poor Prediction (if ⟨Z0⟩ was -0.60):
+   y_hat_bad = (-0.60 + 1)/2 = 0.20
+   Loss_bad = -ln(0.20) = 1.6094 (10.7× higher penalty!)`,
+        result: 'The VQC achieves an 86.0% probability for the true class with a low cross-entropy error of 0.1508.',
       },
     },
   ],
@@ -1548,17 +1686,31 @@ Because the reverse light-cone of local observables in QCNNs is bounded independ
   ],
   equations: [
     {
-      latex: 'U_{\\text{QNN}}(\\boldsymbol{\\theta}) = \\prod_{l=1}^L \\left( \\prod_{j=1}^n R(\\theta_{lj}) \\cdot \\prod_{\\langle j, k \\rangle} CX_{jk} \\right)',
-      explanation: 'Strongly Entangling QNN Layer: alternates single-qubit arbitrary rotations R with entangling CNOT rings across all adjacent qubit pairs.',
+      latex: 'U_{\text{QNN}}(\boldsymbol{\theta}) = \prod_{l=1}^L \left( \bigotimes_{j=1}^n R(\theta_{lj}) \cdot \prod_{\langle j, k \rangle} CX_{jk} \right), \quad \text{Var}_{\boldsymbol{\theta}}\left( \frac{\partial \langle O \rangle}{\partial \theta_k} \right) \sim \mathcal{O}(2^{-n})',
+      explanation: 'Quantum Neural Network Architecture & The Barren Plateau Phenomenon: Describes a multi-layer Parameterized Quantum Neural Network (QNN) alternating arbitrary single-qubit rotations with entangling gates across L layers. In deep unstructured random QNNs, McClean et al. proved that gradient variance vanishes exponentially as O(2^-n), known as a Barren Plateau, requiring specialized architectures (QCNNs, local observables) to train effectively.',
       symbols: [
-        { symbol: 'L', meaning: 'Number of layers', interpretation: 'Depth of the quantum network' },
-        { symbol: 'R(\\theta)', meaning: 'Arbitrary single-qubit rotation', interpretation: 'Rotational weights' },
-        { symbol: 'CX_{jk}', meaning: 'Entangling CNOT gates', interpretation: 'Connects neighbor qubits' },
+        { symbol: 'L', meaning: 'Number of QNN layers', interpretation: 'Depth of parameterized transformations' },
+        { symbol: 'R(\theta)', meaning: 'Parameterized single-qubit rotation', interpretation: 'Rx, Ry, Rz gates acting as trainable synaptic weights' },
+        { symbol: 'CX_{jk}', meaning: 'Two-qubit entangling gates', interpretation: 'Simulates multi-qubit synaptic connectivity between neighboring qubits' },
+        { symbol: '\text{Var}(\partial \langle O \rangle)', meaning: 'Gradient variance across parameter space', interpretation: 'Decays exponentially as 2^-n in deep random circuits' },
       ],
       example: {
-        description: 'A 2-layer QNN on 4 qubits contains 4*3*2 = 24 rotational weights and 8 entangling CNOT gates.',
-        calculation: '\\text{Parameters} = 4 \\text{ qubits} \\times 3 \\text{ angles (Rx, Ry, Rz)} \\times 2 \\text{ layers} = 24',
-        result: '24 learnable parameters in QNN',
+        description: 'Comparing gradient variance decay between a small 4-qubit QNN and a larger 20-qubit QNN on a global observable:',
+        calculation: `Step 1: Evaluate 4-Qubit QNN Variance Scaling:
+   State space dimension: 2^4 = 16
+   Expected gradient variance: Var_4 ~ 1 / 2^4 = 1 / 16 = 0.0625
+   Standard Deviation: σ_4 = √0.0625 = 0.25 (Easily measurable with 1,000 shots!)
+
+Step 2: Evaluate 20-Qubit QNN Variance Scaling (Barren Plateau):
+   State space dimension: 2^20 = 1,048,576
+   Expected gradient variance: Var_20 ~ 1 / 2^20 ≈ 9.54 × 10^-7
+   Standard Deviation: σ_20 = √(9.54 × 10^-7) ≈ 0.000977
+
+Step 3: Shot Requirement to Detect Gradient Direction:
+   Shots needed ~ 1 / Var
+   4 qubits: ~16 shots
+   20 qubits: ~1,048,576 shots (> 1 million measurement shots for ONE step!)`,
+        result: 'The 20-qubit network requires over 1 million shots per gradient step due to barren plateaus, demonstrating why local cost functions are essential.',
       },
     },
   ],
@@ -1742,17 +1894,33 @@ This hybrid architecture is the undisputed state of the art in practical NISQ co
   ],
   equations: [
     {
-      latex: '\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{w}_{\\text{classical}}} = \\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{y}_{\\text{pred}}} \\cdot \\frac{\\partial \\mathbf{y}_{\\text{pred}}}{\\partial \\mathbf{x}_{\\text{quantum}}} \\cdot \\frac{\\partial \\mathbf{x}_{\\text{quantum}}}{\\partial \\mathbf{w}_{\\text{classical}}}',
-      explanation: 'End-to-End Hybrid Backpropagation: the Chain Rule flows smoothly backward from the loss through the quantum layer (via parameter-shift) and into the classical convolutional weights.',
+      latex: '\frac{\partial \mathcal{L}}{\partial \mathbf{w}_{\text{classical}}} = \frac{\partial \mathcal{L}}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial \langle M \rangle_{\text{quantum}}} \cdot \frac{\partial \langle M \rangle_{\text{quantum}}}{\partial \boldsymbol{\theta}_{\text{quantum}}} \cdot \frac{\partial \boldsymbol{\theta}_{\text{quantum}}}{\partial \mathbf{w}_{\text{classical}}}',
+      explanation: 'End-to-End Hybrid Quantum-Classical Backpropagation: Enables seamless gradient flow through a combined neural network where classical layers (e.g. ResNet, PyTorch Linear) feed into a parameterized quantum circuit layer. The backward pass splits the chain rule: PyTorch autograd evaluates classical Jacobians, while the quantum layer executes the Parameter-Shift Rule to compute quantum gradients.',
       symbols: [
-        { symbol: '\\mathcal{L}', meaning: 'Total loss', interpretation: 'Prediction error' },
-        { symbol: '\\mathbf{x}_{\\text{quantum}}', meaning: 'Quantum layer inputs', interpretation: 'Classical features fed into qubits' },
-        { symbol: '\\mathbf{w}_{\\text{classical}}', meaning: 'Classical weights', interpretation: 'CNN filters' },
+        { symbol: '\mathbf{w}_{\text{classical}}', meaning: 'Classical neural network weights', interpretation: 'Convolutional filter weights or linear layer parameters' },
+        { symbol: '\boldsymbol{\theta}_{\text{quantum}}', meaning: 'Quantum circuit rotation parameters', interpretation: 'Angles driven by classical features' },
+        { symbol: '\langle M \rangle_{\text{quantum}}', meaning: 'Quantum measurement expectation', interpretation: 'Output scalar passed from QPU to classical output layer' },
+        { symbol: '\frac{\partial \langle M \rangle}{\partial \boldsymbol{\theta}}', meaning: 'Quantum parameter-shift gradient', interpretation: 'Evaluated using two circuit executions on QPU' },
       ],
       example: {
-        description: 'Error gradient flows through quantum circuit and backpropagates into classical CNN layers, updating both classical filters and quantum gate angles simultaneously.',
-        calculation: '\\text{Grad}_{\\text{total}} = \\text{Grad}_{\\text{loss}} \\times \\text{Grad}_{\\text{quantum}} \\times \\text{Grad}_{\\text{CNN}}',
-        result: 'Seamless end-to-end gradient descent',
+        description: 'Tracing end-to-end backpropagation through a hybrid PyTorch-Qiskit model: Loss -> Quantum Layer -> Classical Dense Layer:',
+        calculation: `Step 1: Classical Loss Gradient (∂L/∂y_hat):
+   Binary Cross-Entropy Loss with y = 1, y_hat = 0.70:
+   ∂L/∂y_hat = -1 / y_hat = -1 / 0.70 = -1.4286
+
+Step 2: Probability Mapping Derivative (∂y_hat/∂⟨M⟩):
+   y_hat = (⟨M⟩ + 1) / 2 → ∂y_hat/∂⟨M⟩ = 0.50
+
+Step 3: Quantum Layer Parameter-Shift Derivative (∂⟨M⟩/∂θ):
+   QPU evaluation: ⟨M⟩_(θ+π/2) = 0.85, ⟨M⟩_(θ-π/2) = -0.15
+   ∂⟨M⟩/∂θ = (0.85 - (-0.15)) / 2 = 1.00 / 2 = 0.50
+
+Step 4: Classical Input Layer Jacobian (∂θ/∂w):
+   θ = w · x with feature x = 2.0 → ∂θ/∂w = 2.0
+
+Step 5: Apply Full Chain Rule:
+   ∂L/∂w = (-1.4286) × (0.50) × (0.50) × (2.0) = -0.7143`,
+        result: 'The classical weight receives an exact end-to-end gradient update of -0.7143, updating classical and quantum parameters simultaneously.',
       },
     },
   ],

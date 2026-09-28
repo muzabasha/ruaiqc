@@ -36,17 +36,28 @@ A quantum algorithm is not merely a classical algorithm running on a colder chip
   ],
   equations: [
     {
-      latex: '\\text{BPP} \\subseteq \\text{BQP} \\subseteq \\text{PSPACE}',
-      explanation: 'The computational complexity hierarchy: BQP contains all efficient classical randomized algorithms (BPP) and is bounded within polynomial memory space (PSPACE).',
+      latex: '\text{BPP} \subseteq \text{BQP} \subseteq \text{PSPACE}, \quad \text{Speedup} = \frac{T_{\text{classical}}(N)}{T_{\text{quantum}}(N)}',
+      explanation: 'Computational Complexity Hierarchy & Quantum Advantage: BPP represents problems that classical computers can solve efficiently with randomness (like quicksort or Monte Carlo). BQP (Bounded-Error Quantum Polynomial-Time) represents problems that quantum computers can solve in polynomial time with ≤ 1/3 error probability. Quantum algorithms provide super-polynomial speedups for problems like integer factoring and discrete logarithms, unlocking solutions that take classical computers billions of years.',
       symbols: [
-        { symbol: '\\text{BPP}', meaning: 'Classical randomized polynomial time', interpretation: 'What classical computers can solve efficiently' },
-        { symbol: '\\text{BQP}', meaning: 'Quantum polynomial time', interpretation: 'What quantum computers can solve efficiently' },
-        { symbol: '\\text{PSPACE}', meaning: 'Polynomial memory space', interpretation: 'Theoretical classical memory bound' },
+        { symbol: '\text{BPP}', meaning: 'Bounded-Error Probabilistic Polynomial-Time', interpretation: 'What ordinary classical computers can solve efficiently within reasonable time' },
+        { symbol: '\text{BQP}', meaning: 'Bounded-Error Quantum Polynomial-Time', interpretation: 'What quantum computers can solve efficiently using polynomial-depth quantum circuits' },
+        { symbol: '\text{PSPACE}', meaning: 'Polynomial Space Complexity', interpretation: 'Problems solvable with a reasonable amount of memory, regardless of execution time' },
+        { symbol: '\subseteq', meaning: 'Subset relation', interpretation: 'Every problem solvable classically in BPP is also solvable quantumly in BQP (BPP ⊆ BQP)' },
       ],
       example: {
-        description: 'Integer factorization is believed to be outside BPP (intractable for classical computers), but inside BQP (solved efficiently by Shor’s algorithm).',
-        calculation: '\\text{Factoring} \\in \\text{BQP} \\setminus \\text{BPP} \\implies \\text{Exponential Quantum Advantage}',
-        result: 'Solvable in polynomial time on quantum processors',
+        description: 'Comparing classical vs quantum runtime scaling for factoring an RSA-2048 key (N = 2^2048):',
+        calculation: `Classical General Number Field Sieve (BPP / Sub-exponential):
+   Operations: ~10^30
+   Time at 1 quadrillion ops/sec = ~31.7 billion years (> age of universe: 13.8 billion years)
+
+Quantum Shor's Algorithm (BQP / Polynomial):
+   Key size: k = 2,048 bits
+   Operations: O(k^3) = (2,048)^3 ≈ 8.59 × 10^9 operations
+   Time at 1 MHz gate clock rate = 8,590 seconds ≈ 2.4 HOURS!
+
+Speedup Ratio:
+   Speedup = (31.7 billion years) / (2.4 hours) ≈ 1.15 × 10^14× faster!`,
+        result: 'Transforms an intractable calculation taking billions of years into a computation that finishes in hours.',
       },
     },
   ],
@@ -174,17 +185,24 @@ Evaluating $f(x)$ on all $2^n$ inputs in a single circuit depth call.`,
   ],
   equations: [
     {
-      latex: 'U_f |x\\rangle|-\\rangle = (-1)^{f(x)} |x\\rangle|-\\rangle',
-      explanation: 'The Phase Kickback Equation: when the target qubit is prepared in state |-> = (|0> - |1>)/sqrt(2), the output f(x) kicks back as a relative phase (-1)^f(x) on the input state.',
+      latex: 'U_f |x\rangle |-\rangle = (-1)^{f(x)} |x\rangle |-\rangle, \quad \text{where } |-\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}}',
+      explanation: 'The Phase Kickback Equation: A quantum oracle evaluates a secret function f(x) reversibly. When the helper (ancilla) target qubit is prepared in the out-of-phase state |–⟩ = (|0⟩ - |1⟩)/√2, the output value f(x) is miraculously "kicked back" into the phase of the input register as (-1)^{f(x)}, without altering the target qubit at all!',
       symbols: [
-        { symbol: 'U_f', meaning: 'Quantum oracle', interpretation: 'Reversible function evaluator' },
-        { symbol: '|-\\rangle', meaning: 'Minus target state', interpretation: 'Ancilla qubit in (|0> - |1>)/sqrt(2)' },
-        { symbol: '(-1)^{f(x)}', meaning: 'Phase kickback factor', interpretation: '+1 if f(x)=0, -1 if f(x)=1' },
+        { symbol: 'U_f', meaning: 'Quantum Oracle operator', interpretation: 'A black-box quantum gate implementing |x⟩|y⟩ → |x⟩|y ⊕ f(x)⟩' },
+        { symbol: '|x\rangle', meaning: 'Input query state', interpretation: 'Can be an individual bitstring or an equal superposition of all possible inputs' },
+        { symbol: '|-\rangle', meaning: 'Ancilla target qubit in minus state', interpretation: 'The catalyst qubit prepared as (|0⟩ - |1⟩)/√2' },
+        { symbol: '(-1)^{f(x)}', meaning: 'Phase kickback factor', interpretation: 'If f(x)=0, phase is (-1)⁰ = +1 (no change). If f(x)=1, phase is (-1)¹ = -1 (phase flipped!)' },
       ],
       example: {
-        description: 'If f(x) = 0, phase is (-1)^0 = +1. If f(x) = 1, phase is (-1)^1 = -1.',
-        calculation: 'U_f|x\\rangle|-\\rangle = (-1)^{f(x)}|x\\rangle|-\\rangle',
-        result: 'Function values are encoded directly into quantum interference phases',
+        description: 'Evaluating phase kickback for an oracle where f(0) = 0 and f(1) = 1 on superposition |+⟩ = (|0⟩ + |1⟩)/√2:',
+        calculation: `Input state: |ψ_in⟩ = [ (|0⟩ + |1⟩)/√2 ] ⊗ |–⟩
+Step 1: Apply Oracle U_f to branch x = 0:
+   f(0) = 0 → (-1)^0 |0⟩ |–⟩ = +1 |0⟩ |–⟩
+Step 2: Apply Oracle U_f to branch x = 1:
+   f(1) = 1 → (-1)^1 |1⟩ |–⟩ = -1 |1⟩ |–⟩
+Step 3: Combine the output register:
+   |ψ_out⟩ = [ (|0⟩ - |1⟩)/√2 ] ⊗ |–⟩ = |–⟩ ⊗ |–⟩`,
+        result: 'The input state flipped from |+⟩ to |–⟩ purely from phase kickback, turning the function outputs directly into readable quantum phase.',
       },
     },
   ],
@@ -312,16 +330,28 @@ Solved in a single shot!`,
   ],
   equations: [
     {
-      latex: '|\\psi_{\\text{final}}\\rangle = \\sum_{z=0}^{2^n-1} \\left( \\frac{1}{2^n} \\sum_{x=0}^{2^n-1} (-1)^{f(x) + x \\cdot z} \\right) |z\\rangle',
-      explanation: 'The final state before measurement in Deutsch-Jozsa: for z = 00...0, the inner amplitude is (1/2^n) * sum (-1)^f(x).',
+      latex: '|\psi_{\text{final}}\rangle = \sum_{z=0}^{2^n-1} \left( \frac{1}{2^n} \sum_{x=0}^{2^n-1} (-1)^{f(x) + x \cdot z} \right) |z\rangle, \quad P(|00\dots0\rangle) = \left| \frac{1}{2^n} \sum_{x=0}^{2^n-1} (-1)^{f(x)} \right|^2',
+      explanation: 'The Deutsch-Jozsa Global Property Equation: Determines with 100% certainty whether an n-qubit function f(x) is Constant (outputs the same bit for all inputs) or Balanced (outputs 0 for half and 1 for the other half) in a SINGLE query! Measuring the all-zero state |00...0⟩ yields 100% if constant, and exactly 0% if balanced.',
       symbols: [
-        { symbol: 'z = 0', meaning: 'All-zero state |00...0>', interpretation: 'Marker for constant function' },
-        { symbol: '(-1)^{f(x)}', meaning: 'Phase kickback factor', interpretation: 'Cancels to 0 if balanced' },
+        { symbol: 'x', meaning: 'Input query bitstring', interpretation: 'Runs across all 2^n possible inputs simultaneously' },
+        { symbol: 'z', meaning: 'Output measurement state', interpretation: 'Measured bitstring after applying final Hadamard interference gates' },
+        { symbol: 'x \cdot z', meaning: 'Bitwise dot product', interpretation: 'Modulo-2 sum of matching bits (x1 z1 ⊕ ... ⊕ xn zn)' },
+        { symbol: 'P(|00\dots0\rangle)', meaning: 'All-zero outcome probability', interpretation: '1.0 (100%) if f is Constant; exactly 0.0 (0%) if f is Balanced' },
       ],
       example: {
-        description: 'If f is balanced, sum (-1)^f(x) has equal numbers of +1 and -1, summing to exactly 0. Thus amplitude for |00...0> is 0!',
-        calculation: '\\sum (-1)^{f(x)} = 2^{n-1}(+1) + 2^{n-1}(-1) = 0 \\implies P(|0\\dots0\\rangle) = 0.0',
-        result: 'Measuring anything other than 0 proves function is balanced',
+        description: 'Running Deutsch-Jozsa on a 2-qubit balanced function with 4 inputs where f(00)=0, f(01)=0, f(10)=1, f(11)=1:',
+        calculation: `Inputs: 2 qubits → 2^2 = 4 inputs (N = 4)
+Classical requirement: Must check N/2 + 1 = 3 inputs in worst-case.
+
+Quantum calculation of amplitude for |00⟩:
+Amplitude = (1/4) × [ (-1)^{f(00)} + (-1)^{f(01)} + (-1)^{f(10)} + (-1)^{f(11)} ]
+= (1/4) × [ (-1)^0 + (-1)^0 + (-1)^1 + (-1)^1 ]
+= (1/4) × [ (+1) + (+1) + (-1) + (-1) ]
+= (1/4) × [ 0 ] = 0.0
+
+Measurement probability of |00⟩:
+P(|00⟩) = |0.0|^2 = 0.00 (0% chance!)`,
+        result: 'Because P(|00⟩) = 0, we measure a non-zero state and conclude the function is Balanced with 100% certainty in ONE single query!',
       },
     },
   ],
@@ -461,17 +491,29 @@ In the 2D subspace spanned by $|\\omega\\rangle$ and $|s'\\rangle = \\frac{1}{\\
   ],
   equations: [
     {
-      latex: 'R \\approx \\frac{\\pi}{4} \\sqrt{N}, \\quad D = 2|s\\rangle\\langle s| - I',
-      explanation: 'Optimal Grover iterations R to reach near 100% success probability, and the Diffusion reflection operator D.',
+      latex: 'R \approx \left\lfloor \frac{\pi}{4} \sqrt{N} \right\rfloor, \quad D = 2|s\rangle\langle s| - I, \quad \theta = 2 \arcsin\left(\frac{1}{\sqrt{N}}\right)',
+      explanation: 'Grover Amplitude Amplification & Inversion About the Mean: Searches an unsorted database of N items. Each iteration applies an Oracle (which flips the sign of the marked item) followed by the Grover Diffusion operator D = 2|s⟩⟨s| - I (which reflects all amplitudes across their average mean). Repeating this R ≈ (π/4)√N times boosts the target item probability to near 100%.',
       symbols: [
-        { symbol: 'R', meaning: 'Optimal number of iterations', interpretation: 'How many times to repeat the loop' },
-        { symbol: 'N', meaning: 'Search space size (2^n)', interpretation: 'Total items in database' },
-        { symbol: '|s\\rangle', meaning: 'Uniform superposition state', interpretation: 'Equal blend of all states' },
+        { symbol: 'N', meaning: 'Total search space size', interpretation: 'Number of items in the unsorted database (N = 2^n)' },
+        { symbol: 'R', meaning: 'Optimal iteration count', interpretation: 'Number of times to run the Oracle + Diffusion loop' },
+        { symbol: '|s\rangle', meaning: 'Uniform superposition state', interpretation: 'Equal mixture of all states: |s⟩ = (1/√N) ∑ |x⟩' },
+        { symbol: 'D', meaning: 'Diffusion operator (Inversion about mean)', interpretation: '2|s⟩⟨s| - I, reflecting amplitudes across the average' },
+        { symbol: '\theta', meaning: 'Rotation angle per Grover step', interpretation: 'Angular step rotating the state vector toward the target item in 2D Hilbert space' },
       ],
       example: {
-        description: 'Searching database of 1,000,000 items: sqrt(1,000,000) = 1,000. R = (pi/4) * 1000 ≈ 785 iterations.',
-        calculation: 'R = 0.785 \\times 1000 = 785 \\text{ iterations vs 500,000 classical}',
-        result: '636x faster than classical search',
+        description: 'Searching for 1 marked item among N = 4 items (2 qubits, |s⟩ = [0.5, 0.5, 0.5, 0.5]^T) where target is |11⟩:',
+        calculation: `Initial State: |s⟩ = [0.5, 0.5, 0.5, 0.5]^T (each has 25% probability)
+Optimal iterations: R = (π/4) × √4 = (3.1415 / 4) × 2 ≈ 1.57 → R = 1 iteration!
+
+Step 1: Apply Oracle (flips target |11⟩):
+   Amplitudes become: [+0.5, +0.5, +0.5, -0.5]^T
+Step 2: Calculate Mean Amplitude (μ):
+   μ = (0.5 + 0.5 + 0.5 - 0.5) / 4 = 1.0 / 4 = +0.25
+Step 3: Apply Diffusion Operator (Invert about mean: a_new = 2μ - a_old):
+   • For non-targets: 2(0.25) - 0.5 = 0.5 - 0.5 = 0.0
+   • For target |11⟩: 2(0.25) - (-0.5) = 0.5 + 0.5 = 1.0
+   New Amplitudes: [0.0, 0.0, 0.0, 1.0]^T`,
+        result: 'In just 1 single iteration, the target item |11⟩ reaches exactly 100% probability (P(|11⟩) = 1.0² = 1.00)!',
       },
     },
   ],
@@ -633,16 +675,27 @@ The circuit is synthesized using $n$ Hadamard gates and $n(n-1)/2$ Controlled-Ph
   ],
   equations: [
     {
-      latex: '|j\\rangle \\xrightarrow{\\text{QFT}} \\frac{1}{\\sqrt{2^n}} \\big(|0\\rangle + e^{2\\pi i 0.j_n}|1\\rangle\\big) \\otimes \\dots \\otimes \\big(|0\\rangle + e^{2\\pi i 0.j_1 j_2 \\dots j_n}|1\\rangle\\big)',
-      explanation: 'Product representation of QFT: factorizes the multi-qubit Fourier transform into unentangled single-qubit phase rotations using binary fraction notation.',
+      latex: '|j\\rangle \\xrightarrow{\\text{QFT}} \\frac{1}{\\sqrt{2^n}} \\sum_{k=0}^{2^n-1} e^{2\\pi i j k / 2^n} |k\\rangle = \\frac{1}{\\sqrt{2^n}} \\big(|0\\rangle + e^{2\\pi i 0.j_n}|1\\rangle\\big) \\otimes \\dots \\otimes \\big(|0\\rangle + e^{2\\pi i 0.j_1 \\dots j_n}|1\\rangle\\big)',
+      explanation: 'The Quantum Fourier Transform (QFT): The quantum analog of the Discrete Fourier Transform (DFT). It converts computational basis states into frequency/phase representations with exponential efficiency (O(n²) gates vs O(n 2^n) classical FFT operations). It is the mathematical engine behind Shor’s factoring and quantum phase estimation.',
       symbols: [
-        { symbol: '0.j_1 j_2 \\dots j_n', meaning: 'Binary fraction', interpretation: '\\sum_{l=1}^n j_l 2^{-l}' },
-        { symbol: 'n', meaning: 'Number of qubits', interpretation: 'Register width' },
+        { symbol: '|j\rangle', meaning: 'Input computational state', interpretation: 'Integer j ∈ {0, ..., 2^n - 1} encoded in binary' },
+        { symbol: 'e^{2\pi i j k / 2^n}', meaning: 'Fourier phase factor', interpretation: 'Complex root of unity rotating the phase proportional to frequency j · k' },
+        { symbol: '0.j_1 j_2 \dots j_n', meaning: 'Binary fraction notation', interpretation: '∑_{l=1}^n j_l 2^{-l} representing fractional phase angle rotations' },
+        { symbol: '\mathcal{O}(n^2)', meaning: 'Quantum circuit gate scaling', interpretation: 'Requires only n(n+1)/2 Hadamard and Controlled-Phase gates' },
       ],
       example: {
-        description: 'For 1 qubit, QFT is identical to the Hadamard gate! H|j> = (1/sqrt(2))(|0> + (-1)^j|1>).',
-        calculation: '\\text{QFT}_1 = \\frac{1}{\\sqrt{2}} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix} = H',
-        result: '1-qubit QFT is the Hadamard gate',
+        description: 'Applying QFT to a single qubit (n = 1):',
+        calculation: `For n = 1, 2^1 = 2 states:
+Formula: |j⟩ → (1/√2) [ |0⟩ + e^{2π i j / 2} |1⟩ ]
+
+Case 1: Input |0⟩ (j = 0):
+   e^{2π i (0)/2} = e^0 = 1
+   QFT |0⟩ = (1/√2) [ |0⟩ + 1|1⟩ ] = (|0⟩ + |1⟩)/√2 = |+⟩ (Equivalent to Hadamard!)
+
+Case 2: Input |1⟩ (j = 1):
+   e^{2π i (1)/2} = e^{i π} = -1 (Euler's identity!)
+   QFT |1⟩ = (1/√2) [ |0⟩ + (-1)|1⟩ ] = (|0⟩ - |1⟩)/√2 = |–⟩`,
+        result: 'For 1 qubit, the QFT is exactly the Hadamard gate. For n qubits, it maps multi-qubit periodicity directly into readable peak frequencies.',
       },
     },
   ],
@@ -776,17 +829,29 @@ You will step through the computational stages, monitor how the quantum amplitud
   ],
   equations: [
     {
-      latex: 'P(\\text{Success}) = \\sin^2\\left( \\frac{2k+1}{2} \\theta \\right), \\quad \\theta = 2 \\arcsin\\left( \\frac{1}{\\sqrt{N}} \\right)',
-      explanation: 'Exact analytical success probability of Grover’s search after k iterations on an N-item database.',
+      latex: 'P(\text{Success}) = \sin^2\left( \frac{2k+1}{2} \theta \right), \quad \theta = 2 \arcsin\left( \frac{1}{\sqrt{N}} \right)',
+      explanation: 'Analytical Success Probability of Grover’s Algorithm: Describes the geometric trajectory of the quantum state rotating toward the marked solution in 2D Hilbert space. Executing k iterations rotates the state by (2k+1)θ/2. If you execute too many iterations, the probability "overshoots" and begins decreasing!',
       symbols: [
-        { symbol: 'k', meaning: 'Number of executed iterations', interpretation: 'Number of loop passes' },
-        { symbol: '\\theta', meaning: 'Angular rotation per step', interpretation: 'Step size in Hilbert space' },
-        { symbol: 'N', meaning: 'Database size', interpretation: 'Total candidates' },
+        { symbol: 'k', meaning: 'Executed iteration count', interpretation: 'Number of Grover loop passes executed so far' },
+        { symbol: '\theta', meaning: 'Angular rotation per Grover step', interpretation: '2 arcsin(1/√N), the angle rotated toward the solution per step' },
+        { symbol: 'N', meaning: 'Database size', interpretation: 'Total entries in the search space (2^n)' },
+        { symbol: 'P(\text{Success})', meaning: 'Probability of measuring target item', interpretation: 'Peaks near 100% when (2k+1)θ/2 ≈ π/2' },
       ],
       example: {
-        description: 'For N = 4 (theta = pi/3) after k = 1 iteration: P = sin^2(3*pi/6) = sin^2(pi/2) = 1.0 (100% exact success).',
-        calculation: 'P = \\sin^2(\\pi / 2) = 1.0 = 100\\%',
-        result: 'Guaranteed 100% deterministic success for N=4',
+        description: 'Calculating the success probability for N = 8 items (3 qubits) at k = 1 and k = 2 iterations:',
+        calculation: `Step 1: Calculate angle θ for N = 8:
+   1/√8 = 1 / 2.8284 ≈ 0.3536
+   arcsin(0.3536) ≈ 0.3614 radians (20.7°)
+   θ = 2 × 0.3614 = 0.7227 radians (41.4°)
+
+Step 2: Evaluate at k = 1 iteration:
+   Angle = (2(1) + 1)/2 × θ = (3/2) × 0.7227 = 1.0841 radians (62.1°)
+   P_success = sin^2(1.0841) = (0.8839)^2 ≈ 0.781 (78.1%)
+
+Step 3: Evaluate at k = 2 iterations:
+   Angle = (2(2) + 1)/2 × θ = (5/2) × 0.7227 = 1.8068 radians (103.5°)
+   P_success = sin^2(1.8068) = (0.972)^2 ≈ 0.945 (94.5%)`,
+        result: 'At k = 2 iterations, the success probability reaches 94.5%, finding the secret item among 8 choices with high confidence.',
       },
     },
   ],
