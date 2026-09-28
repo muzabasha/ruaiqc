@@ -34,13 +34,13 @@ A horizontal line represents a single qubit progressing forward in time from lef
   ],
   equations: [
     {
-      latex: '|\psi_{\text{final}}\rangle = U_k \dots U_2 U_1 |0\rangle^{\otimes n}',
+      latex: '|\\psi_{\\text{final}}\\rangle = U_k \\dots U_2 U_1 |0\\rangle^{\\otimes n}',
       explanation: 'Chronological Gate Ordering in Quantum Circuits: In a circuit diagram, quantum gates are read from left to right like notes on a music score. However, in linear algebra, matrix operations are written from right to left! The first gate applied ($U_1$) acts on the initial ground state first, followed sequentially by $U_2$ up to $U_k$.',
       symbols: [
-        { symbol: '|0\rangle^{\otimes n}', meaning: 'Initial ground state of n qubits', interpretation: 'All n qubits initialized to standard zero |00...0⟩' },
+        { symbol: '|0\\rangle^{\\otimes n}', meaning: 'Initial ground state of $n$ qubits', interpretation: 'All $n$ qubits initialized to standard zero $|00\\dots 0\\rangle$' },
         { symbol: 'U_1', meaning: 'First gate applied chronologically', interpretation: 'The first physical pulse acting on the initial state' },
-        { symbol: 'U_2 \dots U_k', meaning: 'Subsequent quantum gates', interpretation: 'Sequential unitary matrix operations applied in order' },
-        { symbol: '|\psi_{\text{final}}\rangle', meaning: 'Final output state vector', interpretation: 'The resulting multi-qubit state ready for readout measurement' },
+        { symbol: 'U_2 \\dots U_k', meaning: 'Subsequent quantum gates', interpretation: 'Sequential unitary matrix operations applied in order' },
+        { symbol: '|\\psi_{\\text{final}}\\rangle', meaning: 'Final output state vector', interpretation: 'The resulting multi-qubit state ready for readout measurement' },
       ],
       example: {
         description: 'Tracing a 1-qubit circuit with two gates: first Hadamard (H), then Pauli-X (X):',
@@ -221,13 +221,13 @@ Every time you add a single qubit to the register, its memory capacity doubles!`
   ],
   equations: [
     {
-      latex: '|\psi\rangle = \sum_{x=0}^{2^n-1} c_x |x\rangle = c_0 |00\dots0\rangle + c_1 |00\dots1\rangle + \dots + c_{2^n-1} |11\dots1\rangle',
+      latex: '|\\psi\\rangle = \\sum_{x=0}^{2^n-1} c_x |x\\rangle = c_0 |00\\dots0\\rangle + c_1 |00\\dots1\\rangle + \\dots + c_{2^n-1} |11\\dots1\\rangle',
       explanation: 'Multi-Qubit Quantum Register Representation: An n-qubit quantum register does not store just n classical bits. It holds a simultaneous superposition of all 2^n binary configurations at once, each weighted by a complex probability amplitude c_x whose squared magnitudes sum to 100%.',
       symbols: [
         { symbol: 'n', meaning: 'Register width (qubit count)', interpretation: 'The number of quantum wires grouped together' },
-        { symbol: '2^n', meaning: 'Total basis states', interpretation: 'Exponential dimension: 2 qubits = 4 states, 3 qubits = 8 states, n qubits = 2^n states' },
-        { symbol: '|x\rangle', meaning: 'Binary basis state bitstring', interpretation: 'Standard integer encoded as binary (e.g., |0⟩=|00⟩, |1⟩=|01⟩, |2⟩=|10⟩, |3⟩=|11⟩)' },
-        { symbol: 'c_x', meaning: 'State probability amplitude', interpretation: 'Complex number whose squared magnitude gives real probability P(x) = |c_x|²' },
+        { symbol: '2^n', meaning: 'Total basis states', interpretation: 'Exponential dimension: 2 qubits = 4 states, 3 qubits = 8 states, $n$ qubits = $2^n$ states' },
+        { symbol: '|x\\rangle', meaning: 'Binary basis state bitstring', interpretation: 'Standard integer encoded as binary (e.g., $|0\\rangle=|00\\rangle$, $|1\\rangle=|01\\rangle$, $|2\\rangle=|10\\rangle$, $|3\\rangle=|11\\rangle$)' },
+        { symbol: 'c_x', meaning: 'State probability amplitude', interpretation: 'Complex number whose squared magnitude gives real probability $P(x) = |c_x|^2$' },
       ],
       example: {
         description: 'Evaluating a 2-qubit register (n = 2, 2^2 = 4 states) in state |ψ⟩ = 0.5|00⟩ + 0.5|01⟩ + 0.5|10⟩ + 0.5|11⟩:',
@@ -407,12 +407,12 @@ Quantum gates are two-way roundabouts:
   ],
   equations: [
     {
-      latex: 'U = \begin{pmatrix} u_{00} & u_{01} \\ u_{10} & u_{11} \end{pmatrix}, \quad U^\dagger = \begin{pmatrix} u_{00}^* & u_{10}^* \\ u_{01}^* & u_{11}^* \end{pmatrix}, \quad U U^\dagger = U^\dagger U = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} = I',
+      latex: 'U = \\begin{pmatrix} u_{00} & u_{01} \\\\ u_{10} & u_{11} \\end{pmatrix}, \\quad U^\\dagger = \\begin{pmatrix} u_{00}^* & u_{10}^* \\\\ u_{01}^* & u_{11}^* \\end{pmatrix}, \\quad U U^\\dagger = U^\\dagger U = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} = I',
       explanation: 'Unitary Condition for Quantum Gates: Unlike classical gates that destroy information (like AND or OR), all quantum gates are reversible unitary transformations. Multiplying gate U by its conjugate transpose U† yields the Identity matrix I, preserving state vector length and total probability with zero information loss.',
       symbols: [
-        { symbol: 'U', meaning: 'Unitary quantum gate matrix', interpretation: 'A 2×2 complex matrix that rotates the quantum state vector' },
-        { symbol: 'U^\dagger', meaning: 'Hermitian adjoint (dagger)', interpretation: 'Transpose rows and columns, then take complex conjugate (i → -i)' },
-        { symbol: 'U U^\dagger = I', meaning: 'Unitarity condition', interpretation: 'Guarantee that the operation is 100% reversible with zero information loss' },
+        { symbol: 'U', meaning: 'Unitary quantum gate matrix', interpretation: 'A $2 \\times 2$ complex matrix that rotates the quantum state vector' },
+        { symbol: 'U^\\dagger', meaning: 'Hermitian adjoint (dagger)', interpretation: 'Transpose rows and columns, then take complex conjugate (i → -i)' },
+        { symbol: 'U U^\\dagger = I', meaning: 'Unitarity condition', interpretation: 'Guarantee that the operation is 100% reversible with zero information loss' },
         { symbol: 'I = [[1, 0], [0, 1]]', meaning: 'Identity matrix', interpretation: 'The do-nothing base matrix that leaves state vectors unchanged' },
       ],
       example: {
@@ -597,12 +597,12 @@ It acts as a bit-flip operator: $X|x\\rangle = |x \\oplus 1\\rangle$ for $x \\in
   ],
   equations: [
     {
-      latex: 'X = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}, \quad X |0\rangle = |1\rangle, \quad X |1\rangle = |0\rangle, \quad X^2 = I',
+      latex: 'X = \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix}, \\quad X |0\\rangle = |1\\rangle, \\quad X |1\\rangle = |0\\rangle, \\quad X^2 = I',
       explanation: 'The Pauli-X Quantum NOT Gate: Acts as a 180-degree rotation around the X-axis of the Bloch sphere. It swaps the probability amplitudes of |0⟩ and |1⟩. Applying the X gate twice (X² = X · X = I) returns the qubit back to its original state.',
       symbols: [
         { symbol: 'X', meaning: 'Pauli-X matrix', interpretation: 'The quantum bit-flip operator [[0, 1], [1, 0]]' },
-        { symbol: 'X |0\rangle = |1\rangle', meaning: 'Bit-flip on ground state', interpretation: 'Transforms standard 0 into standard 1' },
-        { symbol: 'X |1\rangle = |0\rangle', meaning: 'Bit-flip on excited state', interpretation: 'Transforms standard 1 into standard 0' },
+        { symbol: 'X |0\\rangle = |1\\rangle', meaning: 'Bit-flip on ground state', interpretation: 'Transforms standard 0 into standard 1' },
+        { symbol: 'X |1\\rangle = |0\\rangle', meaning: 'Bit-flip on excited state', interpretation: 'Transforms standard 1 into standard 0' },
         { symbol: 'X^2 = I', meaning: 'Self-inverse property', interpretation: 'Applying NOT twice flips back to original (NOT NOT = no change)' },
       ],
       example: {
@@ -787,13 +787,13 @@ It acts on computational basis states as $Y|0\\rangle = i|1\\rangle$ and $Y|1\\r
   ],
   equations: [
     {
-      latex: 'Y = \begin{pmatrix} 0 & -i \\ i & 0 \end{pmatrix}, \quad Y |0\rangle = i|1\rangle, \quad Y |1\rangle = -i|0\rangle, \quad Y = i X Z',
+      latex: 'Y = \\begin{pmatrix} 0 & -i \\\\ i & 0 \\end{pmatrix}, \\quad Y |0\\rangle = i|1\\rangle, \\quad Y |1\\rangle = -i|0\\rangle, \\quad Y = i X Z',
       explanation: 'The Pauli-Y Gate (Bit & Phase Flip): Performs both a bit flip (like X) and a phase flip (like Z) simultaneously, rotating the state vector by 180 degrees around the Y-axis of the Bloch sphere using the complex imaginary unit i.',
       symbols: [
         { symbol: 'Y', meaning: 'Pauli-Y matrix', interpretation: 'The combined bit-and-phase flip operator [[0, -i], [i, 0]]' },
         { symbol: 'i', meaning: 'Imaginary unit (i² = -1)', interpretation: 'Introduces a 90-degree complex phase shift' },
-        { symbol: 'Y |0\rangle = i|1\rangle', meaning: 'Action on ground state', interpretation: 'Flips |0⟩ to |1⟩ and attaches phase factor +i' },
-        { symbol: 'Y |1\rangle = -i|0\rangle', meaning: 'Action on excited state', interpretation: 'Flips |1⟩ to |0⟩ and attaches phase factor -i' },
+        { symbol: 'Y |0\\rangle = i|1\\rangle', meaning: 'Action on ground state', interpretation: 'Flips $|0\\rangle$ to $|1\\rangle$ and attaches phase factor $+i$' },
+        { symbol: 'Y |1\\rangle = -i|0\\rangle', meaning: 'Action on excited state', interpretation: 'Flips $|1\\rangle$ to $|0\\rangle$ and attaches phase factor $-i$' },
       ],
       example: {
         description: 'Applying Pauli-Y to state |0⟩ = [1, 0]^T and verifying probability:',
@@ -974,13 +974,13 @@ It acts as $Z|x\\rangle = (-1)^x |x\\rangle$. It leaves the computational basis 
   ],
   equations: [
     {
-      latex: 'Z = \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix}, \quad Z |0\rangle = |0\rangle, \quad Z |1\rangle = -|1\rangle, \quad Z |+\rangle = |-\rangle',
+      latex: 'Z = \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix}, \\quad Z |0\\rangle = |0\\rangle, \\quad Z |1\\rangle = -|1\\rangle, \\quad Z |+\\rangle = |-\\rangle',
       explanation: 'The Pauli-Z Phase-Flip Gate: Leaves basis state |0⟩ untouched (Z|0⟩ = |0⟩), but inverts the sign of basis state |1⟩ (Z|1⟩ = -|1⟩). It acts as the fundamental phase-manipulation tool, converting in-phase superposition |+⟩ into out-of-phase superposition |–⟩.',
       symbols: [
         { symbol: 'Z', meaning: 'Pauli-Z matrix', interpretation: 'Diagonal phase-inversion operator [[1, 0], [0, -1]]' },
-        { symbol: 'Z |0\rangle = |0\rangle', meaning: 'Zero invariance', interpretation: 'Basis state 0 experiences zero phase shift' },
-        { symbol: 'Z |1\rangle = -|1\rangle', meaning: 'Phase flip on 1', interpretation: 'Basis state 1 is multiplied by -1 (180-degree phase shift)' },
-        { symbol: 'Z |+\rangle = |-\rangle', meaning: 'Superposition phase toggle', interpretation: 'Transforms (|0⟩+|1⟩)/√2 into (|0⟩-|1⟩)/√2' },
+        { symbol: 'Z |0\\rangle = |0\\rangle', meaning: 'Zero invariance', interpretation: 'Basis state 0 experiences zero phase shift' },
+        { symbol: 'Z |1\\rangle = -|1\\rangle', meaning: 'Phase flip on 1', interpretation: 'Basis state 1 is multiplied by -1 (180-degree phase shift)' },
+        { symbol: 'Z |+\\rangle = |-\\rangle', meaning: 'Superposition phase toggle', interpretation: 'Transforms $(|0\\rangle+|1\\rangle)/\\sqrt{2}$ into $(|0\\rangle-|1\\rangle)/\\sqrt{2}$' },
       ],
       example: {
         description: 'Applying Pauli-Z to equal superposition state |+⟩ = [1/√2, 1/√2]^T:',
@@ -1160,13 +1160,13 @@ It maps between the computational $Z$-basis $\\{|0\\rangle, |1\\rangle\\}$ and t
   ],
   equations: [
     {
-      latex: 'H = \frac{1}{\sqrt{2}} \begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}, \quad H |0\rangle = \frac{|0\rangle + |1\rangle}{\sqrt{2}} = |+\rangle, \quad H |1\rangle = \frac{|0\rangle - |1\rangle}{\sqrt{2}} = |-\rangle',
+      latex: 'H = \\frac{1}{\\sqrt{2}} \\begin{pmatrix} 1 & 1 \\\\ 1 & -1 \\end{pmatrix}, \\quad H |0\\rangle = \\frac{|0\\rangle + |1\\rangle}{\\sqrt{2}} = |+\\rangle, \\quad H |1\\rangle = \\frac{|0\\rangle - |1\\rangle}{\\sqrt{2}} = |-\\rangle',
       explanation: 'The Hadamard Gate (Quantum Equalizer): The most fundamental gate in quantum computing. It converts pure classical bits (|0⟩ or |1⟩) into 50/50 quantum superpositions (|+⟩ or |–⟩), and vice-versa! Applying H twice returns the state back to the start (H² = I).',
       symbols: [
         { symbol: 'H', meaning: 'Hadamard matrix', interpretation: 'Superposition generator (1/√2) [[1, 1], [1, -1]]' },
-        { symbol: '1/\sqrt{2}', meaning: 'Normalization factor ≈ 0.7071', interpretation: 'Ensures (1/√2)² = 0.50 (50% probability)' },
-        { symbol: 'H |0\rangle = |+\rangle', meaning: 'Ground state expansion', interpretation: 'Opens |0⟩ into equal superposition with + sign' },
-        { symbol: 'H |1\rangle = |-\rangle', meaning: 'Excited state expansion', interpretation: 'Opens |1⟩ into equal superposition with - sign' },
+        { symbol: '1/\\sqrt{2}', meaning: 'Normalization factor $\\approx 0.7071$', interpretation: 'Ensures $(1/\\sqrt{2})^2 = 0.50$ (50% probability)' },
+        { symbol: 'H |0\\rangle = |+\\rangle', meaning: 'Ground state expansion', interpretation: 'Opens $|0\\rangle$ into equal superposition with $+$ sign' },
+        { symbol: 'H |1\\rangle = |-\\rangle', meaning: 'Excited state expansion', interpretation: 'Opens $|1\\rangle$ into equal superposition with $-$ sign' },
       ],
       example: {
         description: 'Demonstrating that applying H twice reverses superposition: H(H |0⟩) = |0⟩:',
@@ -1358,13 +1358,13 @@ If the control is in superposition $\\alpha|0\\rangle + \\beta|1\\rangle$, the o
   ],
   equations: [
     {
-      latex: 'C(U) = |0\rangle\langle 0| \otimes I + |1\rangle\langle 1| \otimes U = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & u_{00} & u_{01} \\ 0 & 0 & u_{10} & u_{11} \end{pmatrix}',
+      latex: 'C(U) = |0\\rangle\\langle 0| \\otimes I + |1\\rangle\\langle 1| \\otimes U = \\begin{pmatrix} 1 & 0 & 0 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ 0 & 0 & u_{00} & u_{01} \\\\ 0 & 0 & u_{10} & u_{11} \\end{pmatrix}',
       explanation: 'Controlled-U Gate (Quantum If-Then Logic): Operates on two qubits: a control qubit and a target qubit. If the control qubit is |0⟩, the target qubit is left completely untouched (I). If the control qubit is |1⟩, the unitary gate U is applied to the target qubit. If the control is in superposition, it creates an entangled superposition of both branches simultaneously!',
       symbols: [
         { symbol: 'C(U)', meaning: 'Controlled-U 4×4 matrix', interpretation: 'Two-qubit conditional logic operator' },
-        { symbol: '|0\rangle\langle 0| \otimes I', meaning: 'Inactive branch (control = 0)', interpretation: 'Leaves target qubit unchanged (top-left 2×2 Identity block)' },
-        { symbol: '|1\rangle\langle 1| \otimes U', meaning: 'Active branch (control = 1)', interpretation: 'Applies gate U to target qubit (bottom-right 2×2 block)' },
-        { symbol: '\otimes', meaning: 'Kronecker tensor product', interpretation: 'Combines independent quantum operations across multi-qubit systems' },
+        { symbol: '|0\\rangle\\langle 0| \\otimes I', meaning: 'Inactive branch (control = 0)', interpretation: 'Leaves target qubit unchanged (top-left $2 \\times 2$ Identity block)' },
+        { symbol: '|1\\rangle\\langle 1| \\otimes U', meaning: 'Active branch (control = 1)', interpretation: 'Applies gate $U$ to target qubit (bottom-right $2 \\times 2$ block)' },
+        { symbol: '\\otimes', meaning: 'Kronecker tensor product', interpretation: 'Combines independent quantum operations across multi-qubit systems' },
       ],
       example: {
         description: 'Constructing and verifying Controlled-Z (CZ) where U = Z = [[1, 0], [0, -1]]:',
@@ -1547,13 +1547,13 @@ Together with single-qubit unitary operations $U(2)$, the set $\\{CX, U(2)\\}$ f
   ],
   equations: [
     {
-      latex: 'CX |c, t\rangle = |c, c \oplus t\rangle, \quad CX = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0 \end{pmatrix}',
+      latex: 'CX |c, t\\rangle = |c, c \\oplus t\\rangle, \\quad CX = \\begin{pmatrix} 1 & 0 & 0 & 0 \\\\ 0 & 1 & 0 & 0 \\\\ 0 & 0 & 0 & 1 \\\\ 0 & 0 & 1 & 0 \\end{pmatrix}',
       explanation: 'The Controlled-NOT (CNOT / CX) Gate: The bedrock of quantum computing and entanglement. If control qubit c = 0, target qubit t stays the same (0 ⊕ t = t). If control c = 1, target qubit t flips (1 ⊕ t = NOT t). Applying CNOT when the control qubit is in superposition creates the famous entangled Bell state!',
       symbols: [
         { symbol: 'c', meaning: 'Control qubit bit (0 or 1)', interpretation: 'Remains unchanged after the gate' },
         { symbol: 't', meaning: 'Target qubit bit (0 or 1)', interpretation: 'Flips if and only if c = 1' },
-        { symbol: 'c \oplus t', meaning: 'Bitwise XOR (addition modulo 2)', interpretation: 'Classical XOR truth table: 0⊕0=0, 0⊕1=1, 1⊕0=1, 1⊕1=0' },
-        { symbol: 'CX', meaning: '4×4 CNOT permutation matrix', interpretation: 'Swaps basis states |10⟩ ↔ |11⟩ while leaving |00⟩ and |01⟩ fixed' },
+        { symbol: 'c \\oplus t', meaning: 'Bitwise XOR (addition modulo 2)', interpretation: 'Classical XOR truth table: $0\\oplus 0=0$, $0\\oplus 1=1$, $1\\oplus 0=1$, $1\\oplus 1=0$' },
+        { symbol: 'CX', meaning: '4×4 CNOT permutation matrix', interpretation: 'Swaps basis states $|10\\rangle \\leftrightarrow |11\\rangle$ while leaving $|00\\rangle$ and $|01\\rangle$ fixed' },
       ],
       example: {
         description: 'Creating the entangled Bell state |Φ+⟩ using Hadamard on qubit 0, followed by CNOT(0 → 1):',
@@ -1759,13 +1759,13 @@ This dynamic feed-forward capability is the essential prerequisite for real-time
   ],
   equations: [
     {
-      latex: 'P(q_0 = 0) = |\alpha_{00}|^2 + |\alpha_{01}|^2, \quad |\psi_{\text{collapsed}}\rangle = \frac{\alpha_{00}|00\rangle + \alpha_{01}|01\rangle}{\sqrt{|\alpha_{00}|^2 + |\alpha_{01}|^2}}',
+      latex: 'P(q_0 = 0) = |\\alpha_{00}|^2 + |\\alpha_{01}|^2, \\quad |\\psi_{\\text{collapsed}}\\rangle = \\frac{\\alpha_{00}|00\\rangle + \\alpha_{01}|01\\rangle}{\\sqrt{|\\alpha_{00}|^2 + |\\alpha_{01}|^2}}',
       explanation: 'Partial Measurement & Partial Wavefunction Collapse: When you measure only ONE qubit in an n-qubit register (e.g. measuring qubit 0), you sum the squared amplitudes of all basis states where that qubit is 0. The unmeasured qubits remain in quantum superposition, but the measured qubit snaps into a classical bit!',
       symbols: [
         { symbol: 'P(q_0 = 0)', meaning: 'Probability qubit 0 collapses to 0', interpretation: 'Sum of probabilities of all states with 0 in the first position' },
-        { symbol: '\alpha_{00}, \alpha_{01}', meaning: 'Amplitudes of compatible states', interpretation: 'Weights of states |00⟩ and |01⟩ where q0 = 0' },
-        { symbol: '|\psi_{\text{collapsed}}\rangle', meaning: 'Partial collapsed state vector', interpretation: 'The remaining quantum state for the other unmeasured qubits' },
-        { symbol: '\sqrt{\dots}', meaning: 'Renormalization denominator', interpretation: 'Restores total probability back to 100% (1.0)' },
+        { symbol: '\\alpha_{00}, \\alpha_{01}', meaning: 'Amplitudes of compatible states', interpretation: 'Weights of states $|00\\rangle$ and $|01\\rangle$ where $q_0 = 0$' },
+        { symbol: '|\\psi_{\\text{collapsed}}\\rangle', meaning: 'Partial collapsed state vector', interpretation: 'The remaining quantum state for the other unmeasured qubits' },
+        { symbol: '\\sqrt{\\dots}', meaning: 'Renormalization denominator', interpretation: 'Restores total probability back to 100% (1.0)' },
       ],
       example: {
         description: 'Measuring qubit 0 on state |ψ⟩ = 0.5|00⟩ + 0.5|01⟩ + 0.707|10⟩:',
@@ -1959,7 +1959,7 @@ Today, Qiskit is the most widely used quantum programming framework in the world
         { symbol: 'C', meaning: 'Quantum circuit object (QuantumCircuit)', interpretation: 'The program structure containing qubits, gates, and classical registers' },
         { symbol: '\\text{Depth}(C)', meaning: 'Circuit depth (time slices)', interpretation: 'Longest sequence of dependent gates along any single qubit wire' },
         { symbol: '\\text{Gates}(C)', meaning: 'Total gate count', interpretation: 'Total number of quantum gate operations in the circuit' },
-        { symbol: '\\tau(g)', meaning: 'Physical gate duration', interpretation: 'Time needed by microwave pulse (single-qubit gate ≈ 20 ns, CNOT ≈ 200 ns)' },
+        { symbol: '\\tau(g)', meaning: 'Physical gate duration', interpretation: 'Time needed by microwave pulse (single-qubit gate $\\approx 20$ ns, CNOT $\\approx 200$ ns)' },
       ],
       example: {
         description: 'Analyzing depth and execution duration for a 2-qubit circuit with H on q0, H on q1, then CNOT(q0 → q1):',
@@ -2141,13 +2141,13 @@ This is the famous GHZ state!`,
   ],
   equations: [
     {
-      latex: '|\text{GHZ}\rangle = CX_{12} \cdot CX_{01} \cdot (H_0 \otimes I_1 \otimes I_2) |000\rangle = \frac{|000\rangle + |111\rangle}{\sqrt{2}}',
+      latex: '|\\text{GHZ}\\rangle = CX_{12} \\cdot CX_{01} \\cdot (H_0 \\otimes I_1 \\otimes I_2) |000\\rangle = \\frac{|000\\rangle + |111\\rangle}{\\sqrt{2}}',
       explanation: 'Synthesis of the 3-Qubit Greenberger-Horne-Zeilinger (GHZ) State: The capstone circuit of Module 6. It applies Hadamard to qubit 0 to create superposition, then cascades two CNOT gates (q0 → q1, then q1 → q2) to entangle all three qubits into a tri-partite superposition of |000⟩ and |111⟩.',
       symbols: [
-        { symbol: '|\text{GHZ}\rangle', meaning: 'Greenberger-Horne-Zeilinger state', interpretation: '3-qubit maximally entangled state (|000⟩ + |111⟩)/√2' },
-        { symbol: 'H_0 \otimes I_1 \otimes I_2', meaning: 'Hadamard on qubit 0', interpretation: 'Opens qubit 0 into superposition while qubits 1 and 2 remain in ground state' },
-        { symbol: 'CX_{01}', meaning: 'CNOT from qubit 0 to 1', interpretation: 'Entangles qubit 1 with qubit 0 ((|000⟩ + |110⟩)/√2)' },
-        { symbol: 'CX_{12}', meaning: 'CNOT from qubit 1 to 2', interpretation: 'Entangles qubit 2 with qubit 1 ((|000⟩ + |111⟩)/√2)' },
+        { symbol: '|\\text{GHZ}\\rangle', meaning: 'Greenberger-Horne-Zeilinger state', interpretation: '3-qubit maximally entangled state $(|000\\rangle + |111\\rangle)/\\sqrt{2}$' },
+        { symbol: 'H_0 \\otimes I_1 \\otimes I_2', meaning: 'Hadamard on qubit 0', interpretation: 'Opens qubit 0 into superposition while qubits 1 and 2 remain in ground state' },
+        { symbol: 'CX_{01}', meaning: 'CNOT from qubit 0 to 1', interpretation: 'Entangles qubit 1 with qubit 0 $((|000\\rangle + |110\\rangle)/\\sqrt{2})$' },
+        { symbol: 'CX_{12}', meaning: 'CNOT from qubit 1 to 2', interpretation: 'Entangles qubit 2 with qubit 1 $((|000\\rangle + |111\\rangle)/\\sqrt{2})$' },
       ],
       example: {
         description: 'Simulating 1,000 shots on AerSimulator vs exact Statevector:',

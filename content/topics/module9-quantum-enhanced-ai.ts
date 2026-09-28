@@ -42,14 +42,14 @@ export const module9Topics: Topic[] = [
     ],
     equations: [
       {
-        latex: '\dim(\mathcal{H}) = 2^n, \quad T_{\text{HHL}} = \mathcal{O}\left( \kappa^2 s \frac{\log N}{\epsilon} \right) \quad \text{vs} \quad T_{\text{classical}} = \mathcal{O}(N^3)',
+        latex: '\\dim(\\mathcal{H}) = 2^n, \\quad T_{\\text{HHL}} = \\mathcal{O}\\left( \\kappa^2 s \\frac{\\log N}{\\epsilon} \\right) \\quad \\text{vs} \\quad T_{\\text{classical}} = \\mathcal{O}(N^3)',
         explanation: 'Exponential Hilbert Dimensionality & Quantum Linear System (HHL) Speedup: Quantum computers accelerate artificial intelligence through two primary pillars: state representation capacity (dim(H) = 2^n orthogonal dimensions across n qubits) and algorithmic linear algebra speedups. The Harrow-Hassidim-Lloyd (HHL) algorithm solves high-dimensional linear systems A x = b in logarithmic time O(log N) relative to matrix dimension N, compared to cubic classical Gaussian elimination O(N^3).',
         symbols: [
-          { symbol: '\dim(\mathcal{H})', meaning: 'Hilbert state space dimension', interpretation: '2^n orthogonal states spanned by n qubits' },
-          { symbol: 'N', meaning: 'Data feature matrix dimension', interpretation: 'Number of variables or dimensions in N x N linear system' },
-          { symbol: '\kappa', meaning: 'Matrix condition number', interpretation: 'Ratio of largest to smallest eigenvalue, measuring numerical stability' },
-          { symbol: 'T_{\text{HHL}}', meaning: 'Quantum HHL algorithm runtime', interpretation: 'Scales logarithmically O(log N) with matrix size' },
-          { symbol: 'T_{\text{classical}}', meaning: 'Classical matrix inversion runtime', interpretation: 'Scales cubically O(N^3) using standard Gaussian elimination' },
+          { symbol: '\\dim(\\mathcal{H})', meaning: 'Hilbert state space dimension', interpretation: '$2^n$ orthogonal states spanned by $n$ qubits' },
+          { symbol: 'N', meaning: 'Data feature matrix dimension', interpretation: 'Number of variables or dimensions in $N \\times N$ linear system' },
+          { symbol: '\\kappa', meaning: 'Matrix condition number', interpretation: 'Ratio of largest to smallest eigenvalue, measuring numerical stability' },
+          { symbol: 'T_{\\text{HHL}}', meaning: 'Quantum HHL algorithm runtime', interpretation: 'Scales logarithmically $\\mathcal{O}(\log N)$ with matrix size' },
+          { symbol: 'T_{\\text{classical}}', meaning: 'Classical matrix inversion runtime', interpretation: 'Scales cubically $\\mathcal{O}(N^3)$ using standard Gaussian elimination' },
         ],
         example: {
           description: 'Comparing classical vs quantum matrix inversion runtime for a high-dimensional covariance matrix with N = 1,048,576 features (2^20 dimensions, kappa = 10, s = 2, epsilon = 0.01):',
@@ -225,10 +225,10 @@ Step 3: Speedup Factor:
         latex: '\\sum_{j=0}^{N-1} \\alpha_j |j\\rangle_A |0\\rangle_D \\xrightarrow{\\text{QRAM}} \\sum_{j=0}^{N-1} \\alpha_j |j\\rangle_A |D_j\\rangle_D, \\quad T_{\\text{lookup}} = \\mathcal{O}(\\log_2 N)',
         explanation: 'Quantum Random Access Memory (QRAM) & Coherent Memory Access: QRAM allows a quantum processor to query an address register A in superposition and retrieve classical data entries D_j into a target data register D without collapsing quantum superposition. Using a binary tree of quantum routers (Bucket Brigade architecture), a lookup across N database records completes in O(log2 N) routing depth, unlocking parallel dataset ingestion for AI.',
         symbols: [
-          { symbol: '|j\rangle_A', meaning: 'Address register state', interpretation: 'Superposition over all N data memory addresses' },
-          { symbol: '|D_j\rangle_D', meaning: 'Data register state', interpretation: 'Classical data record loaded into quantum register at index j' },
-          { symbol: '\alpha_j', meaning: 'Superposition amplitude', interpretation: 'Weight or probability amplitude assigned to data record j' },
-          { symbol: 'T_{\text{lookup}}', meaning: 'Memory query time complexity', interpretation: 'O(log2 N) routing depth through binary quantum router tree' },
+          { symbol: '|j\\rangle_A', meaning: 'Address register state', interpretation: 'Superposition over all $N$ data memory addresses' },
+          { symbol: '|D_j\\rangle_D', meaning: 'Data register state', interpretation: 'Classical data record loaded into quantum register at index $j$' },
+          { symbol: '\\alpha_j', meaning: 'Superposition amplitude', interpretation: 'Weight or probability amplitude assigned to data record $j$' },
+          { symbol: 'T_{\\text{lookup}}', meaning: 'Memory query time complexity', interpretation: '$\\mathcal{O}(\log_2 N)$ routing depth through binary quantum router tree' },
         ],
         example: {
           description: 'Executing a coherent QRAM superposition lookup across N = 4 memory records (D0=5, D1=12, D2=3, D3=9) using a 2-qubit address register:',
@@ -405,13 +405,13 @@ Step 4: Output Superposition State:
     ],
     equations: [
       {
-        latex: 'F_p(\boldsymbol{\gamma}, \boldsymbol{\beta}) = \langle \psi_p(\boldsymbol{\gamma}, \boldsymbol{\beta}) | H_C | \psi_p(\boldsymbol{\gamma}, \boldsymbol{\beta}) \rangle, \quad |\psi_p\rangle = \prod_{l=1}^p e^{-i \beta_l H_M} e^{-i \gamma_l H_C} |+\rangle^{\otimes n}',
+        latex: 'F_p(\\boldsymbol{\\gamma}, \\boldsymbol{\\beta}) = \\langle \\psi_p(\\boldsymbol{\\gamma}, \\boldsymbol{\\beta}) | H_C | \\psi_p(\\boldsymbol{\\gamma}, \\boldsymbol{\\beta}) \\rangle, \\quad |\\psi_p\\rangle = \\prod_{l=1}^p e^{-i \\beta_l H_M} e^{-i \\gamma_l H_C} |+\\rangle^{\\otimes n}',
         explanation: 'Quantum Approximate Optimization Algorithm (QAOA) Expectation: Formulates combinatorial optimization problems (e.g. Max-Cut, portfolio selection, graph coloring) as finding the ground state of an Ising cost Hamiltonian H_C. The algorithm alternates between applying the problem unitary e^{-i gamma_l H_C} (which encodes problem constraints into relative phases) and the mixer unitary e^{-i beta_l H_M} (which drives quantum tunneling transitions) for p layers.',
         symbols: [
           { symbol: 'H_C', meaning: 'Problem Cost Hamiltonian', interpretation: 'Diagonal Ising operator encoding the combinatorial cost to be minimized' },
           { symbol: 'H_M', meaning: 'Transverse Mixer Hamiltonian', interpretation: 'Sum of Pauli-X operators driving quantum tunneling transitions between states' },
-          { symbol: '\boldsymbol{\gamma}, \boldsymbol{\beta}', meaning: 'Variational angle parameters', interpretation: 'Parameters tuned by classical optimizer to minimize energy expectation' },
-          { symbol: 'p', meaning: 'QAOA circuit depth / layers', interpretation: 'Number of alternating cost-mixer layers; higher p approaches optimal solution' },
+          { symbol: '\\boldsymbol{\\gamma}, \\boldsymbol{\\beta}', meaning: 'Variational angle parameters', interpretation: 'Parameters tuned by classical optimizer to minimize energy expectation' },
+          { symbol: 'p', meaning: 'QAOA circuit depth / layers', interpretation: 'Number of alternating cost-mixer layers; higher $p$ approaches optimal solution' },
         ],
         example: {
           description: 'Solving a 2-node Max-Cut problem with cost Hamiltonian H_C = 0.5*(I - Z0 Z1) using p = 1 QAOA layer with gamma = pi/4 and beta = pi/8:',
@@ -625,12 +625,12 @@ Step 4: Expectation Value Evaluation:
     ],
     equations: [
       {
-        latex: '\nabla_{\boldsymbol{\theta}} \mathcal{L} = \frac{\partial \mathcal{L}}{\partial \langle M \rangle} \cdot \frac{\langle M \rangle_{\boldsymbol{\theta} + \frac{\pi}{2}\mathbf{e}_k} - \langle M \rangle_{\boldsymbol{\theta} - \frac{\pi}{2}\mathbf{e}_k}}{2}, \quad \boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t - \eta \, m_t / (\sqrt{v_t} + \epsilon)',
+        latex: '\\nabla_{\\boldsymbol{\\theta}} \\mathcal{L} = \\frac{\\partial \\mathcal{L}}{\\partial \\langle M \\rangle} \\cdot \\frac{\\langle M \\rangle_{\\boldsymbol{\\theta} + \\frac{\\pi}{2}\\mathbf{e}_k} - \\langle M \\rangle_{\\boldsymbol{\\theta} - \\frac{\\pi}{2}\\mathbf{e}_k}}{2}, \\quad \\boldsymbol{\\theta}_{t+1} = \\boldsymbol{\\theta}_t - \\eta \\, m_t / (\\sqrt{v_t} + \\epsilon)',
         explanation: 'Hybrid Optimization Loop & Parameter-Shift Backpropagation: Integrates classical deep learning frameworks (PyTorch / TensorFlow) with quantum circuit co-processors. Classical optimizers (like Adam with momentum m_t and adaptive variance v_t) compute parameter updates for both classical neural weights and quantum circuit rotation angles using exact parameter-shift gradients evaluated on the QPU.',
         symbols: [
-          { symbol: '\nabla_{\boldsymbol{\theta}} \mathcal{L}', meaning: 'Task loss gradient vector', interpretation: 'Direction and rate of fastest loss decrease with respect to quantum parameters' },
-          { symbol: '\frac{\partial \mathcal{L}}{\partial \langle M \rangle}', meaning: 'Classical loss gradient', interpretation: 'Gradient backpropagated through classical neural layers to quantum measurement head' },
-          { symbol: '\mathbf{e}_k', meaning: 'Unit basis vector', interpretation: 'Indicates parameter shift applied specifically to the k-th gate angle' },
+          { symbol: '\\nabla_{\\boldsymbol{\\theta}} \\mathcal{L}', meaning: 'Task loss gradient vector', interpretation: 'Direction and rate of fastest loss decrease with respect to quantum parameters' },
+          { symbol: '\\frac{\\partial \\mathcal{L}}{\\partial \\langle M \\rangle}', meaning: 'Classical loss gradient', interpretation: 'Gradient backpropagated through classical neural layers to quantum measurement head' },
+          { symbol: '\\mathbf{e}_k', meaning: 'Unit basis vector', interpretation: 'Indicates parameter shift applied specifically to the $k$-th gate angle' },
           { symbol: 'm_t, v_t', meaning: 'Adam moment vectors', interpretation: 'Running averages of gradient and squared gradient smoothing out quantum shot noise' },
         ],
         example: {
@@ -811,14 +811,14 @@ Step 4: Update Quantum Gate Angle (θ_t = 1.50 rad):
     ],
     equations: [
       {
-        latex: '\epsilon_{\text{shot}} = \frac{\sigma}{\sqrt{N_{\text{shots}}}}, \quad \lim_{\lambda \to 0} E(\lambda) = 3 E(1) - 3 E(2) + E(3), \quad T_{\text{total}} = N_{\text{iter}} \big( N_{\text{params}} \cdot 2 N_{\text{shots}} \tau_{\text{circuit}} + \tau_{\text{opt}} \big)',
+        latex: '\\epsilon_{\\text{shot}} = \\frac{\\sigma}{\\sqrt{N_{\\text{shots}}}}, \\quad \\lim_{\\lambda \\to 0} E(\\lambda) = 3 E(1) - 3 E(2) + E(3), \\quad T_{\\text{total}} = N_{\\text{iter}} \\big( N_{\\text{params}} \\cdot 2 N_{\\text{shots}} \\tau_{\\text{circuit}} + \\tau_{\\text{opt}} \\big)',
         explanation: 'Quantum Measurement Shot-Noise & Zero-Noise Extrapolation (ZNE): Evaluates the end-to-end execution budget and noise mitigation for cloud QPUs. The statistical uncertainty of measurement expectation values decays with shot count as sigma / sqrt(N_shots). Zero-Noise Extrapolation (ZNE) artificially scales hardware noise factors lambda in {1, 2, 3} using pulse stretching or unitary folding and extrapolates polynomial curves back to the zero-noise limit lambda -> 0.',
         symbols: [
-          { symbol: '\epsilon_{\text{shot}}', meaning: 'Shot noise standard error', interpretation: 'Uncertainty in measurement expectation due to finite sampling count' },
-          { symbol: 'N_{\text{shots}}', meaning: 'Shot count per circuit execution', interpretation: 'Typically 1,024 to 8,192 measurement repetitions' },
-          { symbol: 'E(\lambda)', meaning: 'Expectation at noise scale lambda', interpretation: 'Expectation measured with intentionally scaled noise' },
-          { symbol: '\lim_{\lambda \to 0} E(\lambda)', meaning: 'ZNE mitigated expectation', interpretation: 'Extrapolated noiseless expectation value' },
-          { symbol: 'T_{\text{total}}', meaning: 'Total hybrid training runtime', interpretation: 'Wall-clock time combining quantum circuit executions and classical optimization' },
+          { symbol: '\\epsilon_{\\text{shot}}', meaning: 'Shot noise standard error', interpretation: 'Uncertainty in measurement expectation due to finite sampling count' },
+          { symbol: 'N_{\\text{shots}}', meaning: 'Shot count per circuit execution', interpretation: 'Typically 1,024 to 8,192 measurement repetitions' },
+          { symbol: 'E(\\lambda)', meaning: 'Expectation at noise scale $\\lambda$', interpretation: 'Expectation measured with intentionally scaled noise' },
+          { symbol: '\\lim_{\\lambda \\to 0} E(\\lambda)', meaning: 'ZNE mitigated expectation', interpretation: 'Extrapolated noiseless expectation value' },
+          { symbol: 'T_{\\text{total}}', meaning: 'Total hybrid training runtime', interpretation: 'Wall-clock time combining quantum circuit executions and classical optimization' },
         ],
         example: {
           description: 'Applying Richardson Zero-Noise Extrapolation (ZNE) with noise scale factors lambda_1 = 1, lambda_2 = 2, and lambda_3 = 3 to mitigate noisy hardware readout:',
@@ -992,14 +992,14 @@ Step 3: Compare Error Reduction (True noiseless value = 0.860):
     ],
     equations: [
       {
-        latex: 'E_0 \le \langle \psi(\boldsymbol{\theta}) | \hat{H}_{\text{elec}} | \psi(\boldsymbol{\theta}) \rangle = \sum_{k=1}^K c_k \langle \psi(\boldsymbol{\theta}) | P_k | \psi(\boldsymbol{\theta}) \rangle, \quad \Delta G_{\text{binding}} = E_{\text{complex}} - (E_{\text{protein}} + E_{\text{ligand}})',
+        latex: 'E_0 \\le \\langle \\psi(\\boldsymbol{\\theta}) | \\hat{H}_{\\text{elec}} | \\psi(\\boldsymbol{\\theta}) \\rangle = \\sum_{k=1}^K c_k \\langle \\psi(\\boldsymbol{\\theta}) | P_k | \\psi(\\boldsymbol{\\theta}) \\rangle, \\quad \\Delta G_{\\text{binding}} = E_{\\text{complex}} - (E_{\\text{protein}} + E_{\\text{ligand}})',
         explanation: 'Variational Quantum Eigensolver (VQE) for Molecular Chemistry & Drug Design: Computes molecular ground state energies by decomposing the electronic Hamiltonian H_elec into a weighted sum of K Pauli strings P_k in {I, X, Y, Z}^n. By the Rayleigh-Ritz variational principle, the measured energy expectation <H> is an upper bound on the true ground state energy E_0. Calculating binding free energy differences Delta G_binding enables computational discovery of pharmaceuticals and battery materials.',
         symbols: [
-          { symbol: '\hat{H}_{\text{elec}}', meaning: 'Molecular electronic Hamiltonian', interpretation: 'Quantum operator describing electronic kinetic energy and Coulomb interactions' },
+          { symbol: '\\hat{H}_{\\text{elec}}', meaning: 'Molecular electronic Hamiltonian', interpretation: 'Quantum operator describing electronic kinetic energy and Coulomb interactions' },
           { symbol: 'c_k', meaning: 'Hamiltonian expansion coefficients', interpretation: 'Pre-computed classical one- and two-electron molecular integrals' },
-          { symbol: 'P_k', meaning: 'Pauli tensor product strings', interpretation: 'Multi-qubit observables (e.g. Z0 Z1, X0 X1) measured on quantum hardware' },
+          { symbol: 'P_k', meaning: 'Pauli tensor product strings', interpretation: 'Multi-qubit observables (e.g. $Z_0 Z_1, X_0 X_1$) measured on quantum hardware' },
           { symbol: 'E_0', meaning: 'Ground state electronic energy', interpretation: 'Lowest possible energy level corresponding to stable chemical bonding' },
-          { symbol: '\Delta G_{\text{binding}}', meaning: 'Binding free energy difference', interpretation: 'Negative value indicates spontaneous, thermodynamically favorable drug binding' },
+          { symbol: '\\Delta G_{\\text{binding}}', meaning: 'Binding free energy difference', interpretation: 'Negative value indicates spontaneous, thermodynamically favorable drug binding' },
         ],
         example: {
           description: 'Calculating the ground state bonding energy of a Hydrogen molecule (H2 at bond distance R = 0.7414 A) using a 2-qubit Jordan-Wigner Hamiltonian:',
@@ -1184,14 +1184,14 @@ Step 4: Total Molecular Energy:
     ],
     equations: [
       {
-        latex: '\mathbb{E}_{\boldsymbol{\theta}}\left[ \frac{\partial \mathcal{L}}{\partial \theta_k} \right] = 0, \quad \text{Var}_{\boldsymbol{\theta}}\left( \frac{\partial \mathcal{L}}{\partial \theta_k} \right) \le c \cdot 2^{-\alpha n}, \quad N_{\text{physical}} \approx \mathcal{O}(d_{\text{code}}^2) \cdot N_{\text{logical}}',
+        latex: '\\mathbb{E}_{\\boldsymbol{\\theta}}\\left[ \\frac{\\partial \\mathcal{L}}{\\partial \\theta_k} \\right] = 0, \\quad \\text{Var}_{\\boldsymbol{\\theta}}\\left( \\frac{\\partial \\mathcal{L}}{\\partial \\theta_k} \\right) \\le c \\cdot 2^{-\\alpha n}, \\quad N_{\\text{physical}} \\approx \\mathcal{O}(d_{\\text{code}}^2) \\cdot N_{\\text{logical}}',
         explanation: 'Barren Plateau Measure Concentration & Quantum Error Correction Scaling: Outlines cutting-edge research frontiers in Quantum AI. The Barren Plateau theorem demonstrates that random parameterized circuits form unitary 2-designs whose gradient variance decays exponentially with qubit count n (<= c * 2^{-alpha n}), making training untrainable without geometric priors or local cost functions. Concurrently, Fault-Tolerant Quantum Computing requires surface codes of code distance d_code where each logical qubit requires hundreds of physical qubits to suppress physical errors.',
         symbols: [
-          { symbol: '\mathbb{E}[\partial_\theta \mathcal{L}]', meaning: 'Expected gradient value', interpretation: 'Always exactly zero across Haar-random parameter distribution due to symmetry' },
-          { symbol: '\text{Var}(\partial_\theta \mathcal{L})', meaning: 'Gradient variance across landscape', interpretation: 'Decays exponentially as 2^{-alpha n}, causing the optimization surface to flatten' },
-          { symbol: '\alpha', meaning: 'Decay exponent constant', interpretation: 'Governed by circuit depth, entanglement pattern, and locality of observable' },
-          { symbol: 'd_{\text{code}}', meaning: 'Surface code distance', interpretation: 'Number of physical errors needed to cause an undetectable logical error' },
-          { symbol: 'N_{\text{physical}}', meaning: 'Physical qubits per logical qubit', interpretation: 'Roughly 2 * d_code^2 physical qubits needed to protect each logical qubit' },
+          { symbol: '\\mathbb{E}[\\partial_{\\theta} \\mathcal{L}]', meaning: 'Expected gradient value', interpretation: 'Always exactly zero across Haar-random parameter distribution due to symmetry' },
+          { symbol: '\\text{Var}(\\partial_{\\theta} \\mathcal{L})', meaning: 'Gradient variance across landscape', interpretation: 'Decays exponentially as $2^{-\\alpha n}$, causing the optimization surface to flatten' },
+          { symbol: '\\alpha', meaning: 'Decay exponent constant', interpretation: 'Governed by circuit depth, entanglement pattern, and locality of observable' },
+          { symbol: 'd_{\\text{code}}', meaning: 'Surface code distance', interpretation: 'Number of physical errors needed to cause an undetectable logical error' },
+          { symbol: 'N_{\\text{physical}}', meaning: 'Physical qubits per logical qubit', interpretation: 'Roughly $2 \\cdot d_{\\text{code}}^2$ physical qubits needed to protect each logical qubit' },
         ],
         example: {
           description: 'Calculating the physical qubit requirement and surface code distance to achieve commercial error rate P_logical = 10^-12 from noisy physical qubits with physical error rate p = 10^-3 (threshold p_th = 10^-2):',
@@ -1368,13 +1368,13 @@ Step 4: Total Physical Qubits for a 100-Logical-Qubit QML Algorithm:
     ],
     equations: [
       {
-        latex: '\mathcal{Q}_{\text{advantage}} = \frac{\Delta \text{Metric}}{\text{Energy Ratio}} = \frac{\text{Accuracy}_{\text{Quantum}} - \text{Accuracy}_{\text{Classical}}}{\log_{10}\left( \frac{\text{Joules}_{\text{Classical}}}{\text{Joules}_{\text{Quantum}}} \right)}, \quad \mathcal{F}(\rho, \sigma) = \left( \text{Tr}\sqrt{\sqrt{\rho}\sigma\sqrt{\rho}} \right)^2',
+        latex: '\\mathcal{Q}_{\\text{advantage}} = \\frac{\\Delta \\text{Metric}}{\\text{Energy Ratio}} = \\frac{\\text{Accuracy}_{\\text{Quantum}} - \\text{Accuracy}_{\\text{Classical}}}{\\log_{10}\\left( \\frac{\\text{Joules}_{\\text{Classical}}}{\\text{Joules}_{\\text{Quantum}}} \\right)}, \\quad \\mathcal{F}(\\rho, \\sigma) = \\left( \\text{Tr}\\sqrt{\\sqrt{\\rho}\\sigma\\sqrt{\\rho}} \\right)^2',
         explanation: 'Quantum Advantage Benchmarking Metric & Quantum State Fidelity: For student capstone projects and research publications, quantum machine learning models must be rigorously benchmarked against tuned classical baselines. The Quantum Advantage Metric evaluates performance gain normalized by computational energy expenditure. In quantum generative modeling and classification, Uhlmann State Fidelity F(rho, sigma) in [0, 1] quantitatively measures the fidelity between generated quantum distributions and true target data states.',
         symbols: [
-          { symbol: '\mathcal{Q}_{\text{advantage}}', meaning: 'Comprehensive quantum advantage score', interpretation: 'Performance margin normalized by computational energy efficiency' },
-          { symbol: '\Delta \text{Metric}', meaning: 'Accuracy performance margin', interpretation: 'Net improvement over fully tuned classical machine learning baseline' },
-          { symbol: '\text{Joules}', meaning: 'Computational energy consumption', interpretation: 'Total electricity consumed by classical GPUs vs cryogenic quantum processor' },
-          { symbol: '\mathcal{F}(\rho, \sigma)', meaning: 'Uhlmann state fidelity', interpretation: 'Quantum state overlap metric where 1.0 indicates perfect distribution match' },
+          { symbol: '\\mathcal{Q}_{\\text{advantage}}', meaning: 'Comprehensive quantum advantage score', interpretation: 'Performance margin normalized by computational energy efficiency' },
+          { symbol: '\\Delta \\text{Metric}', meaning: 'Accuracy performance margin', interpretation: 'Net improvement over fully tuned classical machine learning baseline' },
+          { symbol: '\\text{Joules}', meaning: 'Computational energy consumption', interpretation: 'Total electricity consumed by classical GPUs vs cryogenic quantum processor' },
+          { symbol: '\\mathcal{F}(\\rho, \\sigma)', meaning: 'Uhlmann state fidelity', interpretation: 'Quantum state overlap metric where 1.0 indicates perfect distribution match' },
         ],
         example: {
           description: 'Benchmarking a student capstone project comparing a Quantum Support Vector Classifier (QSVC) vs Classical RBF SVM on a financial fraud detection dataset:',

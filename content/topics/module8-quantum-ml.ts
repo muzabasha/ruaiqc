@@ -35,13 +35,13 @@ Together, they allow computers to find patterns in complex data that no classica
   ],
   equations: [
     {
-      latex: 'f(\mathbf{x}; \boldsymbol{\theta}) = \langle 0 | U^\dagger(\mathbf{x}) W^\dagger(\boldsymbol{\theta}) M W(\boldsymbol{\theta}) U(\mathbf{x}) | 0 \rangle = \text{Tr}\big( M \, W(\boldsymbol{\theta}) \rho(\mathbf{x}) W^\dagger(\boldsymbol{\theta}) \big)',
+      latex: 'f(\\mathbf{x}; \\boldsymbol{\\theta}) = \\langle 0 | U^\\dagger(\\mathbf{x}) W^\\dagger(\\boldsymbol{\\theta}) M W(\\boldsymbol{\\theta}) U(\\mathbf{x}) | 0 \\rangle = \\text{Tr}\\big( M \\, W(\\boldsymbol{\\theta}) \\rho(\\mathbf{x}) W^\\dagger(\\boldsymbol{\\theta}) \\big)',
       explanation: 'The Fundamental Quantum Machine Learning (QML) Model: In quantum machine learning, a quantum neural network processes classical data by first encoding input vector x into an entangled quantum state rho(x) = U(x)|0><0|U^dagger(x). Next, a parameterized variational ansatz W(theta) applies tunable rotation and entangling gates. Finally, a Hermitian observable M (such as Pauli-Z) is measured, yielding an expectation value in [-1, +1] that serves as the model’s prediction score.',
       symbols: [
-        { symbol: 'U(\mathbf{x})', meaning: 'Quantum Feature Map', interpretation: 'Unitary transformation mapping classical vector x into quantum Hilbert space' },
-        { symbol: 'W(\boldsymbol{\theta})', meaning: 'Parameterized Variational Ansatz', interpretation: 'Learnable quantum circuit weights theta optimized via gradient descent' },
+        { symbol: 'U(\\mathbf{x})', meaning: 'Quantum Feature Map', interpretation: 'Unitary transformation mapping classical vector x into quantum Hilbert space' },
+        { symbol: 'W(\\boldsymbol{\\theta})', meaning: 'Parameterized Variational Ansatz', interpretation: 'Learnable quantum circuit weights $\\boldsymbol{\\theta}$ optimized via gradient descent' },
         { symbol: 'M', meaning: 'Hermitian Readout Observable', interpretation: 'Measurement operator whose statistical expectation value yields continuous prediction' },
-        { symbol: 'f(\mathbf{x}; \boldsymbol{\theta})', meaning: 'Model Prediction Score', interpretation: 'Output scalar bounded between the eigenvalues of observable M' },
+        { symbol: 'f(\\mathbf{x}; \\boldsymbol{\\theta})', meaning: 'Model Prediction Score', interpretation: 'Output scalar bounded between the eigenvalues of observable M' },
       ],
       example: {
         description: 'Evaluating a 1-qubit QML model with input feature x = 0.5 radians, trainable weight theta = 1.2 radians, and Pauli-Z readout observable:',
@@ -249,7 +249,7 @@ Reinforcement learning agents monitor qubit microwave pulse shapes, automaticall
         { symbol: '\\epsilon', meaning: 'Generalization error bound', interpretation: 'Maximum expected gap between empirical training loss and true test loss' },
         { symbol: 'd_{\\mathcal{H}}', meaning: 'Effective quantum dimension', interpretation: 'Hilbert space capacity accessible to the parameterized quantum ansatz' },
         { symbol: 'M', meaning: 'Number of training samples', interpretation: 'Sample complexity required to achieve high classification accuracy' },
-        { symbol: 'F_Q(\\boldsymbol{\\theta})', meaning: 'Quantum Fisher Information Matrix', interpretation: 'Measures how sensitive the quantum state is to parameter updates theta' },
+        { symbol: 'F_Q(\\boldsymbol{\\theta})', meaning: 'Quantum Fisher Information Matrix', interpretation: 'Measures how sensitive the quantum state is to parameter updates $\\boldsymbol{\\theta}$' },
       ],
       example: {
         description: 'Comparing the sample complexity of learning an entangled quantum concept with n = 10 qubits using Classical ML vs Quantum ML:',
@@ -441,13 +441,13 @@ This is **Native Quantum Data**! The quantum computer ingests quantum states dir
   ],
   equations: [
     {
-      latex: 'S(\rho) = -\text{Tr}(\rho \log_2 \rho) = -\sum_{i} \lambda_i \log_2 \lambda_i, \quad \gamma(\rho) = \text{Tr}(\rho^2) \le 1',
+      latex: 'S(\\rho) = -\\text{Tr}(\\rho \\log_2 \\rho) = -\\sum_{i} \\lambda_i \\log_2 \\lambda_i, \\quad \\gamma(\\rho) = \\text{Tr}(\\rho^2) \\le 1',
       explanation: 'Von Neumann Entropy and State Purity of Native Quantum Data: Unlike classical data vectors x in R^d, native quantum data from quantum sensors or molecular systems is characterized by density matrices rho. The Von Neumann Entropy S(rho) quantifies quantum disorder and entanglement entropy, while Purity gamma(rho) = Tr(rho^2) distinguishes pure quantum states (gamma = 1) from mixed statistical ensembles (gamma < 1).',
       symbols: [
-        { symbol: '\rho', meaning: 'Density matrix operator', interpretation: 'Positive semi-definite Hermitian matrix representing the quantum data state' },
-        { symbol: 'S(\rho)', meaning: 'Von Neumann Entropy', interpretation: 'Zero for pure states, maximum log2(d) for maximally mixed states' },
-        { symbol: '\lambda_i', meaning: 'Eigenvalues of density matrix rho', interpretation: 'Classical probabilities of the quantum state components, sum lambda_i = 1' },
-        { symbol: '\gamma(\rho)', meaning: 'Purity metric', interpretation: 'Tr(rho^2), indicating whether the data is pure (1.0) or noisy/mixed' },
+        { symbol: '\\rho', meaning: 'Density matrix operator', interpretation: 'Positive semi-definite Hermitian matrix representing the quantum data state' },
+        { symbol: 'S(\\rho)', meaning: 'Von Neumann Entropy', interpretation: 'Zero for pure states, maximum log2(d) for maximally mixed states' },
+        { symbol: '\\lambda_i', meaning: 'Eigenvalues of density matrix $\\rho$', interpretation: 'Classical probabilities of the quantum state components, $\\sum \lambda_i = 1$' },
+        { symbol: '\\gamma(\\rho)', meaning: 'Purity metric', interpretation: '$\\text{Tr}(\\rho^2)$, indicating whether the data is pure (1.0) or noisy/mixed' },
       ],
       example: {
         description: 'Analyzing a noisy quantum sensor output with 80% coherent state |0⟩ and 20% orthogonal state |1⟩:',
@@ -640,12 +640,12 @@ Choosing the right encoding strategy is the very first architectural decision of
   ],
   equations: [
     {
-      latex: '|\mathbf{x}_{\text{amp}}\rangle = \sum_{i=0}^{2^n-1} \frac{x_i}{\|\mathbf{x}\|_2} |i\rangle, \quad |\mathbf{x}_{\text{angle}}\rangle = \bigotimes_{j=1}^d \Big( \cos(x_j)|0\rangle + \sin(x_j)|1\rangle \Big)',
+      latex: '|\\mathbf{x}_{\\text{amp}}\\rangle = \\sum_{i=0}^{2^n-1} \\frac{x_i}{\\|\\mathbf{x}\\|_2} |i\\rangle, \\quad |\\mathbf{x}_{\\text{angle}}\\rangle = \\bigotimes_{j=1}^d \\Big( \\cos(x_j)|0\\rangle + \\sin(x_j)|1\\rangle \\Big)',
       explanation: 'Amplitude Encoding vs Angle Encoding: The two foundational strategies for embedding classical datasets into quantum processors. Amplitude encoding achieves exponential compression by packing 2^n classical features into n qubits, but requires O(2^n) gates to synthesize. Angle encoding maps d features into d separate single-qubit rotations with constant depth O(1), ideal for NISQ processors.',
       symbols: [
-        { symbol: '|\mathbf{x}_{\text{amp}}\rangle', meaning: 'Amplitude encoded state', interpretation: 'Superposition where amplitudes equal normalized feature values' },
-        { symbol: '|\mathbf{x}_{\text{angle}}\rangle', meaning: 'Angle encoded state', interpretation: 'Tensor product of independent single-qubit state rotations' },
-        { symbol: '\|\mathbf{x}\|_2', meaning: 'Euclidean L2 norm of feature vector', interpretation: 'Square root of sum of squares, ensuring quantum state normalizes to 1.0' },
+        { symbol: '|\\mathbf{x}_{\\text{amp}}\\rangle', meaning: 'Amplitude encoded state', interpretation: 'Superposition where amplitudes equal normalized feature values' },
+        { symbol: '|\\mathbf{x}_{\\text{angle}}\\rangle', meaning: 'Angle encoded state', interpretation: 'Tensor product of independent single-qubit state rotations' },
+        { symbol: '\\|\\mathbf{x}\\|_2', meaning: 'Euclidean L2 norm of feature vector', interpretation: 'Square root of sum of squares, ensuring quantum state normalizes to 1.0' },
         { symbol: '2^n', meaning: 'Feature capacity of n qubits', interpretation: 'log2(N) qubits store N features in amplitude encoding' },
       ],
       example: {
@@ -834,12 +834,12 @@ Quantum Feature Maps pick up your tangled classical data and lift it into a vast
   ],
   equations: [
     {
-      latex: 'U_{\Phi}(\mathbf{x}) = \exp\left( i \sum_{j=1}^n x_j Z_j + i \sum_{j < k}^n (\pi - x_j)(\pi - x_k) Z_j Z_k \right) H^{\otimes n}',
+      latex: 'U_{\\Phi}(\\mathbf{x}) = \\exp\\left( i \\sum_{j=1}^n x_j Z_j + i \\sum_{j < k}^n (\\pi - x_j)(\\pi - x_k) Z_j Z_k \\right) H^{\\otimes n}',
       explanation: 'The Havlicek ZZ-Feature Map (IBM Quantum): Maps classical data into non-linearly entangled quantum states. By combining initial Hadamard superpositions with single-qubit phase rotations and two-qubit Z_j Z_k entangling interactions whose phases scale as (pi - x_j)(pi - x_k), this feature map creates quantum correlations that are proven to be classically hard to simulate.',
       symbols: [
-        { symbol: 'U_\Phi(\mathbf{x})', meaning: 'Non-linear feature map unitary', interpretation: 'Prepares the quantum feature state |Phi(x)> = U_Phi(x)|0>^n' },
-        { symbol: 'H^{\otimes n}', meaning: 'Layer of Hadamard gates', interpretation: 'Initializes all qubits into uniform quantum superposition' },
-        { symbol: 'Z_j', meaning: 'Pauli-Z operator on qubit j', interpretation: 'Encodes individual feature x_j into single-qubit phase' },
+        { symbol: 'U_\\Phi(\\mathbf{x})', meaning: 'Non-linear feature map unitary', interpretation: 'Prepares the quantum feature state $|\\Phi(\\mathbf{x})\\rangle = U_{\\Phi}(\\mathbf{x})|0\\rangle^{\otimes n}$' },
+        { symbol: 'H^{\\otimes n}', meaning: 'Layer of Hadamard gates', interpretation: 'Initializes all qubits into uniform quantum superposition' },
+        { symbol: 'Z_j', meaning: 'Pauli-Z operator on qubit j', interpretation: 'Encodes individual feature $x_j$ into single-qubit phase' },
         { symbol: 'Z_j Z_k', meaning: 'Two-qubit Ising coupling', interpretation: 'Encodes non-linear cross-product interaction between features j and k' },
       ],
       example: {
@@ -1028,13 +1028,13 @@ The resulting Gram matrix $\\mathbf{K} \\in \\mathbb{R}^{N \\times N}$ is symmet
   ],
   equations: [
     {
-      latex: 'K(\mathbf{x}, \mathbf{x}^\prime) = \big| \langle \Phi(\mathbf{x}^\prime) | \Phi(\mathbf{x}) \rangle \big|^2 = \big| \langle 0^{\otimes n} | U_\Phi^\dagger(\mathbf{x}^\prime) U_\Phi(\mathbf{x}) | 0^{\otimes n} \rangle \big|^2 = \text{Tr}\big( \rho(\mathbf{x}) \rho(\mathbf{x}^\prime) \big)',
+      latex: 'K(\\mathbf{x}, \\mathbf{x}^\\prime) = \\big| \\langle \\Phi(\\mathbf{x}^\\prime) | \\Phi(\\mathbf{x}) \\rangle \\big|^2 = \\big| \\langle 0^{\\otimes n} | U_\\Phi^\\dagger(\\mathbf{x}^\\prime) U_\\Phi(\\mathbf{x}) | 0^{\\otimes n} \\rangle \\big|^2 = \\text{Tr}\\big( \\rho(\\mathbf{x}) \\rho(\\mathbf{x}^\\prime) \\big)',
       explanation: 'Quantum Kernel Estimation (Transition Probability): Evaluates the similarity between two classical data samples x and x prime directly in 2^n-dimensional Hilbert space. The kernel value equals the transition probability of preparing state |Phi(x)>, applying the adjoint circuit U_dagger(x prime), and measuring the probability of collapsing back to the all-zero state |00...0>. The resulting Gram matrix is fed into a classical Support Vector Machine (QSVC).',
       symbols: [
-        { symbol: 'K(\mathbf{x}, \mathbf{x}^\prime)', meaning: 'Quantum kernel similarity score', interpretation: 'Bounded in [0.0, 1.0], where 1.0 is identical and 0.0 is orthogonal' },
-        { symbol: '|\Phi(\mathbf{x})\rangle', meaning: 'Quantum state of sample x', interpretation: 'State vector created by feature map U(x)|0>' },
-        { symbol: 'U_\Phi^\dagger(\mathbf{x}^\prime)', meaning: 'Adjoint feature map for sample x prime', interpretation: 'Inverted circuit running the second data point in reverse' },
-        { symbol: '|0^{\otimes n}\rangle', meaning: 'All-zero ground state', interpretation: 'Reference state measured to determine transition probability overlap' },
+        { symbol: 'K(\\mathbf{x}, \\mathbf{x}^\\prime)', meaning: 'Quantum kernel similarity score', interpretation: 'Bounded in [0.0, 1.0], where 1.0 is identical and 0.0 is orthogonal' },
+        { symbol: '|\\Phi(\\mathbf{x})\\rangle', meaning: 'Quantum state of sample $\\mathbf{x}$', interpretation: 'State vector created by feature map $U(\\mathbf{x})|0\\rangle$' },
+        { symbol: 'U_\\Phi^\\dagger(\\mathbf{x}^\\prime)', meaning: 'Adjoint feature map for sample x prime', interpretation: 'Inverted circuit running the second data point in reverse' },
+        { symbol: '|0^{\\otimes n}\\rangle', meaning: 'All-zero ground state', interpretation: 'Reference state measured to determine transition probability overlap' },
       ],
       example: {
         description: 'Computing the quantum kernel similarity between two 1-qubit data points x = 0.2 and x prime = 0.8 with angle feature map U(x) = Ry(2x):',
@@ -1256,13 +1256,13 @@ For standard Pauli rotation generators with $r = 1/2$, the shift is $\\pm \\pi/2
   ],
   equations: [
     {
-      latex: '\frac{\partial \langle M \rangle}{\partial \theta_j} = \frac{\langle M \rangle_{\theta_j + \frac{\pi}{2}} - \langle M \rangle_{\theta_j - \frac{\pi}{2}}}{2}, \quad \boldsymbol{\theta}_{t+1} = \boldsymbol{\theta}_t - \eta \nabla_{\boldsymbol{\theta}} \mathcal{L}',
+      latex: '\\frac{\\partial \\langle M \\rangle}{\\partial \\theta_j} = \\frac{\\langle M \\rangle_{\\theta_j + \\frac{\\pi}{2}} - \\langle M \\rangle_{\\theta_j - \\frac{\\pi}{2}}}{2}, \\quad \\boldsymbol{\\theta}_{t+1} = \\boldsymbol{\\theta}_t - \\eta \\nabla_{\\boldsymbol{\\theta}} \\mathcal{L}',
       explanation: 'The Parameter-Shift Rule for Parameterized Quantum Circuits (PQCs): Computes mathematically exact partial derivatives of quantum expectations on real quantum hardware without numerical finite-difference approximation errors. By evaluating the circuit at two macro-shifts (theta_j + pi/2 and theta_j - pi/2), the exact analytical gradient is obtained directly from hardware measurements, immune to small-step shot noise.',
       symbols: [
-        { symbol: '\frac{\partial \langle M \rangle}{\partial \theta_j}', meaning: 'Exact analytical gradient', interpretation: 'Derivative of expectation value with respect to gate parameter theta_j' },
-        { symbol: '\langle M \rangle_{\theta + \pi/2}', meaning: 'Forward shifted expectation', interpretation: 'Measurement outcome with parameter shifted forward by +90 degrees' },
-        { symbol: '\langle M \rangle_{\theta - \pi/2}', meaning: 'Backward shifted expectation', interpretation: 'Measurement outcome with parameter shifted backward by -90 degrees' },
-        { symbol: '\eta', meaning: 'Optimizer learning rate', interpretation: 'Step size taken along the negative gradient direction' },
+        { symbol: '\\frac{\\partial \\langle M \\rangle}{\\partial \\theta_j}', meaning: 'Exact analytical gradient', interpretation: 'Derivative of expectation value with respect to gate parameter $\theta_j$' },
+        { symbol: '\\langle M \\rangle_{\\theta + \\pi/2}', meaning: 'Forward shifted expectation', interpretation: 'Measurement outcome with parameter shifted forward by +90 degrees' },
+        { symbol: '\\langle M \\rangle_{\\theta - \\pi/2}', meaning: 'Backward shifted expectation', interpretation: 'Measurement outcome with parameter shifted backward by -90 degrees' },
+        { symbol: '\\eta', meaning: 'Optimizer learning rate', interpretation: 'Step size taken along the negative gradient direction' },
       ],
       example: {
         description: 'Optimizing a variational gate parameter currently at theta = 0.70 radians with learning rate eta = 0.20 using the Parameter-Shift Rule:',
@@ -1451,12 +1451,12 @@ In a **Variational Quantum Classifier (VQC)**, they form a tight feedback loop:
   ],
   equations: [
     {
-      latex: '\hat{y}(\mathbf{x}) = \frac{\langle Z_0 \rangle_{\mathbf{x}, \boldsymbol{\theta}} + 1}{2}, \quad \mathcal{L}_{\text{BCE}}(\boldsymbol{\theta}) = -\frac{1}{M}\sum_{m=1}^M \Big[ y^{(m)} \log \hat{y}^{(m)} + (1 - y^{(m)}) \log(1 - \hat{y}^{(m)}) \Big]',
+      latex: '\\hat{y}(\\mathbf{x}) = \\frac{\\langle Z_0 \\rangle_{\\mathbf{x}, \\boldsymbol{\\theta}} + 1}{2}, \\quad \\mathcal{L}_{\\text{BCE}}(\\boldsymbol{\\theta}) = -\\frac{1}{M}\\sum_{m=1}^M \\Big[ y^{(m)} \\log \\hat{y}^{(m)} + (1 - y^{(m)}) \\log(1 - \\hat{y}^{(m)}) \\Big]',
       explanation: 'Variational Quantum Classifier (VQC) Output Calibration & Binary Cross-Entropy Loss: In a VQC, the quantum expectation value <Z_0> in [-1, +1] is mapped onto a calibrated probability y_hat in [0, 1] via the affine transformation y_hat = (<Z> + 1)/2. The classical optimizer updates the ansatz rotation angles theta by minimizing the binary cross-entropy loss across the training dataset.',
       symbols: [
-        { symbol: '\hat{y}(\mathbf{x})', meaning: 'Predicted probability of Class 1', interpretation: 'Calibrated output probability bounded between 0.0 and 1.0' },
-        { symbol: '\langle Z_0 \rangle', meaning: 'Pauli-Z expectation value on qubit 0', interpretation: 'Physical QPU measurement value between -1.0 and +1.0' },
-        { symbol: '\mathcal{L}_{\text{BCE}}', meaning: 'Binary Cross-Entropy Loss', interpretation: 'Supervised classification error minimized by classical optimizer' },
+        { symbol: '\\hat{y}(\\mathbf{x})', meaning: 'Predicted probability of Class 1', interpretation: 'Calibrated output probability bounded between 0.0 and 1.0' },
+        { symbol: '\\langle Z_0 \\rangle', meaning: 'Pauli-Z expectation value on qubit 0', interpretation: 'Physical QPU measurement value between -1.0 and +1.0' },
+        { symbol: '\\mathcal{L}_{\\text{BCE}}', meaning: 'Binary Cross-Entropy Loss', interpretation: 'Supervised classification error minimized by classical optimizer' },
         { symbol: 'y^{(m)}', meaning: 'Ground-truth label', interpretation: 'True binary class label (1 or 0) for training sample m' },
       ],
       example: {
@@ -1686,13 +1686,13 @@ Because the reverse light-cone of local observables in QCNNs is bounded independ
   ],
   equations: [
     {
-      latex: 'U_{\text{QNN}}(\boldsymbol{\theta}) = \prod_{l=1}^L \left( \bigotimes_{j=1}^n R(\theta_{lj}) \cdot \prod_{\langle j, k \rangle} CX_{jk} \right), \quad \text{Var}_{\boldsymbol{\theta}}\left( \frac{\partial \langle O \rangle}{\partial \theta_k} \right) \sim \mathcal{O}(2^{-n})',
+      latex: 'U_{\\text{QNN}}(\\boldsymbol{\\theta}) = \\prod_{l=1}^L \\left( \\bigotimes_{j=1}^n R(\\theta_{lj}) \\cdot \\prod_{\\langle j, k \\rangle} CX_{jk} \\right), \\quad \\text{Var}_{\\boldsymbol{\\theta}}\\left( \\frac{\\partial \\langle O \\rangle}{\\partial \\theta_k} \\right) \\sim \\mathcal{O}(2^{-n})',
       explanation: 'Quantum Neural Network Architecture & The Barren Plateau Phenomenon: Describes a multi-layer Parameterized Quantum Neural Network (QNN) alternating arbitrary single-qubit rotations with entangling gates across L layers. In deep unstructured random QNNs, McClean et al. proved that gradient variance vanishes exponentially as O(2^-n), known as a Barren Plateau, requiring specialized architectures (QCNNs, local observables) to train effectively.',
       symbols: [
         { symbol: 'L', meaning: 'Number of QNN layers', interpretation: 'Depth of parameterized transformations' },
-        { symbol: 'R(\theta)', meaning: 'Parameterized single-qubit rotation', interpretation: 'Rx, Ry, Rz gates acting as trainable synaptic weights' },
+        { symbol: 'R(\\theta)', meaning: 'Parameterized single-qubit rotation', interpretation: 'Rx, Ry, Rz gates acting as trainable synaptic weights' },
         { symbol: 'CX_{jk}', meaning: 'Two-qubit entangling gates', interpretation: 'Simulates multi-qubit synaptic connectivity between neighboring qubits' },
-        { symbol: '\text{Var}(\partial \langle O \rangle)', meaning: 'Gradient variance across parameter space', interpretation: 'Decays exponentially as 2^-n in deep random circuits' },
+        { symbol: '\\text{Var}(\\partial \\langle O \\rangle)', meaning: 'Gradient variance across parameter space', interpretation: 'Decays exponentially as $2^{-n}$ in deep random circuits' },
       ],
       example: {
         description: 'Comparing gradient variance decay between a small 4-qubit QNN and a larger 20-qubit QNN on a global observable:',
@@ -1894,13 +1894,13 @@ This hybrid architecture is the undisputed state of the art in practical NISQ co
   ],
   equations: [
     {
-      latex: '\frac{\partial \mathcal{L}}{\partial \mathbf{w}_{\text{classical}}} = \frac{\partial \mathcal{L}}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial \langle M \rangle_{\text{quantum}}} \cdot \frac{\partial \langle M \rangle_{\text{quantum}}}{\partial \boldsymbol{\theta}_{\text{quantum}}} \cdot \frac{\partial \boldsymbol{\theta}_{\text{quantum}}}{\partial \mathbf{w}_{\text{classical}}}',
+      latex: '\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{w}_{\\text{classical}}} = \\frac{\\partial \\mathcal{L}}{\\partial \\hat{y}} \\cdot \\frac{\\partial \\hat{y}}{\\partial \\langle M \\rangle_{\\text{quantum}}} \\cdot \\frac{\\partial \\langle M \\rangle_{\\text{quantum}}}{\\partial \\boldsymbol{\\theta}_{\\text{quantum}}} \\cdot \\frac{\\partial \\boldsymbol{\\theta}_{\\text{quantum}}}{\\partial \\mathbf{w}_{\\text{classical}}}',
       explanation: 'End-to-End Hybrid Quantum-Classical Backpropagation: Enables seamless gradient flow through a combined neural network where classical layers (e.g. ResNet, PyTorch Linear) feed into a parameterized quantum circuit layer. The backward pass splits the chain rule: PyTorch autograd evaluates classical Jacobians, while the quantum layer executes the Parameter-Shift Rule to compute quantum gradients.',
       symbols: [
-        { symbol: '\mathbf{w}_{\text{classical}}', meaning: 'Classical neural network weights', interpretation: 'Convolutional filter weights or linear layer parameters' },
-        { symbol: '\boldsymbol{\theta}_{\text{quantum}}', meaning: 'Quantum circuit rotation parameters', interpretation: 'Angles driven by classical features' },
-        { symbol: '\langle M \rangle_{\text{quantum}}', meaning: 'Quantum measurement expectation', interpretation: 'Output scalar passed from QPU to classical output layer' },
-        { symbol: '\frac{\partial \langle M \rangle}{\partial \boldsymbol{\theta}}', meaning: 'Quantum parameter-shift gradient', interpretation: 'Evaluated using two circuit executions on QPU' },
+        { symbol: '\\mathbf{w}_{\\text{classical}}', meaning: 'Classical neural network weights', interpretation: 'Convolutional filter weights or linear layer parameters' },
+        { symbol: '\\boldsymbol{\\theta}_{\\text{quantum}}', meaning: 'Quantum circuit rotation parameters', interpretation: 'Angles driven by classical features' },
+        { symbol: '\\langle M \\rangle_{\\text{quantum}}', meaning: 'Quantum measurement expectation', interpretation: 'Output scalar passed from QPU to classical output layer' },
+        { symbol: '\\frac{\\partial \\langle M \\rangle}{\\partial \\boldsymbol{\\theta}}', meaning: 'Quantum parameter-shift gradient', interpretation: 'Evaluated using two circuit executions on QPU' },
       ],
       example: {
         description: 'Tracing end-to-end backpropagation through a hybrid PyTorch-Qiskit model: Loss -> Quantum Layer -> Classical Dense Layer:',

@@ -38,27 +38,27 @@ export default function EquationCard({ equation }: EquationCardProps) {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-gray-100">
-                  <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold">
-                    Symbol
+                  <th className="border border-gray-300 px-4 py-2.5 text-left text-sm font-semibold w-1/4">
+                    Symbol / Term
                   </th>
-                  <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold">
+                  <th className="border border-gray-300 px-4 py-2.5 text-left text-sm font-semibold w-1/3">
                     Meaning
                   </th>
-                  <th className="border border-gray-300 px-4 py-2 text-left text-sm font-semibold">
+                  <th className="border border-gray-300 px-4 py-2.5 text-left text-sm font-semibold">
                     Beginner Interpretation
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {equation.symbols.map((symbol, index) => (
-                  <tr key={index} className="hover:bg-gray-50">
-                    <td className="border border-gray-300 px-4 py-2 font-mono text-sm font-semibold text-primary-700">
-                      <MathRenderer content={symbol.symbol} inline />
+                  <tr key={index} className="hover:bg-gray-50 transition-colors">
+                    <td className="border border-gray-300 px-4 py-3 text-sm font-semibold text-primary-700 align-top bg-primary-50/20">
+                      <MathRenderer content={symbol.symbol} inline mathOnly={true} />
                     </td>
-                    <td className="border border-gray-300 px-4 py-2 text-sm text-gray-800">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-800 align-top font-medium">
                       <MathRenderer content={symbol.meaning} inline />
                     </td>
-                    <td className="border border-gray-300 px-4 py-2 text-sm text-gray-700">
+                    <td className="border border-gray-300 px-4 py-3 text-sm text-gray-700 align-top leading-relaxed">
                       <MathRenderer content={symbol.interpretation} inline />
                     </td>
                   </tr>
