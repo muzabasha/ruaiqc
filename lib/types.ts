@@ -93,6 +93,7 @@ export interface Illustration {
 export interface FunLearning {
   analogyTitle: string;
   storyAnalogy: string;
+  analogyImage?: string;
   interactiveThoughtExperiment: string;
   takeaway: string;
 }

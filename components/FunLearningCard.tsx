@@ -4,12 +4,15 @@ import React from 'react';
 import { Sparkles, Brain, Compass, Lightbulb } from 'lucide-react';
 import { FunLearning } from '@/lib/types';
 import MathRenderer from './MathRenderer';
+import AnalogyVisual from './AnalogyVisual';
+import InteractiveThoughtExperiment from './InteractiveThoughtExperiment';
 
 interface FunLearningCardProps {
   funLearning?: FunLearning;
+  topicId?: string;
 }
 
-export default function FunLearningCard({ funLearning }: FunLearningCardProps) {
+export default function FunLearningCard({ funLearning, topicId }: FunLearningCardProps) {
   if (!funLearning) return null;
 
   return (
@@ -26,7 +29,7 @@ export default function FunLearningCard({ funLearning }: FunLearningCardProps) {
                 🎮 Fun Learning Zone
               </h2>
               <p className="text-xs sm:text-sm font-medium text-amber-800">
-                Grasp complex quantum concepts with zero prior physics or math knowledge!
+                Grasp complex quantum concepts visually with zero prior physics or math knowledge!
               </p>
             </div>
           </div>
@@ -35,7 +38,14 @@ export default function FunLearningCard({ funLearning }: FunLearningCardProps) {
           </span>
         </div>
 
-        {/* 1. The Everyday Analogy */}
+        {/* 1. Visual Concept Storyboard (Understand at a glance without reading) */}
+        <AnalogyVisual
+          topicId={topicId}
+          analogyTitle={funLearning.analogyTitle}
+          analogyImage={funLearning.analogyImage}
+        />
+
+        {/* 2. The Everyday Analogy Narrative */}
         <div className="mb-6 bg-white/90 backdrop-blur-sm rounded-xl p-5 border border-amber-200/70 shadow-sm">
           <div className="flex items-center space-x-2 text-amber-900 font-bold text-lg mb-2">
             <Compass size={20} className="text-amber-600" />
@@ -46,14 +56,12 @@ export default function FunLearningCard({ funLearning }: FunLearningCardProps) {
           </div>
         </div>
 
-        {/* 2. Interactive Mental Thought Experiment */}
-        <div className="mb-6 bg-amber-100/70 rounded-xl p-5 border border-amber-300/80">
-          <h4 className="font-bold text-amber-950 text-base mb-2 flex items-center gap-2">
-            <span className="text-xl">🧪</span> Mental Sandbox Experiment
-          </h4>
-          <div className="text-sm sm:text-base text-amber-900 leading-relaxed italic">
-            <MathRenderer content={funLearning.interactiveThoughtExperiment} />
-          </div>
+        {/* 3. Interactive Mental Thought Experiment */}
+        <div className="mb-6">
+          <InteractiveThoughtExperiment
+            topicId={topicId}
+            thoughtExperimentText={funLearning.interactiveThoughtExperiment}
+          />
         </div>
 
         {/* 3. The "Aha!" Moment */}

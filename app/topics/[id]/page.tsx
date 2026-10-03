@@ -250,7 +250,7 @@ export default function TopicPage() {
         {/* Fun Learning Zone (Zero Prerequisites) */}
         {topic.funLearning && (
           <div id="section-fun" className="scroll-mt-20">
-            <FunLearningCard funLearning={topic.funLearning} />
+            <FunLearningCard funLearning={topic.funLearning} topicId={topic.id} />
           </div>
         )}
 
